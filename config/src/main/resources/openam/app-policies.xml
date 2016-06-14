@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Policies
+        PUBLIC "-//OpenSSO Policy Administration DTD//EN"
+        "jar://com/sun/identity/policy/policyAdmin.dtd">
+
+<Policies>
+    <Policy name="ledeteksteditor_001" referralPolicy="false" active="true" >
+
+        <Rule name="rule_ledeteksteditor__001_02">
+            <ServiceName name="iPlanetAMWebAgentService" />
+            <ResourceName name="https://${DomainName}/ledeteksteditor/*?*" />
+            <AttributeValuePair>
+                <Attribute name="POST" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="GET" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="PUT" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="DELETE" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="OPTIONS" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+        </Rule>
+
+        <Rule name="rule_ledeteksteditor_001_01">
+            <ServiceName name="iPlanetAMWebAgentService" />
+            <ResourceName name="https://${DomainName}/ledeteksteditor/*" />
+            <AttributeValuePair>
+                <Attribute name="POST" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="GET" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="PUT" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="DELETE" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="OPTIONS" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+        </Rule>
+
+        <Rule name="rule_ledeteksteditor_001_04">
+            <ServiceName name="iPlanetAMWebAgentService" />
+            <ResourceName name="https://${DomainName}/ledeteksteditor/" />
+            <AttributeValuePair>
+                <Attribute name="POST" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="GET" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="PUT" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="DELETE" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="OPTIONS" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+        </Rule>
+
+        <Rule name="rule_ledeteksteditor_001_03">
+            <ServiceName name="iPlanetAMWebAgentService" />
+            <ResourceName name="https://${DomainName}/ledeteksteditor" />
+            <AttributeValuePair>
+                <Attribute name="POST" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="GET" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="PUT" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="DELETE" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+            <AttributeValuePair>
+                <Attribute name="OPTIONS" />
+                <Value>allow</Value>
+            </AttributeValuePair>
+        </Rule>
+
+    </Policy>
+</Policies>

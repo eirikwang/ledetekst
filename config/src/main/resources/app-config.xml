@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://appconfig.aura.nav.no"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://appconfig.aura.nav.no
+             http://maven.adeo.no/xsd/appconfig.xsd ">
+
+    <name>ledeteksteditor</name>
+
+    <selftestPagePath>ledeteksteditor/internal/selftest</selftestPagePath>
+
+    <artifacts>
+        <ear groupId="no.nav.sbl" artifactId="ledeteksteditor-ear"/>
+    </artifacts>
+
+    <resources>
+        <baseUrl mapToProperty="appres.cms" alias="appres.cms"/>
+        <!--baseUrl mapToProperty="dialogarena.cms" alias="appres.cms"/-->
+        <!--baseUrl mapToProperty="soknadsapi" alias="soknadsapi"/-->
+    </resources>
+
+    <loadBalancer>
+        <contextRoot>ledeteksteditor</contextRoot>
+        <lbHealthMonitor type="HTTPS" isAliveUrl="ledeteksteditor/internal/isAlive" interval="5" timeout="16"/>
+        <lbPool slowRampTime="30" loadBalancingMethod="LEAST_CONNECTIONS" connectionLimit="500"/>
+    </loadBalancer>
+
+    <serverOptions>
+        <memoryParameters resourceAlias="brukerdialog-memparams"/>
+    </serverOptions>
+</application>

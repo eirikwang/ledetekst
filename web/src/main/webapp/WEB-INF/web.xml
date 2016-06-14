@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+    <display-name>ledeteksteditor</display-name>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>no.nav.sbl.ledeteksteditor.config.ApplicationConfig</param-value>
+    </context-param>
+
+    <filter>
+        <filter-name>decoratorFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>decoratorFilter</filter-name>
+        <url-pattern>/index.html</url-pattern>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+    <filter>
+        <filter-name>charEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>charEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>RestAPI</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>no.nav.sbl.ledeteksteditor.rest.Application</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RestAPI</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SelftestServlet</servlet-name>
+        <servlet-class>no.nav.sbl.ledeteksteditor.selftest.SelftestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SelftestServlet</servlet-name>
+        <url-pattern>/internal/selftest</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SelftestJsonServlet</servlet-name>
+        <servlet-class>no.nav.sbl.ledeteksteditor.selftest.SelftestJsonServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SelftestJsonServlet</servlet-name>
+        <url-pattern>/internal/selftest.json</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>isAlive</servlet-name>
+        <servlet-class>no.nav.sbl.ledeteksteditor.selftest.IsAliveServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>isAlive</servlet-name>
+        <url-pattern>/internal/isAlive</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AppServlet</servlet-name>
+        <servlet-class>no.nav.sbl.ledeteksteditor.AppServlet</servlet-class>
+        <init-param>
+            <param-name>applicationFile</param-name>
+            <param-value>index.html</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AppServlet</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+</web-app>
