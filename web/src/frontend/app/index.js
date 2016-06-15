@@ -1,5 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
 import Application from './application';
+import Http, { toText } from './http';
 
-render(<Application />, document.getElementById('mainapp'));
+Http.get('/ledeteksteditor/api/test').then(toText)
+    .then(([resp]) => {
+        render(<Application isAlive={resp.ok} />, document.getElementById('mainapp'));
+    });
+

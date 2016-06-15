@@ -168,8 +168,11 @@
             <properties>
                 <sonar.language>js</sonar.language>
                 <sonar.coverage.exclusions>
-                    src/frontend/app/js/**/*-test.js,
-                    src/frontend/app/js/**/*-spec.js,
+                    src/frontend/app/**/*-test.js,
+                    src/frontend/app/**/*-spec.js,
+                    src/frontend/app/vendors.js,
+                    src/frontend/app/index.js,
+                    src/frontend/app/http.js,
                     src/main/webapp/**/*
                 </sonar.coverage.exclusions>
                 <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
