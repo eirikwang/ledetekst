@@ -138,6 +138,21 @@
                             <workingDirectory>src/frontend</workingDirectory>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>JS test</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>test</phase>
+                        <configuration>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>coverage</argument>
+                            </arguments>
+                            <workingDirectory>src/frontend</workingDirectory>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
@@ -154,10 +169,14 @@
                 <sonar.language>js</sonar.language>
                 <sonar.coverage.exclusions>
                     src/frontend/app/js/**/*-test.js,
+                    src/frontend/app/js/**/*-spec.js,
                     src/main/webapp/**/*
                 </sonar.coverage.exclusions>
                 <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
                 <sonar.sources>src/frontend/app</sonar.sources>
+                <sonar.javascript.jstest.reportsPath>target/surefire-reports</sonar.javascript.jstest.reportsPath>
+                <sonar.javascript.lcov.reportPath>target/js-coverage/lcov.info</sonar.javascript.lcov.reportPath>
+                <skip.js-tests>false</skip.js-tests>
             </properties>
         </profile>
     </profiles>
