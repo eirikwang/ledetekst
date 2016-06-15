@@ -16,4 +16,4 @@ export const toText = fetchParse((r) => r.text());
 
 export default {
     get: (...args) => fetch(...args)
-};
+}
