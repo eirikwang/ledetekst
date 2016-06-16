@@ -8,7 +8,7 @@ const Application = ({ isAlive }) => (
 );
 
 Application.propTypes = {
-    isAlive: PT.bool.isRequired
+    isAlive: PT.string.isRequired
 };
 
 export default Application;

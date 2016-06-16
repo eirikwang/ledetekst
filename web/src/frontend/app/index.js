@@ -4,7 +4,8 @@ import Application from './application';
 import Http, { toText } from './http';
 
 Http.get('/ledeteksteditor/api/test').then(toText)
-    .then(([resp]) => {
-        render(<Application isAlive={resp.ok} />, document.getElementById('mainapp'));
+    .then(([resp, value]) => {
+        const message = !resp.ok ? 'noe feilet' : value;
+        render(<Application isAlive={message} />, document.getElementById('mainapp'));
     });
 
