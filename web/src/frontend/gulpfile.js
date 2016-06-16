@@ -12,9 +12,9 @@ gulp.task('build-less', require('./gulp/build-less')(gulp));
 gulp.task('build-js', require('./gulp/build-js').buildJs(gulp));
 gulp.task('build-vendors', require('./gulp/build-js').buildVendors(gulp));
 gulp.task('build-js-watchify', require('./gulp/build-js').buildJsWatchify(gulp));
-gulp.task('eslint', require('./gulp/eslint')(gulp));
 gulp.task('copy-img', require('./gulp/copy-img').copyImg(gulp));
 
+gulp.task('eslint', require('./gulp/eslint')(gulp));
 gulp.task('test', require('./gulp/tests').test(gulp, false));
 gulp.task('test-tdd', require('./gulp/tests').test(gulp, true));
 gulp.task('tdd', ['test-tdd'], require('./gulp/tests').watch(gulp));
