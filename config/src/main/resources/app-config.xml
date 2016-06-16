@@ -26,12 +26,4 @@
     <serverOptions>
         <memoryParameters resourceAlias="brukerdialog-memparams"/>
     </serverOptions>
-
-    <security>
-        <logins>
-            <openAm>
-                <contextRoot>veiledearbeidssoker</contextRoot>
-            </openAm>
-        </logins>
-    </security>
 </application>
