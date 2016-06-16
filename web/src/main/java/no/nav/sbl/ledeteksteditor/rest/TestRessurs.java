@@ -1,8 +1,7 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -13,7 +12,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Produces(APPLICATION_JSON + ";charset=utf-8")
 public class TestRessurs {
 
-    @Autowired
+    @Inject
     public String dummy;
 
     @GET
