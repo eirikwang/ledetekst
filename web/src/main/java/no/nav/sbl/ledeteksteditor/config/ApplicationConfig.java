@@ -5,9 +5,7 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({
-        EnvironmentPropertiesConfig.class,
-        ContentConfig.class,
-        DecoratorConfig.class
+        EnvironmentPropertiesConfig.class
 })
 public class ApplicationConfig {
 }
