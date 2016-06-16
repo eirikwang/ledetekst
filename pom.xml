@@ -41,6 +41,12 @@
                 <version>2.0.1</version>
             </dependency>
             <dependency>
+                <groupId>org.glassfish.jersey.ext</groupId>
+                <artifactId>jersey-spring3</artifactId>
+                <version>${jersey.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.glassfish.jersey.core</groupId>
                 <artifactId>jersey-server</artifactId>
                 <version>${jersey.version}</version>
@@ -110,11 +116,6 @@
                 <artifactId>jcl-over-slf4j</artifactId>
                 <version>1.7.10</version>
                 <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>no.nav.sbl</groupId>
-                <artifactId>innholdshenter</artifactId>
-                <version>4.0</version>
             </dependency>
             <dependency>
                 <groupId>no.nav.sbl.dialogarena</groupId>
