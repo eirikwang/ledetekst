@@ -14,6 +14,7 @@ import org.eclipse.jgit.treewalk.filter.PathFilter;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class JGitWrapper {
@@ -33,9 +34,11 @@ public class JGitWrapper {
      * @return ledetekster fra et repo/applikasjon
      * @throws IOException
      */
-    private ArrayList<Ledetekst> hentApplikasjonsFelter() throws IOException {
+    private ArrayList<Ledetekst> hentApplikasjonsLedetekster() throws IOException {
 
-        Repository repo = new FileRepositoryBuilder().setGitDir(new File("C:\\Users\\O148212\\Documents\\projects\\veiledningarbeidssoker/.git")).build();
+        Repository repo = new FileRepositoryBuilder()
+                .setGitDir(new File("C:\\Users\\O148212\\Documents\\projects\\veiledningarbeidssoker/.git"))
+                .build();
         TreeWalk treeWalk = new TreeWalk(repo);
         RevWalk walk = new RevWalk(repo);
         RevCommit commit = walk.parseCommit(repo.getRef("HEAD").getObjectId());
@@ -55,7 +58,7 @@ public class JGitWrapper {
                     PathFilter.create(
                             hentFilstiFraLedetekstNokkel((String) ledetekstNokkel)));
 
-            HashMap<String, String> innhold = new HashMap<>();
+            Map<String, String> innhold = new HashMap<>();
             while (treeWalk.next()) {
                 innhold.putAll(hentInnhold(treeWalk, repo));
             }
@@ -72,7 +75,7 @@ public class JGitWrapper {
      * @return innhold i en ledetekst for hvert språk
      * @throws IOException
      */
-    private HashMap<String, String> hentInnhold(TreeWalk treeWalk, Repository repo) throws IOException {
+    private Map<String, String> hentInnhold(TreeWalk treeWalk, Repository repo) throws IOException {
         HashMap<String, String> innhold = new HashMap<>();
 
         String filsti = treeWalk.getPathString();
@@ -121,7 +124,7 @@ public class JGitWrapper {
      * @throws IOException
      */
     private Object[] hentLedetekstNokklerMedFilsti(TreeWalk treeWalk) throws IOException {
-        HashMap<String, String> ledetekstNokklerMedFilsti = new HashMap<>();
+        Map<String, String> ledetekstNokklerMedFilsti = new HashMap<>();
         while (treeWalk.next()) {
             String filsti = treeWalk.getPathString();
             if (filsti.contains(FIELD_PATH)) {
@@ -146,7 +149,7 @@ public class JGitWrapper {
     public static void main(String[] args) throws IOException {
         JGitWrapper jgit = new JGitWrapper();
 
-        ArrayList<Ledetekst> ledetekster = jgit.hentApplikasjonsFelter();
+        ArrayList<Ledetekst> ledetekster = jgit.hentApplikasjonsLedetekster();
 
         for (Ledetekst s : ledetekster) {
             System.out.println(s.hentInnhold());

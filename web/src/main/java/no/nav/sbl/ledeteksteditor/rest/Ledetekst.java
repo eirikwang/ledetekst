@@ -1,15 +1,15 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
 
-import java.util.HashMap;
+import java.util.Map;
 
-public class Ledetekst {
+class Ledetekst {
 
     private String navn;
-    private HashMap<String, String> innhold;
+    private Map<String, String> innhold;
 
 
-    public Ledetekst( String navn, HashMap<String, String> innhold) {
+    Ledetekst( String navn, Map<String, String> innhold) {
         this.navn = navn;
         this.innhold = innhold;
     }
@@ -18,7 +18,7 @@ public class Ledetekst {
         return navn;
     }
 
-    public HashMap<String, String> hentInnhold(){
+    Map<String, String> hentInnhold(){
         return innhold;
     }
 }
