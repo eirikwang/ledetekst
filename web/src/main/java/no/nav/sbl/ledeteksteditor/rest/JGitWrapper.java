@@ -14,6 +14,7 @@ import org.eclipse.jgit.treewalk.filter.PathFilter;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 
@@ -47,22 +48,27 @@ public class JGitWrapper {
 
         ArrayList<Ledetekst> ledetekster = new ArrayList<>();
 
-        Object[] ledetekstNokkler = hentLedetekstNokklerMedFilsti(treeWalk);
+        Map ledetekstNokkler = hentLedetekstNokkler(treeWalk);
+        Iterator it = ledetekstNokkler.entrySet().iterator();
 
-        for (Object ledetekstNokkel : ledetekstNokkler) {
+        for (Object entry : ledetekstNokkler.keySet()){
+
+            Map.Entry pair = (Map.Entry) it.next();
+            String ledetekstNokkel = (String) entry;
+            String filsti = (String) ledetekstNokkler.get(entry);
+
             System.out.println(ledetekstNokkel);
+
             treeWalk.reset();
             treeWalk.addTree(commit.getTree());
             treeWalk.setRecursive(true);
-            treeWalk.setFilter(
-                    PathFilter.create(
-                            hentFilstiFraLedetekstNokkel((String) ledetekstNokkel)));
+            treeWalk.setFilter(PathFilter.create(filsti));
 
             Map<String, String> innhold = new HashMap<>();
             while (treeWalk.next()) {
                 innhold.putAll(hentInnhold(treeWalk, repo));
             }
-            ledetekster.add(new Ledetekst((String) ledetekstNokkel, innhold));
+            ledetekster.add(new Ledetekst(ledetekstNokkel, innhold));
         }
         return ledetekster;
     }
@@ -79,7 +85,7 @@ public class JGitWrapper {
         HashMap<String, String> innhold = new HashMap<>();
 
         String filsti = treeWalk.getPathString();
-        System.out.println(filsti);
+        //System.out.println(filsti);
         ObjectId objectId = treeWalk.getObjectId(0);
 
         try {
@@ -87,7 +93,7 @@ public class JGitWrapper {
             try (InputStream stream = objektLaster.openStream();
                  BufferedReader buff = new BufferedReader(new InputStreamReader(stream))) {
                 String spraakInnhold = buff.readLine();
-                String spraak = hentSpraakFraFilsti(filsti);
+                String spraak = hentSpraak(filsti);
                 innhold.put(spraak, spraakInnhold);
             }
         } finally {
@@ -97,12 +103,43 @@ public class JGitWrapper {
     }
 
     /**
+     * Henter hele filstien (med filnavn) uten språk (_no og _en)
+     *
+     * @param treeWalk  itereringen av treet
+     * @return alle filstier med filnavn uten språk
+     * @throws IOException
+     */
+    private Map hentLedetekstNokkler(TreeWalk treeWalk) throws IOException {
+        Map<String, String> ledetekstNokkler = new HashMap<>();
+        while (treeWalk.next()) {
+            String filsti = treeWalk.getPathString();
+            String filnavn = treeWalk.getNameString();
+            if (filsti.contains(FIELD_PATH)) {
+                String ledetekstNokkel = hentLedetekstNokkelFraFilnavn(filnavn);
+                ledetekstNokkler.put(ledetekstNokkel, hentFilsti(filsti));
+            }
+        }
+        return ledetekstNokkler;
+    }
+
+    /**
+     * Metoden over bruker den her, henter filnavn uten språk
+     *
+     * @param filnavn    filstien
+     * @return filnavn med filnavn uten språk for én fil
+     */
+    private String hentLedetekstNokkelFraFilnavn(String filnavn) {
+        int sisteUnderstrek = filnavn.lastIndexOf("_");
+        return filnavn.substring(0, sisteUnderstrek);
+    }
+
+    /**
      * finner om det er _NO eller _EN osv i et filnavn
      *
      * @param filsti    filstien for ledetekst
      * @return språk for en ledetekst
      */
-    private String hentSpraakFraFilsti(String filsti) {
+    private String hentSpraak(String filsti) {
         return filsti.substring(filsti.lastIndexOf("_") + 1, filsti.lastIndexOf("."));
     }
 
@@ -112,39 +149,10 @@ public class JGitWrapper {
      * @param ledetekstNokkel   hele filstien
      * @return filsti for ledetekst
      */
-    private String hentFilstiFraLedetekstNokkel(String ledetekstNokkel) {
+    private String hentFilsti(String ledetekstNokkel) {
         return ledetekstNokkel.substring(0, ledetekstNokkel.lastIndexOf("/"));
     }
 
-    /**
-     * Henter hele filstien (med filnavn) uten språk (_NO og _EN)
-     *
-     * @param treeWalk  itereringen av treet
-     * @return alle filstier med filnavn uten språk
-     * @throws IOException
-     */
-    private Object[] hentLedetekstNokklerMedFilsti(TreeWalk treeWalk) throws IOException {
-        Map<String, String> ledetekstNokklerMedFilsti = new HashMap<>();
-        while (treeWalk.next()) {
-            String filsti = treeWalk.getPathString();
-            if (filsti.contains(FIELD_PATH)) {
-                String filstiUtenSpraak = hentFilstiUtenSpraak(filsti);
-                ledetekstNokklerMedFilsti.put(filstiUtenSpraak, filstiUtenSpraak);
-            }
-        }
-        return ledetekstNokklerMedFilsti.values().toArray();
-    }
-
-    /**
-     * Metoden over bruker den her, henter filnavn uten språk
-     *
-     * @param filsti    filstien
-     * @return filsti med filnavn uten språk for én fil
-     */
-    private String hentFilstiUtenSpraak(String filsti) {
-        int sisteUnderstrekIFilsti = filsti.lastIndexOf("_");
-        return filsti.substring(0, sisteUnderstrekIFilsti);
-    }
 
     public static void main(String[] args) throws IOException {
         JGitWrapper jgit = new JGitWrapper();
@@ -152,7 +160,10 @@ public class JGitWrapper {
         ArrayList<Ledetekst> ledetekster = jgit.hentApplikasjonsLedetekster();
 
         for (Ledetekst s : ledetekster) {
+            System.out.print(s.hentNavn() + " ");
             System.out.println(s.hentInnhold());
         }
     }
+
+
 }
