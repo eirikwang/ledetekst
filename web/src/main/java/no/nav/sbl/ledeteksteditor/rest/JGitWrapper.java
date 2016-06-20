@@ -49,7 +49,6 @@ public class JGitWrapper {
         ArrayList<Ledetekst> ledetekster = new ArrayList<>();
 
         Map ledetekstNokkler = hentLedetekstNokkler(treeWalk);
-        Iterator it = ledetekstNokkler.entrySet().iterator();
 
         for (Object entry : ledetekstNokkler.keySet()){
             String ledetekstNokkel = (String) entry;
