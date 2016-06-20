@@ -42,7 +42,7 @@ public class JGitWrapper {
                 .build();
         TreeWalk treeWalk = new TreeWalk(repo);
         RevWalk walk = new RevWalk(repo);
-        RevCommit commit = walk.parseCommit(repo.getRef("HEAD").getObjectId());
+        RevCommit commit = walk.parseCommit(repo.exactRef("HEAD").getObjectId());
         treeWalk.addTree(commit.getTree());
         treeWalk.setRecursive(true);
 
@@ -52,8 +52,6 @@ public class JGitWrapper {
         Iterator it = ledetekstNokkler.entrySet().iterator();
 
         for (Object entry : ledetekstNokkler.keySet()){
-
-            Map.Entry pair = (Map.Entry) it.next();
             String ledetekstNokkel = (String) entry;
             String filsti = (String) ledetekstNokkler.get(entry);
 
