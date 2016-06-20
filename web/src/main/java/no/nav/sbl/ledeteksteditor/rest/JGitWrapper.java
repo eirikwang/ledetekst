@@ -20,11 +20,14 @@ public class JGitWrapper {
 
     private final static String FIELD_PATH = "tekster/src/main/resources/tekster/";
 
-    public void hentApplikasjon() throws GitAPIException {
-        Git git = Git.cloneRepository()
-                .setURI("ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git")
-                //.setDirectory("")
-                .call();
+    public void klonApplikasjon() throws GitAPIException {
+
+        try {
+            Git git = Git.cloneRepository()
+                    .setURI("ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git")
+                    //.setDirectory("")
+                    .call();
+        }
     }
 
     private ArrayList<Ledetekst> hentApplikasjonsFelter() throws IOException {
