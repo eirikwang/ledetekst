@@ -21,13 +21,16 @@ public class JGitWrapper {
     private final static String FIELD_PATH = "tekster/src/main/resources/tekster/";
 
     public void klonApplikasjon() throws GitAPIException {
+        File kloneTestDir = new File("C:\\Users\\e148211\\Documents\\ClonedTestDir");
+        kloneTestDir.mkdir();
 
-        try {
-            Git git = Git.cloneRepository()
-                    .setURI("ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git")
-                    //.setDirectory("")
-                    .call();
-        }
+
+        Git testResult = Git.cloneRepository()
+                .setURI("ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git")
+                .setDirectory(kloneTestDir)
+                .call();
+
+        System.out.println("Repository: " + testResult.getRepository().getDirectory());
     }
 
     private ArrayList<Ledetekst> hentApplikasjonsFelter() throws IOException {
