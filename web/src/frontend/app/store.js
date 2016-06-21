@@ -5,6 +5,10 @@ import thunkMiddleware from 'redux-thunk';
 import Reducers from './reducers';
 import { erDev } from './felles/utils';
 
+/**
+ * Store "binder" reducers og actions sammen. 
+ */
+
 function getDebugSessionKey() {
     const matches = window.location.href.match(/[?&]debug_session=([^&]+)\b/);
     return (matches && matches.length > 0) ? matches[1] : null;

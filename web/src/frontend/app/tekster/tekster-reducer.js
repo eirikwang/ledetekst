@@ -1,6 +1,10 @@
 import { fetchToJson } from './../felles/utils';
 import { STATUS } from './../felles/konstanter';
 
+/**
+ * Reducer for tekster-komponent.
+ */
+
 export const LASTER_TEKSTER = 'LASTER_TEKSTER';
 export const LASTET_TEKSTER = 'LASTET_TEKSTER';
 export const FEIL_TEKSTER = 'FEIL_TEKSTER';
