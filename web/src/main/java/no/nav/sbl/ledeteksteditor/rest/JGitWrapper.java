@@ -3,6 +3,7 @@ package no.nav.sbl.ledeteksteditor.rest;
 import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Repository;
@@ -27,18 +28,23 @@ public class JGitWrapper {
      *   Metode for å klone et git repository ned
      *   i en (per nå) testmappe.
      */
-    public void klonApplikasjon() throws GitAPIException {
-        Git testResult = Git.cloneRepository()
-                .setURI("ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git")
-                .setDirectory(kloneTestDir)
-                .call();
+    public void klonApplikasjon() throws GitAPIException, IOException {
+        Git testResult;
+        try {
+            testResult = Git.cloneRepository()
+                    .setURI("ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git")
+                    .setDirectory(kloneTestDir)
+                    .call();
 
-        testResult.checkout()
-                .setCreateBranch(true)
-                .setName("tekstendepunkt")
-                .setUpstreamMode(CreateBranchCommand.SetupUpstreamMode.TRACK)
-                .setStartPoint("origin/tekstendepunkt")
-                .call();
+            testResult.checkout()
+                    .setCreateBranch(true)
+                    .setName("tekstendepunkt")
+                    .setUpstreamMode(CreateBranchCommand.SetupUpstreamMode.TRACK)
+                    .setStartPoint("origin/tekstendepunkt")
+                    .call();
+        } catch(JGitInternalException e){
+            testResult = Git.open(kloneTestDir);
+        }
 
         System.out.println("Repository: " + testResult.getRepository().getDirectory());
     }
