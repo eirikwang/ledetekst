@@ -1,7 +1,10 @@
 import React, { PropTypes as PT } from 'react';
 import { storeShape } from './../felles/proptype-shapes';
 
-//"Dum" komponent for tekster
+/**
+ * "Dum" komponent for tekster-modulen
+ */
+
 
 function Tekster({ tekster }) {
     const teksterElement = Object

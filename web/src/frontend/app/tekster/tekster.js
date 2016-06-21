@@ -5,6 +5,12 @@ import { lastInnTekster } from './tekster-reducer';
 import InnholdsLaster from './../felles/innholdslaster/innholdslaster';
 import TeksterListe from './tekster-liste';
 
+/**
+ * Den smarte komponenten for tekster-modulen. Merk oppdeling: Hver funksjonell modul har
+ * en smart komponent, actions/reducers og en/flere dumme komponenter. Actions/Reducers og
+ * react-komponenter er -ikke- gruppert sammen over flere funksjonelle moduler
+ */
+
 class Tekster extends Component {
     componentWillMount() {
         this.props.actions.lastInnTekster();
