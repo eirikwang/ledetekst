@@ -22,11 +22,18 @@ public class JGitWrapper {
 
     private final static String FIELD_PATH = "tekster/src/main/resources/tekster/";
 
-    public void hentApplikasjon() throws GitAPIException {
-        Git git = Git.cloneRepository()
+    /**
+     *   Metode for å klone et git repository ned i en (per nå) testmappe.
+     */
+    public void klonApplikasjon() throws GitAPIException {
+        File kloneTestDir = new File("C:\\Users\\e148211\\Documents\\ClonedTestDir");
+        kloneTestDir.mkdir();
+
+        Git testResult = Git.cloneRepository()
                 .setURI("ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git")
-                //.setDirectory("")
+                .setDirectory(kloneTestDir)
                 .call();
+        System.out.println("Repository: " + testResult.getRepository().getDirectory());
     }
 
     /**
