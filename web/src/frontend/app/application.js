@@ -1,14 +1,24 @@
-import React, { PropTypes as PT } from 'react';
+import React from 'react';
+import Tekster from './tekster/tekster';
+import DevTools from './devtools';
+import { defineMessages, FormattedMessage } from 'react-intl';
 
-const Application = ({ isAlive }) => (
-    <div className="index">
-        <h1>React header</h1>
-        <p><b>Status: </b><span>{isAlive}</span></p>
-    </div>
-);
+const meldinger = defineMessages({
+    overskrift: {
+        id: 'application.tittel',
+        defaultMessage: 'Ledeteksteditor'
+    }
+});
 
-Application.propTypes = {
-    isAlive: PT.string.isRequired
-};
+function Application() {
+    return (
+        <div className="application">
+            <h1><FormattedMessage {...meldinger.overskrift} /></h1>
+            <hr />
+            <Tekster />
+            <DevTools />
+        </div>
+    );
+}
 
 export default Application;
