@@ -1,5 +1,6 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
+import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.ObjectId;
@@ -14,25 +15,31 @@ import org.eclipse.jgit.treewalk.filter.PathFilter;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 
 public class JGitWrapper {
 
-    private final static String FIELD_PATH = "tekster/src/main/resources/tekster/";
+    private final static String FIELD_PATH = "tekster/src/main/tekster";
+    private File kloneTestDir = new File("../repo/veiledningarbeidssoker");
 
     /**
-     *   Metode for å klone et git repository ned i en (per nå) testmappe.
+     *   Metode for å klone et git repository ned
+     *   i en (per nå) testmappe.
      */
     public void klonApplikasjon() throws GitAPIException {
-        File kloneTestDir = new File("C:\\Users\\e148211\\Documents\\ClonedTestDir");
-        kloneTestDir.mkdir();
-
         Git testResult = Git.cloneRepository()
                 .setURI("ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git")
                 .setDirectory(kloneTestDir)
                 .call();
+
+        testResult.checkout()
+                .setCreateBranch(true)
+                .setName("tekstendepunkt")
+                .setUpstreamMode(CreateBranchCommand.SetupUpstreamMode.TRACK)
+                .setStartPoint("origin/tekstendepunkt")
+                .call();
+
         System.out.println("Repository: " + testResult.getRepository().getDirectory());
     }
 
@@ -42,11 +49,14 @@ public class JGitWrapper {
      * @return ledetekster fra et repo/applikasjon
      * @throws IOException
      */
-    private ArrayList<Ledetekst> hentApplikasjonsLedetekster() throws IOException {
+    private ArrayList<Ledetekst> hentApplikasjonsLedetekster() throws IOException, GitAPIException {
 
         Repository repo = new FileRepositoryBuilder()
-                .setGitDir(new File("C:\\Users\\O148212\\Documents\\projects\\veiledningarbeidssoker/.git"))
+                .setGitDir(new File(kloneTestDir + "/.git"))
                 .build();
+
+        System.out.println(repo.getBranch());
+
         TreeWalk treeWalk = new TreeWalk(repo);
         RevWalk walk = new RevWalk(repo);
         RevCommit commit = walk.parseCommit(repo.exactRef("HEAD").getObjectId());
@@ -61,7 +71,7 @@ public class JGitWrapper {
             String ledetekstNokkel = (String) entry;
             String filsti = (String) ledetekstNokkler.get(entry);
 
-            System.out.println(ledetekstNokkel);
+            //System.out.println(ledetekstNokkel);
 
             treeWalk.reset();
             treeWalk.addTree(commit.getTree());
@@ -158,8 +168,10 @@ public class JGitWrapper {
     }
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, GitAPIException {
         JGitWrapper jgit = new JGitWrapper();
+
+        jgit.klonApplikasjon();
 
         ArrayList<Ledetekst> ledetekster = jgit.hentApplikasjonsLedetekster();
 
@@ -167,6 +179,7 @@ public class JGitWrapper {
             System.out.print(s.hentNavn() + " ");
             System.out.println(s.hentInnhold());
         }
+        System.out.println(jgit.kloneTestDir.getAbsolutePath());
     }
 
 
