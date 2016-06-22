@@ -1,3 +1,4 @@
+
 import { fetchToJson } from './../felles/utils';
 
 /**
