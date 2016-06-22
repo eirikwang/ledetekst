@@ -2,18 +2,18 @@ import React, { PropTypes as PT } from 'react';
 import { storeShape } from './../felles/proptype-shapes';
 
 /**
- * "Dum" komponent for tekster-modulen(?)
+ * "Dum" komponent (i.e.  presentational component) for tekster-modulen(?)
  */
-
 
 function Tekster({ tekster }) {
     const teksterElement = Object
         .entries(tekster.data)
-        .map(([key, value]) => <li key={key}>{`${key} --> ${value}`}</li>);
+        .map((tekst) => <li>{tekst}</li>);
 
     return (
         <div>
             <ul className="tekster">
+                <h1>Ledertekster</h1>
                 {teksterElement}
             </ul>
         </div>
