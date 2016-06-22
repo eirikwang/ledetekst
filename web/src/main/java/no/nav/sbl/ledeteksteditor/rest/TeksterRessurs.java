@@ -1,6 +1,8 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
 
+import io.swagger.annotations.Api;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -9,6 +11,7 @@ import java.util.Map;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
+@Api(value = "ledetekster", description = "Endpoint for ledetekster")
 @Path("/tekster")
 @Produces(APPLICATION_JSON + ";charset=utf-8")
 public class TeksterRessurs {

@@ -58,13 +58,14 @@
     </servlet-mapping>
 
     <!-- Swagger grafisk api auto-dokumentasjon-->
-    <!--<servlet>
+    <!-- servlet som tilbyr /api-beskrivelse/swagger.json-->
+    <servlet>
         <servlet-name>Swagger</servlet-name>
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>
-                io.swagger.jaxrs.listing
+                io.swagger.jaxrs.listing,
                 no.nav.sbl.ledeteksteditor.rest
             </param-value>
         </init-param>
@@ -74,10 +75,18 @@
         <servlet-name>Swagger</servlet-name>
         <url-pattern>/api-beskrivelse/*</url-pattern>
     </servlet-mapping>
--->
+    <!--Servlet som setter instillinger som brukes av servleten Swagger-->
     <servlet>
-        <servlet-name>SwaggerBootstrap</servlet-name>
-        <servlet-class>no.nav.sbl.ledeteksteditor.SwaggerServlet</servlet-class>
+        <servlet-name>Jersey2Config</servlet-name>
+        <servlet-class>io.swagger.jersey.config.JerseyJaxrsConfig</servlet-class>
+        <init-param>
+            <param-name>api.version</param-name>
+            <param-value>1.0.0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>swagger.api.basepath</param-name>
+            <param-value>http://a34duvw25882.devillo.no:8182/ledeteksteditor/api-beskrivelse</param-value>
+        </init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <!--Swagger slutt-->
