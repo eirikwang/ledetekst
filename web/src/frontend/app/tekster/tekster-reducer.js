@@ -1,4 +1,4 @@
-import { fetchToJson } from './../felles/utils';
+//import { fetchToJson } from './../felles/utils';
 import { STATUS } from './../felles/konstanter';
 import { REQUEST_TEKSTER, RECEIVE_TEKSTER, RECEIVE_FEIL } from './tekster-actions';
 
@@ -27,6 +27,7 @@ export default function tekster(state = DEFAULT_STATE, action) {
     }
 }
 
+/*
 export function lastInnTekster() {
     return (dispatch) => {
         dispatch({ type: REQUEST_TEKSTER });
@@ -35,3 +36,4 @@ export function lastInnTekster() {
             .catch((err) => dispatch({ type: RECEIVE_FEIL, data: err }));
     };
 }
+*/
