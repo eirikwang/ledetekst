@@ -2,7 +2,7 @@ import React, { PropTypes as PT } from 'react';
 import { storeShape } from './../felles/proptype-shapes';
 
 /**
- * "Dum" komponent for tekster-modulen
+ * "Dum" komponent for tekster-modulen(?)
  */
 
 
