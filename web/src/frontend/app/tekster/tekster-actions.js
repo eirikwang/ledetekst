@@ -1,3 +1,5 @@
+import { fetchToJson } from './../felles/utils';
+
 /**
  * Action creators for tekster. Tre muligheter her: Kan sende en request,
  * få en suksessfull response, eller få en response med feilmld
@@ -34,10 +36,10 @@ export function receiveFeil (error) {
 
 export function fetchTekster (data){
     return dispatch => {
-        dispatch(sendRequest(data))
-        return fetch(data)
+        dispatch(sendRequest(data));
+        return fetchToJson(data)
             .then(function (response){
-                dispatch(receiveTekster(response.json()));
+                dispatch(receiveTekster(response));
             })
             .catch(function (error){
                 dispatch(receiveFeil(error));
