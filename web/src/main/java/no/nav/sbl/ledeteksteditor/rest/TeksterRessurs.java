@@ -28,15 +28,15 @@ public class TeksterRessurs {
     @GET
     public List<Map> test() {
         return new ArrayList<Map>() {{
-            tilLedetekstMap("dagpenger.annenstotte.ingress",
+            add(tilLedetekstMap("dagpenger.annenstotte.ingress",
                     "Som arbeidssøker kan du få støtte til å dekke utgifter for å komme i arbeid",
-                    "[EN] Som arbeidssøker kan du få støtte til å dekke utgifter for å komme i arbeid");
-            tilLedetekstMap("dagpenger.annenstotte.innhold",
+                    "[EN] Som arbeidssøker kan du få støtte til å dekke utgifter for å komme i arbeid"));
+            add(tilLedetekstMap("dagpenger.annenstotte.innhold",
                     "<p>Du kan få støtte til å dekke utgifter for å reise til jobbintervju eller til arbeidsstedet når du starter i en  jland.",
-                    "<p>[EN] Som arbeidssøker kan du få støtte til å dekke utgifter for å komme i arbeid:</p><ul class=\"mindre-innrykk-liste\">");
-            tilLedetekstMap("dagpenger.annenstotte.sok-stonad-lenke",
+                    "<p>[EN] Som arbeidssøker kan du få støtte til å dekke utgifter for å komme i arbeid:</p><ul class=\"mindre-innrykk-liste\">"));
+            add(tilLedetekstMap("dagpenger.annenstotte.sok-stonad-lenke",
                     "https://www.nav.no/no/Person/Skjemaer-for-privatpersoner/Skjemaer/Tilleggsstonader/Tilleggsstonader/Innsendingsvalg-tilleggsstonader",
-                    "https://www.nav.no/no/Person/Skjemaer-for-privatpersoner/Skjemaer/Tilleggsstonader/Tilleggsstonader/Innsendingsvalg-tilleggsstonader");
+                    "https://www.nav.no/no/Person/Skjemaer-for-privatpersoner/Skjemaer/Tilleggsstonader/Tilleggsstonader/Innsendingsvalg-tilleggsstonader"));
         }};
     }
 }
