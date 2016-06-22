@@ -5,11 +5,13 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
+import org.eclipse.jgit.util.FS;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -33,9 +35,12 @@ public class JGitWrapper {
      *   Metode for å klone et git repository ned
      *   i en (per nå) testmappe.
      */
-    private void cloneRepository() throws GitAPIException, IOException {
+    public void cloneRepository() throws GitAPIException, IOException {
         Git testResult;
-        try {
+
+        if (RepositoryCache.FileKey.isGitRepository(new File("../repo/veiledningarbeidssoker/.git"), FS.DETECTED)) {
+            testResult = Git.open(kloneTestDir);
+        } else {
             testResult = Git.cloneRepository()
                     .setURI("ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git")
                     .setDirectory(kloneTestDir)
@@ -47,8 +52,6 @@ public class JGitWrapper {
                     .setUpstreamMode(CreateBranchCommand.SetupUpstreamMode.TRACK)
                     .setStartPoint("origin/tekstendepunkt")
                     .call();
-        } catch(JGitInternalException e){
-            testResult = Git.open(kloneTestDir);
         }
 
         System.out.println("Repository: " + testResult.getRepository().getDirectory());
@@ -66,6 +69,7 @@ public class JGitWrapper {
                 .build();
 
         System.out.println(repo.getBranch());
+
 
         TreeWalk treeWalk = new TreeWalk(repo);
         RevWalk walk = new RevWalk(repo);

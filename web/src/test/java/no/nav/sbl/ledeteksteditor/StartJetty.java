@@ -26,7 +26,7 @@ public class StartJetty {
         jetty.startAnd(first(waitFor(gotKeypress())).then(jetty.stop));
         */
         JGitWrapper kloneTest = new JGitWrapper();
-        kloneTest.klonApplikasjon();
+        kloneTest.cloneRepository();
 
     }
 }
