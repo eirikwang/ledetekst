@@ -22,6 +22,12 @@ function getDevStoreCompose() {
     );
 }
 
+/**
+ *
+ * Middleware gjør at du kan bruke synkrone action creators sammen med (asynkrone)
+ * nettverkskall. Ved å bruke thunkMiddleware kan action creatoren returnere
+ * en funksjon i stedet for et objekt
+ */
 function getStoreCompose() {
     return compose(
         applyMiddleware(thunkMiddleware)
