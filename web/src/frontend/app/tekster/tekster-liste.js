@@ -4,7 +4,7 @@ import { storeShape } from './../felles/proptype-shapes';
 function Tekster({ tekster }) {
     const teksterElement = Object
         .entries(tekster.data.ledetekster)
-        .map(([key, value]) => <li key={value.nokkel}>{`${value.nokkel} --> ${value.spraak[0].innhold}`}</li>);
+        .map(([key, value]) => <li key={value.nokkel}>{`${value.nokkel} --> ${value.spraak.nb}`}</li>);
 
     return (
         <div>
