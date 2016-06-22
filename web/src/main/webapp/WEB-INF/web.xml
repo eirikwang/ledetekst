@@ -57,6 +57,31 @@
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
 
+    <!-- Swagger grafisk api auto-dokumentasjon-->
+    <!--<servlet>
+        <servlet-name>Swagger</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>
+                io.swagger.jaxrs.listing
+                no.nav.sbl.ledeteksteditor.rest
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Swagger</servlet-name>
+        <url-pattern>/api-beskrivelse/*</url-pattern>
+    </servlet-mapping>
+-->
+    <servlet>
+        <servlet-name>SwaggerBootstrap</servlet-name>
+        <servlet-class>no.nav.sbl.ledeteksteditor.SwaggerServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <!--Swagger slutt-->
+
     <servlet>
         <servlet-name>SelftestServlet</servlet-name>
         <servlet-class>no.nav.sbl.ledeteksteditor.selftest.SelftestServlet</servlet-class>
@@ -95,5 +120,4 @@
         <servlet-name>AppServlet</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
-
 </web-app>
