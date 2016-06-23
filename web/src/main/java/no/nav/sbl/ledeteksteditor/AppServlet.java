@@ -10,6 +10,8 @@ import java.io.IOException;
 
 public class AppServlet extends HttpServlet {
     private String applicationFile;
+    public static final String FILE_REQUEST_PATTERN = "^(.+\\..{1,4})$";
+    public static final String SWAGGER_REQUEST_PATTERN = "^.*/internal/swagger.*$";
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -24,9 +26,9 @@ public class AppServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = getServletContext().getNamedDispatcher("default");
 
-        String fileRequestPattern = "^(.+\\..{1,4})$";
-
-        if (!request.getRequestURI().matches(fileRequestPattern)) {
+        if (request.getRequestURI().matches(SWAGGER_REQUEST_PATTERN)) {
+            dispatcher.forward(request, response);
+        } else if (!request.getRequestURI().matches(FILE_REQUEST_PATTERN)) {
             RequestDispatcher index = getServletContext().getRequestDispatcher(applicationFile);
             index.forward(request, response);
         } else {
