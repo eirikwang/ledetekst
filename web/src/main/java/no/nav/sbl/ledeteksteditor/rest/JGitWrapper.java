@@ -35,10 +35,10 @@ public class JGitWrapper {
      * @return ledetekster fra et repo/applikasjon
      * @throws IOException
      */
-    private ArrayList<Ledetekst> hentApplikasjonsLedetekster() throws IOException {
+    public ArrayList<Ledetekst> hentApplikasjonsLedetekster() throws IOException {
 
         Repository repo = new FileRepositoryBuilder()
-                .setGitDir(new File("C:\\Users\\O148212\\Documents\\projects\\veiledningarbeidssoker/.git"))
+                .setGitDir(new File("C:\\Users\\0148211\\Documents\\projects\\veiledningarbeidssoker/.git"))
                 .build();
         TreeWalk treeWalk = new TreeWalk(repo);
         RevWalk walk = new RevWalk(repo);
@@ -149,18 +149,5 @@ public class JGitWrapper {
     private String hentFilsti(String ledetekstNokkel) {
         return ledetekstNokkel.substring(0, ledetekstNokkel.lastIndexOf("/"));
     }
-
-
-    public static void main(String[] args) throws IOException {
-        JGitWrapper jgit = new JGitWrapper();
-
-        ArrayList<Ledetekst> ledetekster = jgit.hentApplikasjonsLedetekster();
-
-        for (Ledetekst s : ledetekster) {
-            System.out.print(s.hentNavn() + " ");
-            System.out.println(s.hentInnhold());
-        }
-    }
-
 
 }

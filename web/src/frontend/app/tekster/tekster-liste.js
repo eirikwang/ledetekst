@@ -8,7 +8,6 @@ import { storeShape } from './../felles/proptype-shapes';
 function mapTilHtml(tekstMap){
     const nokkel = tekstMap[1].nokkel;
     const spraakObj = tekstMap[1].spraak;
-
     let htmltekst = (
         <ul key={nokkel}>
             <li>{nokkel}</li>
@@ -19,8 +18,6 @@ function mapTilHtml(tekstMap){
             </li>
         </ul>
     );
-    console.log("Ferdig html for en nøkkel:");
-    console.log(htmltekst);
     return htmltekst;
 }
 
