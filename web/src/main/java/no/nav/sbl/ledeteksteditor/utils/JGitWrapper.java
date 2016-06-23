@@ -1,9 +1,10 @@
-package no.nav.sbl.ledeteksteditor.rest;
+package no.nav.sbl.ledeteksteditor.utils;
+
+import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 
 import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -68,7 +69,7 @@ public class JGitWrapper {
                 .setGitDir(new File(kloneTestDir + "/.git"))
                 .build();
 
-        System.out.println(repo.getBranch());
+        //System.out.println(repo.getBranch());
 
 
         TreeWalk treeWalk = new TreeWalk(repo);
@@ -84,7 +85,7 @@ public class JGitWrapper {
         for (Map.Entry<String, String> entry : ledetekstNokkler.entrySet()){
             String ledetekstNokkel = entry.getKey();
             String filsti = entry.getValue();
-
+            //System.out.println();
             treeWalk.reset();
             treeWalk.addTree(commit.getTree());
             treeWalk.setRecursive(true);
@@ -109,6 +110,7 @@ public class JGitWrapper {
     private Map<String, String> hentInnhold(TreeWalk treeWalk) throws IOException {
         HashMap<String, String> innhold = new HashMap<>();
         String filsti = testerPath + treeWalk.getPathString();
+        System.out.println("SE HER" + filsti);
         String spraak = "";
         Matcher matcher = regex.matcher(filsti);
         if(matcher.find()) {
@@ -134,10 +136,11 @@ public class JGitWrapper {
         while (treeWalk.next()) {
             String filsti = treeWalk.getPathString();
             String filnavn = treeWalk.getNameString();
-
+            //System.out.println();
             if (filsti.contains(FIELD_PATH)) {
                 Matcher matcher = regex.matcher(filnavn);
                 String ledetekstNokkel = "";
+                //System.out.println();
                 if (matcher.find()) {
                     ledetekstNokkel = matcher.group(1);
                 }
@@ -166,11 +169,11 @@ public class JGitWrapper {
 
         ArrayList<Ledetekst> ledetekster = jgit.hentApplikasjonsLedetekster();
 
-        for (Ledetekst s : ledetekster) {
-            System.out.print(s.hentNavn() + " ");
-            System.out.println(s.hentInnhold());
-        }
-        System.out.println(jgit.kloneTestDir.getAbsolutePath());
+        //for (Ledetekst s : ledetekster) {
+            //System.out.print(s.hentNavn() + " ");
+            //System.out.println(s.hentInnhold());
+        //}
+        //System.out.println(jgit.kloneTestDir.getAbsolutePath());
     }
 
 
