@@ -84,11 +84,6 @@
             <param-value>1.0.0</param-value>
         </init-param>
         <init-param>
-            <param-name>swagger.api.host</param-name>
-            <!-- Swagger tar i mot host som init -->
-            <param-value>http://a34duvw25882.devillo.no:8182</param-value>
-        </init-param>
-        <init-param>
             <param-name>swagger.api.basepath</param-name>
             <param-value>/ledeteksteditor/api/</param-value>
         </init-param>

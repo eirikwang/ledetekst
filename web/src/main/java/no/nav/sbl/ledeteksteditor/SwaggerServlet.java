@@ -26,7 +26,6 @@ public class SwaggerServlet extends HttpServlet {
         RequestDispatcher index;
         Matcher matcher = FILEPATTERN.matcher(request.getRequestURI());
         if(matcher.find()){
-            System.out.println(matcher.group(1));
             index = getServletContext().getRequestDispatcher("/" + matcher.group(1));
         }
         else{
