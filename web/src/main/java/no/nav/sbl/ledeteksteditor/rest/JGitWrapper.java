@@ -63,7 +63,7 @@ public class JGitWrapper {
      * @return ledetekster fra et repo/applikasjon
      * @throws IOException
      */
-    private ArrayList<Ledetekst> hentApplikasjonsLedetekster() throws IOException, GitAPIException {
+    public ArrayList<Ledetekst> hentApplikasjonsLedetekster() throws IOException, GitAPIException {
         Repository repo = new FileRepositoryBuilder()
                 .setGitDir(new File(kloneTestDir + "/.git"))
                 .build();
@@ -157,19 +157,4 @@ public class JGitWrapper {
     private String hentFilsti(String ledetekstNokkel) {
         return ledetekstNokkel.substring(0, ledetekstNokkel.lastIndexOf("/"));
     }
-
-    public static void main(String[] args) throws IOException, GitAPIException {
-        JGitWrapper jgit = new JGitWrapper();
-
-        jgit.cloneRepository();
-
-        ArrayList<Ledetekst> ledetekster = jgit.hentApplikasjonsLedetekster();
-
-        for (Ledetekst s : ledetekster) {
-            System.out.print(s.hentNavn() + " ");
-            System.out.println(s.hentInnhold());
-        }
-        System.out.println(jgit.kloneTestDir.getAbsolutePath());
-    }
-
 }

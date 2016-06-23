@@ -4,12 +4,8 @@ package no.nav.sbl.ledeteksteditor.rest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -18,22 +14,25 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 public class TeksterRessurs {
 
     @GET
-    public List<Map> test() {
+    public ArrayList<HashMap> test() {
         JGitWrapper gitTest = new JGitWrapper();
-
         try {
+            gitTest.cloneRepository();
             ArrayList<Ledetekst> applikasjonsTekster = gitTest.hentApplikasjonsLedetekster();
-            List<Map> toReturn = applikasjonsTekster.stream()
-                    .map(l -> l.hentInnhold())
-                    .collect(Collectors.toList());
-            System.out.println("Inne i try -- klar til å returnere!");
+            ArrayList<HashMap> toReturn = new ArrayList<>();
+            for(Ledetekst l : applikasjonsTekster){
+                HashMap<String,Object> tekstMap = new HashMap<>();
+                tekstMap.put("nokkel", l.hentNavn());
+                tekstMap.put("spraak", l.hentInnhold());
+                toReturn.add(tekstMap);
+            }
             return toReturn;
-        }catch(IOException e){
+        }catch(Exception e){
             e.printStackTrace();
         }
 
-
-        return new ArrayList<Map>() {
+        /*
+        return new ArrayList<HashMap>() {
             {
                 add(new HashMap<String, Object>() {{
                     put("nokkel", "testnokkel1");
@@ -61,6 +60,8 @@ public class TeksterRessurs {
 
             }
         };
+        */
+        return null;
     }
 }
 
