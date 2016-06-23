@@ -1,6 +1,5 @@
 package no.nav.sbl.ledeteksteditor.utils;
 
-import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
@@ -22,7 +21,6 @@ public class GitWrapper {
 
     public static Repository getRepo(String stashurl, File fileDir) throws GitAPIException, IOException {
         Git testResult;
-        String path;
 
         if (isLegalRepo(fileDir.toPath())) {
             testResult = Git.open(fileDir);
