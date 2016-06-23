@@ -89,19 +89,6 @@
         </init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>
-    <!-- Servlet hosting static swagger-ui filer-->
-    <servlet>
-        <servlet-name>SwaggerServlet</servlet-name>
-        <servlet-class>no.nav.sbl.ledeteksteditor.SwaggerServlet</servlet-class>
-        <init-param>
-            <param-name>applicationFile</param-name>
-            <param-value>index.html</param-value>
-        </init-param>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>SwaggerServlet</servlet-name>
-        <url-pattern>/internal/swagger/*</url-pattern>
-    </servlet-mapping>
     <!-- Slutt Swagger -->
 
     <servlet>
