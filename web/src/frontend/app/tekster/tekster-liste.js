@@ -9,24 +9,27 @@ function mapTilHtml(tekstMap){
     const nokkel = tekstMap[1].nokkel;
     const spraakObj = tekstMap[1].spraak;
 
-    let htmltekst = `<li>${nokkel}</li>`;
-    htmltekst += `<li>Språk<ul>`;
-    for(let key in spraakObj){
-        let value = spraakObj[key];
-        htmltekst += `<li>${key}: ${value}</li>`;
-    }
-    htmltekst += `</ul></li>`;
+    let htmltekst = (
+        <ul key={nokkel}>
+            <li>{nokkel}</li>
+            <li>Språk
+                <ul>
+                {Object.entries(spraakObj).map(([key, value]) => <li key={key}>{key}: {value}</li>)}
+                </ul>
+            </li>
+        </ul>
+    );
     console.log("Ferdig html for en nøkkel:");
     console.log(htmltekst);
     return htmltekst;
 }
 
 function Tekster({ tekster }) {
-    var liste = document.createElement("tekster");
     const teksterElement = Object
         .entries(tekster.data)
         .map((tekstMap) => mapTilHtml(tekstMap));
-    liste.innerHTML = teksterElement;
+
+    console.log('tek', teksterElement);
     return (
         <div>
             <h1>Ledertekster</h1>
