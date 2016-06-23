@@ -1,10 +1,10 @@
 import React, { PropTypes as PT } from 'react';
 import { storeShape } from './../felles/proptype-shapes';
 
-function mapTilHtml(tekstMap){
+function mapTilHtml(tekstMap) {
     const nokkel = tekstMap[1].nokkel;
     const spraakObj = tekstMap[1].spraak;
-    let htmltekst = (
+    const htmltekst = (
         <ul key={nokkel}>
             <li>{nokkel}</li>
             <li>Språk

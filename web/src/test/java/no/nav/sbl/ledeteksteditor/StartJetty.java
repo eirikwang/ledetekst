@@ -1,8 +1,5 @@
 package no.nav.sbl.ledeteksteditor;
-
 import no.nav.sbl.dialogarena.common.jetty.Jetty;
-import no.nav.sbl.ledeteksteditor.rest.JGitWrapper;
-
 import java.io.File;
 
 import static no.nav.modig.lang.collections.FactoryUtils.gotKeypress;
