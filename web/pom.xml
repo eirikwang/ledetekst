@@ -13,6 +13,7 @@
     <artifactId>ledeteksteditor-web</artifactId>
     <packaging>war</packaging>
 
+
     <dependencies>
         <dependency>
             <groupId>javax.inject</groupId>
@@ -95,6 +96,14 @@
             <groupId>no.nav.sbl.dialogarena</groupId>
             <artifactId>common-test</artifactId>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -164,30 +173,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>sonar</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-
-            <properties>
-                <sonar.language>js</sonar.language>
-                <sonar.coverage.exclusions>
-                    src/frontend/app/**/*-test.js,
-                    src/frontend/app/**/*-spec.js,
-                    src/frontend/app/vendors.js,
-                    src/frontend/app/index.js,
-                    src/frontend/app/http.js,
-                    src/main/webapp/**/*
-                </sonar.coverage.exclusions>
-                <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-                <sonar.sources>src/frontend/app</sonar.sources>
-                <sonar.javascript.jstest.reportsPath>target/surefire-reports</sonar.javascript.jstest.reportsPath>
-                <sonar.javascript.lcov.reportPath>target/js-coverage/lcov.info</sonar.javascript.lcov.reportPath>
-                <skip.js-tests>false</skip.js-tests>
-            </properties>
-        </profile>
-    </profiles>
 </project>
