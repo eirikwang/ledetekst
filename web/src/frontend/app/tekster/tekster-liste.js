@@ -1,10 +1,6 @@
 import React, { PropTypes as PT } from 'react';
 import { storeShape } from './../felles/proptype-shapes';
 
-/**
- * "Dum" komponent (i.e.  presentational component) for tekster-modulen(?)
- */
-
 function mapTilHtml(tekstMap){
     const nokkel = tekstMap[1].nokkel;
     const spraakObj = tekstMap[1].spraak;
@@ -26,7 +22,6 @@ function Tekster({ tekster }) {
         .entries(tekster.data)
         .map((tekstMap) => mapTilHtml(tekstMap));
 
-    console.log('tek', teksterElement);
     return (
         <div>
             <h1>Ledertekster</h1>

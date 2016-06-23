@@ -19,7 +19,7 @@ public class TeksterRessursTest {
     @Test
     public void skalReturnereMockData() throws Exception {
         TeksterRessurs ressurs = new TeksterRessurs();
-        List<HashMap> result = ressurs.test();
+        List<HashMap> result = ressurs.testTekstHenting();
         List<String> nokkler = result.stream().map((Map m) -> ((String) m.get("nokkel"))).collect(toList());
         List<Map> spraak = result.stream().map((Map m) -> ((Map) m.get("spraak"))).collect(toList());
 

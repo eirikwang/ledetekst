@@ -5,10 +5,6 @@ import thunkMiddleware from 'redux-thunk';
 import Reducers from './reducers';
 import { erDev } from './felles/utils';
 
-/**
- * Store "binder" reducers og actions sammen. 
- */
-
 function getDebugSessionKey() {
     const matches = window.location.href.match(/[?&]debug_session=([^&]+)\b/);
     return (matches && matches.length > 0) ? matches[1] : null;
@@ -22,12 +18,6 @@ function getDevStoreCompose() {
     );
 }
 
-/**
- *
- * Middleware gjør at du kan bruke synkrone action creators sammen med (asynkrone)
- * nettverkskall. Ved å bruke thunkMiddleware kan action creatoren returnere
- * en funksjon i stedet for et objekt
- */
 function getStoreCompose() {
     return compose(
         applyMiddleware(thunkMiddleware)

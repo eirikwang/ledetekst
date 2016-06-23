@@ -1,15 +1,4 @@
-
 import { fetchToJson } from './../felles/utils';
-
-/**
- * Action creators for tekster. Tre muligheter her: Kan sende en request,
- * få en suksessfull response, eller få en response med feilmld
-*/
-
-/**
- * Oppdater staten med requesten vi sender. Når vi får svar, oppdaterer vi
- * staten med resultatet av kallet
- */
 
 export const REQUEST_TEKSTER = 'REQUEST_TEKSTER';
 export function sendRequest (data){
