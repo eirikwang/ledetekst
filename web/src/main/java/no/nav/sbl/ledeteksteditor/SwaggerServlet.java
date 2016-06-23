@@ -1,25 +1,37 @@
 package no.nav.sbl.ledeteksteditor;
 
-import io.swagger.jaxrs.config.BeanConfig;
+import javafx.scene.control.TextInputControl;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SwaggerServlet extends HttpServlet {
+    private String applicationFile;
+    private static final Pattern FILEPATTERN = Pattern.compile("/ledeteksteditor/internal/(.*?)$");
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-
-        BeanConfig beanConfig = new BeanConfig();
-        beanConfig.setVersion("1.0.0");
-        beanConfig.setSchemes(new String[]{"http"});
-        beanConfig.setHost("http://a34duvw25882.devillo.no:8182");
-        beanConfig.setBasePath("/api-beskrivelse");
-        beanConfig.setResourcePackage("no.nav.sbl.ledeteksteditor.rest");
-        beanConfig.setScan(true);
-
     }
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher index;
+        Matcher matcher = FILEPATTERN.matcher(request.getRequestURI());
+        if(matcher.find()){
+            System.out.println(matcher.group(1));
+            index = getServletContext().getRequestDispatcher("/" + matcher.group(1));
+        }
+        else{
+             index = getServletContext().getRequestDispatcher("/swagger/index.html");
+        }
+        index.forward(request, response);
+    }
 }

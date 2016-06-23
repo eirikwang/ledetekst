@@ -56,7 +56,7 @@
         <servlet-name>RestAPI</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
-
+    <!-- Start Swagger -->
     <!-- Swagger grafisk api auto-dokumentasjon-->
     <!-- servlet som tilbyr /api-beskrivelse/swagger.json-->
     <servlet>
@@ -73,7 +73,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Swagger</servlet-name>
-        <url-pattern>/api-beskrivelse/*</url-pattern>
+        <url-pattern>/internal/api/*</url-pattern>
     </servlet-mapping>
     <!--Servlet som setter instillinger som brukes av servleten Swagger-->
     <servlet>
@@ -84,12 +84,30 @@
             <param-value>1.0.0</param-value>
         </init-param>
         <init-param>
+            <param-name>swagger.api.host</param-name>
+            <!-- Swagger tar i mot host som init -->
+            <param-value>http://a34duvw25882.devillo.no:8182</param-value>
+        </init-param>
+        <init-param>
             <param-name>swagger.api.basepath</param-name>
-            <param-value>http://a34duvw25882.devillo.no:8182/ledeteksteditor/api-beskrivelse</param-value>
+            <param-value>/ledeteksteditor/api/</param-value>
         </init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>
-    <!--Swagger slutt-->
+    <!-- Servlet hosting static swagger-ui filer-->
+    <servlet>
+        <servlet-name>SwaggerServlet</servlet-name>
+        <servlet-class>no.nav.sbl.ledeteksteditor.SwaggerServlet</servlet-class>
+        <init-param>
+            <param-name>applicationFile</param-name>
+            <param-value>index.html</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SwaggerServlet</servlet-name>
+        <url-pattern>/internal/swagger/*</url-pattern>
+    </servlet-mapping>
+    <!-- Slutt Swagger -->
 
     <servlet>
         <servlet-name>SelftestServlet</servlet-name>
