@@ -4,7 +4,7 @@ import no.nav.sbl.dialogarena.common.jetty.Jetty;
 
 import java.io.File;
 
-import static no.nav.modig.core.test.FilesAndDirs.TEST_RESOURCES;
+import static no.nav.sbl.dialogarena.test.path.FilesAndDirs.TEST_RESOURCES;
 import static no.nav.modig.lang.collections.FactoryUtils.gotKeypress;
 import static no.nav.modig.lang.collections.RunnableUtils.first;
 import static no.nav.modig.lang.collections.RunnableUtils.waitFor;

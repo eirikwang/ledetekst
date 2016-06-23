@@ -13,6 +13,7 @@ import org.eclipse.jgit.util.FS;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +22,9 @@ public class GitWrapper {
 
     public static Repository getRepo(String stashurl, File fileDir) throws GitAPIException, IOException {
         Git testResult;
+        String path;
 
-        String path = fileDir.getPath() + "/.git";
-        if (RepositoryCache.FileKey.isGitRepository(new File(path), FS.DETECTED)) {
+        if (isLegalRepo(fileDir.toPath())) {
             testResult = Git.open(fileDir);
         } else {
             testResult = Git.cloneRepository()
@@ -31,12 +32,7 @@ public class GitWrapper {
                     .setDirectory(fileDir)
                     .call();
 
-            testResult.checkout()
-                    .setCreateBranch(true)
-                    .setName("tekstendepunkt")
-                    .setUpstreamMode(CreateBranchCommand.SetupUpstreamMode.TRACK)
-                    .setStartPoint("origin/tekstendepunkt")
-                    .call();
+
         }
         return testResult.getRepository();
     }
@@ -64,4 +60,9 @@ public class GitWrapper {
         return String.join("\n", content);
 
     }
+
+    private static boolean isLegalRepo(Path path){
+        return RepositoryCache.FileKey.isGitRepository(path.resolve(".git").toFile(), FS.DETECTED);
+    }
+
 }

@@ -19,7 +19,7 @@ public class LedetekstService {
 
     private static final String FILE_PATH = "tekster\\src\\main\\tekster";
     private final static Predicate<File> erLedetekstFil = (File p) -> p.getPath().contains(FILE_PATH);
-    private static final Pattern regex = Pattern.compile("(.*?)(_([a-zA-Z]{2}_?[a-zA-Z]{0,2}))?\\.([a-z]*)$");
+    private static final Pattern FILE_PATTERN = Pattern.compile("(.*?)(_([a-zA-Z]{2}_?[a-zA-Z]{0,2}))?\\.([a-z]*)$");
 
     public List<File> hentAlleLedeteksterFor(String stashurl, File fileDir) throws GitAPIException, IOException {
         Repository repo = GitWrapper.getRepo(stashurl, fileDir);
@@ -32,20 +32,16 @@ public class LedetekstService {
         Map<String, Map<String, String>> innhold = new HashMap<>();
 
         for (File file : filer) {
-            String nokkel = " ";
-            String locale = " ";
-            String innholdFil = " ";
             String filsti = file.getPath();
-            Matcher matcher = regex.matcher(file.getPath());
+            Matcher matcher = FILE_PATTERN.matcher(file.getPath());
+
             if(matcher.find()) {
-                nokkel = filsti.substring(filsti.lastIndexOf("\\") + 1, filsti.lastIndexOf(matcher.group(2)));
-                locale = file.getPath().substring(file.getPath().lastIndexOf(matcher.group(3)), file.getPath().lastIndexOf("."));
-                innholdFil = GitWrapper.getContentFromFile(file);
+                String nokkel = filsti.substring(filsti.lastIndexOf("\\") + 1, filsti.lastIndexOf(matcher.group(2)));
+                String locale = file.getPath().substring(file.getPath().lastIndexOf(matcher.group(3)), file.getPath().lastIndexOf("."));
+                String innholdFil = GitWrapper.getContentFromFile(file);
+                innhold.computeIfAbsent(nokkel, (ignore) -> new HashMap<>()).put(locale, innholdFil);
             }
-            if (!innhold.containsKey(nokkel)){
-                innhold.put(nokkel, new HashMap<>());
-            }
-            innhold.get(nokkel).put(locale, innholdFil);
+
         }
         return innhold.entrySet().stream().map(entry -> new Ledetekst(entry.getKey(), entry.getValue())).collect(Collectors.toList());
     }
