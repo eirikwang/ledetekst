@@ -1,42 +1,51 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
+
+import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
+import no.nav.sbl.ledeteksteditor.services.LedetekstService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import static java.lang.String.format;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-
 
 @Path("/tekster")
 @Produces(APPLICATION_JSON + ";charset=utf-8")
 public class TeksterRessurs {
+    private static Logger logger = LoggerFactory.getLogger(TeksterRessurs.class);
+    public static final File REPO_DIR = new File("../repo/veiledningarbeidssoker/");
 
-    private HashMap<String, Object> tilLedetekstMap(String nokkel, String no, String en){
-        return new HashMap<String, Object>() {{
-            put("nokkel", nokkel);
-            put("spraak", new HashMap<String, String>() {{
-                put("nb", no);
-                put("en", en);
-            }});
-        }};
-    }
+    @Inject
+    private LedetekstService ledetekstService;
 
     @GET
-    public List<Map> test() {
-        return new ArrayList<Map>() {{
-            add(tilLedetekstMap("dagpenger.annenstotte.ingress",
-                    "Som arbeidssøker kan du få støtte til å dekke utgifter for å komme i arbeid",
-                    "[EN] Som arbeidssøker kan du få støtte til å dekke utgifter for å komme i arbeid"));
-            add(tilLedetekstMap("dagpenger.annenstotte.innhold",
-                    "<p>Du kan få støtte til å dekke utgifter for å reise til jobbintervju eller til arbeidsstedet når du starter i en  jland.",
-                    "<p>[EN] Som arbeidssøker kan du få støtte til å dekke utgifter for å komme i arbeid:</p><ul class=\"mindre-innrykk-liste\">"));
-            add(tilLedetekstMap("dagpenger.annenstotte.sok-stonad-lenke",
-                    "https://www.nav.no/no/Person/Skjemaer-for-privatpersoner/Skjemaer/Tilleggsstonader/Tilleggsstonader/Innsendingsvalg-tilleggsstonader",
-                    "https://www.nav.no/no/Person/Skjemaer-for-privatpersoner/Skjemaer/Tilleggsstonader/Tilleggsstonader/Innsendingsvalg-tilleggsstonader"));
-        }};
+    @Path("/{stashurl}")
+    public Response hentTeksterForUrl(@PathParam("stashurl") String stashUrl) {
+        try {
+            List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(stashUrl, REPO_DIR);
+            ArrayList<HashMap> toReturn = new ArrayList<>();
+            for (Ledetekst l : applikasjonsTekster) {
+                HashMap<String, Object> tekstMap = new HashMap<>();
+                tekstMap.put("nokkel", l.hentNavn());
+                tekstMap.put("spraak", l.hentInnhold());
+                toReturn.add(tekstMap);
+            }
+            return Response.ok(toReturn).build();
+        } catch (Exception e) {
+            logger.warn(format("Kunne ikke hente ut tekster for %s", stashUrl), e);
+            return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+        }
     }
 }
+
