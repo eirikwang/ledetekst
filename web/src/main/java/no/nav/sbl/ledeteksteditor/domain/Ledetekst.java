@@ -1,15 +1,13 @@
-package no.nav.sbl.ledeteksteditor.rest;
-
-
+package no.nav.sbl.ledeteksteditor.domain;
 import java.util.Map;
 
-class Ledetekst {
+public class Ledetekst {
 
     private String navn;
     private Map<String, String> innhold;
 
 
-    Ledetekst( String navn, Map<String, String> innhold) {
+    public Ledetekst(String navn, Map<String, String> innhold) {
         this.navn = navn;
         this.innhold = innhold;
     }
@@ -18,7 +16,7 @@ class Ledetekst {
         return navn;
     }
 
-    Map<String, String> hentInnhold(){
+    public Map<String, String> hentInnhold(){
         return innhold;
     }
 }
