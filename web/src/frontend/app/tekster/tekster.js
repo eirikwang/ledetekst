@@ -7,7 +7,7 @@ import TeksterListe from './tekster-liste';
 
 class Tekster extends Component {
     componentWillMount() {
-        this.props.actions.fetchTekster('/tekster');
+        this.props.actions.fetchTekster();
     }
     render() {
         return (

@@ -25,10 +25,12 @@ export function receiveFeil(error) {
     };
 }
 
-export function fetchTekster(data) {
+export function fetchTekster() {
+    const url = `/tekster/${encodeURIComponent('ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git')}`;
+
     return dispatch => {
-        dispatch(sendRequest(data));
-        return fetchToJson(data)
+        dispatch(sendRequest(url));
+        return fetchToJson(url)
             .then((response) =>
                 dispatch(receiveTekster(response)))
             .catch((error) =>
