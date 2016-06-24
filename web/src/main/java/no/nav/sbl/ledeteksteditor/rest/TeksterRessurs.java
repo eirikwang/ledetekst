@@ -29,13 +29,6 @@ public class TeksterRessurs {
     @Inject
     private LedetekstService ledetekstServiceImpl;
 
-    public TeksterRessurs() {
-    }
-
-    public TeksterRessurs(LedetekstService ledetekstServiceImpl) {
-        this.ledetekstServiceImpl = ledetekstServiceImpl;
-    }
-
     @GET
     @Path("/{stashurl}")
     public Response hentTeksterForUrl(@PathParam("stashurl") String stashUrl) {
