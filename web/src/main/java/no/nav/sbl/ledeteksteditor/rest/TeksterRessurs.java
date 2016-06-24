@@ -17,11 +17,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static java.lang.String.format;
+import io.swagger.annotations.Api;
+
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+
+import static java.lang.String.format;
 
 @Path("/tekster")
 @Produces(APPLICATION_JSON + ";charset=utf-8")
+@Api(value = "ledetekster", description = "Endpoint for ledetekster")
 public class TeksterRessurs {
     private static Logger logger = LoggerFactory.getLogger(TeksterRessurs.class);
     public static final File REPO_DIR = new File("../repo/veiledningarbeidssoker/");
