@@ -50,7 +50,7 @@ public class TeksterRessurs {
             }
             return Response.ok(toReturn).build();
         } catch (Exception e) {
-            logger.warn(format("Kunne ikke hente ut tekster for %s og lagre i %s", stashUrl), e);
+            logger.warn(format("Kunne ikke hente ut tekster for %s", stashUrl), e);
             return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
         }
     }
