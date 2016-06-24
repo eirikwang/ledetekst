@@ -27,13 +27,13 @@ public class TeksterRessurs {
     public static final File REPO_DIR = new File("../repo/veiledningarbeidssoker/");
 
     @Inject
-    private LedetekstService ledetekstServiceImpl;
+    private LedetekstService ledetekstService;
 
     @GET
     @Path("/{stashurl}")
     public Response hentTeksterForUrl(@PathParam("stashurl") String stashUrl) {
         try {
-            List<Ledetekst> applikasjonsTekster = ledetekstServiceImpl.hentAlleTeksterFor(stashUrl, REPO_DIR);
+            List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(stashUrl, REPO_DIR);
             ArrayList<HashMap> toReturn = new ArrayList<>();
             for (Ledetekst l : applikasjonsTekster) {
                 HashMap<String, Object> tekstMap = new HashMap<>();

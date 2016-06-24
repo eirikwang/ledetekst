@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class LedetekstServiceImpl implements LedetekstService {
 
-    private static final String FILE_PATH = "tekster\\src\\main\\tekster";
+    private static final String FILE_PATH = "tekster/src/main/tekster";
     private final static Predicate<File> erLedetekstFil = (File p) -> p.getPath().contains(FILE_PATH);
     private static final Pattern FILE_PATTERN = Pattern.compile("(.*?)(_([a-zA-Z]{2}_?[a-zA-Z]{0,2}))?\\.([a-z]*)$");
 
@@ -43,7 +43,7 @@ public class LedetekstServiceImpl implements LedetekstService {
             String filsti = file.getPath();
             Matcher matcher = FILE_PATTERN.matcher(file.getPath());
 
-            if(matcher.find()) {
+            if (matcher.find()) {
                 String nokkel = filsti.substring(filsti.lastIndexOf("\\") + 1, filsti.lastIndexOf(matcher.group(2)));
                 String locale = file.getPath().substring(file.getPath().lastIndexOf(matcher.group(3)), file.getPath().lastIndexOf("."));
                 String innholdFil = GitWrapper.getContentFromFile(file);

@@ -20,6 +20,7 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
@@ -46,7 +47,7 @@ public class TeksterRessursTest {
         List<String> nokler = result.stream().map((Map m) -> ((String) m.get("nokkel"))).collect(toList());
         List<Map> spraak = result.stream().map((Map m) -> ((Map) m.get("spraak"))).collect(toList());
 
-
+        assertFalse(result.isEmpty());
         assertEquals(nokler.get(0), "ledetekst1");
         assertThat(spraak.get(0)).hasSize(2);
     }
@@ -59,6 +60,8 @@ public class TeksterRessursTest {
         List<String> nokler = result.stream().map((Map m) -> ((String) m.get("nokkel"))).collect(toList());
         List<Map> spraak = result.stream().map((Map m) -> ((Map) m.get("spraak"))).collect(toList());
 
+
+        assertTrue(result.isEmpty());
         assertTrue(nokler.isEmpty());
         assertTrue(spraak.isEmpty());
     }

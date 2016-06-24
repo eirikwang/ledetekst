@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +44,7 @@ public class GitWrapper {
         List<File> files = new ArrayList<>();
 
         while (treeWalk.next()) {
-            File file = new File(treeWalk.getPathString());
+            File file = new File(repo.getWorkTree(), treeWalk.getPathString());
             files.add(file);
         }
 
@@ -53,13 +52,12 @@ public class GitWrapper {
     }
 
     public static String getContentFromFile(File file) throws IOException {
-        final String path = "../repo/veiledningarbeidssoker/";
-        List<String> content = Files.readAllLines(Paths.get(path + file.getPath()));
+        List<String> content = Files.readAllLines(file.toPath());
         return String.join("\n", content);
 
     }
 
-    private static boolean isLegalRepo(Path path){
+    private static boolean isLegalRepo(Path path) {
         return RepositoryCache.FileKey.isGitRepository(path.resolve(".git").toFile(), FS.DETECTED);
     }
 
