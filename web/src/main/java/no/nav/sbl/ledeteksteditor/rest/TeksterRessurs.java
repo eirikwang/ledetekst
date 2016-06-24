@@ -34,6 +34,7 @@ public class TeksterRessurs {
             }
             return Response.ok(toReturn).build();
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
         }
     }
