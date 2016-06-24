@@ -1,12 +1,16 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
 
+import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -16,10 +20,11 @@ public class TeksterRessurs {
 
     @GET
     public Response testTekstHenting() {
-        JGitWrapper gitTest = new JGitWrapper();
+
+        LedetekstRessurs tekstTest = new LedetekstRessurs();
         try {
-            gitTest.cloneRepository();
-            ArrayList<Ledetekst> applikasjonsTekster = gitTest.hentApplikasjonsLedetekster();
+            List<Ledetekst> applikasjonsTekster = tekstTest.hentAlleTeksterFor
+                    ("ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git", new File("../repo/veiledningarbeidssoker/"));
             ArrayList<HashMap> toReturn = new ArrayList<>();
             for (Ledetekst l : applikasjonsTekster) {
                 HashMap<String, Object> tekstMap = new HashMap<>();
