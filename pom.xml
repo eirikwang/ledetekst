@@ -36,6 +36,7 @@
         <javax.inject.version>1</javax.inject.version>
         <swagger.version>1.5.0</swagger.version>
         <swaggerui.version>2.1.8-M1</swaggerui.version>
+        <mockito.version>1.10.19</mockito.version>
     </properties>
 
     <dependencyManagement>
@@ -127,6 +128,12 @@
                 <version>1.7.10</version>
                 <scope>runtime</scope>
             </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.5</version>
+            </dependency>
             <dependency>
                 <groupId>no.nav.sbl.dialogarena</groupId>
                 <artifactId>common-web</artifactId>
@@ -155,6 +162,16 @@
                 <artifactId>common-jetty</artifactId>
                 <version>1.0.26</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${mockito.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
             </dependency>
             <dependency>
                 <groupId>no.nav.modig</groupId>
