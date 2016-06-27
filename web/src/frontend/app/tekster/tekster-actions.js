@@ -27,7 +27,6 @@ export function receiveFeil(error) {
 
 export function fetchTekster() {
     const url = `/tekster/${encodeURIComponent('ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git')}`;
-
     return dispatch => {
         dispatch(sendRequest(url));
         return fetchToJson(url)
