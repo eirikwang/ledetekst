@@ -22,12 +22,9 @@ import java.util.stream.Collectors;
 
 public class LedetekstServiceImpl implements LedetekstService {
 
-    public static final Map<String, String> REPOSITORIES = new HashMap<String, String>() {{
+    public static final Map<String, String> REPOSITORIES = new HashMap<String, String>(){{
         put("sbl-veiledningarbeidssoker", "ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git");
     }};
-    private static final String FILE_PATH = "tekster" + File.separator + "src" + File.separator + "main" + File.separator + "tekster";
-    private final static Predicate<File> erLedetekstFil = (File p) -> p.getPath().contains(FILE_PATH);
-    private static final Pattern FILE_PATTERN = Pattern.compile("(.*?)(_([a-zA-Z]{2}_?[a-zA-Z]{0,2}))?\\.([a-z]*)$");
 
     static {
         SshSessionFactory.setInstance(new JschConfigSessionFactory() {
@@ -38,18 +35,15 @@ public class LedetekstServiceImpl implements LedetekstService {
         });
     }
 
-    private FileUtils filUtils = new FileUtils();
-
     public List<Ledetekst> hentAlleTeksterFor(String stashurl, String testDir) throws GitAPIException, IOException {
         List<File> filer = hentAlleLedeteksterFor(stashurl, testDir);
         return mapTilLedetekst(filer);
     }
 
     public List<File> hentAlleLedeteksterFor(String stashurl, String testDir) throws GitAPIException, IOException {
-        Repository repo = filUtils.hentTestRepo(stashurl, testDir);
+        Repository repo = FileUtils.hentTestRepo(stashurl, testDir);
         List<File> filer = GitWrapper.listFiles(repo);
-
-        return filer.stream().filter(erLedetekstFil).collect(Collectors.toList());
+        return filer.stream().filter(FileUtils.erLedetekstFil()).collect(Collectors.toList());
     }
 
     @Override
@@ -57,8 +51,8 @@ public class LedetekstServiceImpl implements LedetekstService {
         Map<String, Map<String, String>> innhold = new HashMap<>();
 
         for (File file : filer) {
-            String nokkel = filUtils.hentNokkel(file);
-            String locale = filUtils.hentLocale(file);
+            String nokkel = FileUtils.hentNokkel(file);
+            String locale = FileUtils.hentLocale(file);
             if(nokkel != null && locale != null) {
                 String innholdFil = GitWrapper.getContentFromFile(file);
                 innhold.computeIfAbsent(nokkel, (ignore) -> new HashMap<>()).put(locale, innholdFil);

@@ -16,7 +16,7 @@ public class FileUtils {
     private static final String FILE_PATH = "tekster" + File.separator + "src" + File.separator + "main" + File.separator + "tekster";
     private static final Pattern FILE_PATTERN = Pattern.compile("(.*?)(_([a-zA-Z]{2}_?[a-zA-Z]{0,2}))?\\.([a-z]*)$");
 
-    public File lagTestMappe(String mappeNavn) {
+    private static File lagTestMappe(String mappeNavn) {
         Path homeDir = Paths.get(System.getProperty("user.home"));
         Path testDir = homeDir.resolve(mappeNavn);
         System.out.println(testDir.toAbsolutePath());
@@ -25,11 +25,11 @@ public class FileUtils {
         return toReturn;
     }
 
-    public Repository hentTestRepo(String repoURL, String testMappeNavn) throws GitAPIException, IOException {
+    public static Repository hentTestRepo(String repoURL, String testMappeNavn) throws GitAPIException, IOException {
         return GitWrapper.getRepo(repoURL, lagTestMappe(testMappeNavn));
     }
 
-    public String hentNokkel(File tekstFil) {
+    public static String hentNokkel(File tekstFil) {
         String filsti = tekstFil.getPath();
         Matcher matcher = FILE_PATTERN.matcher(filsti);
         if(matcher.find()) {
@@ -38,12 +38,16 @@ public class FileUtils {
         return null;
     }
 
-    public String hentLocale(File tekstFil) {
+    public static String hentLocale(File tekstFil) {
         String filsti = tekstFil.getPath();
         Matcher matcher = FILE_PATTERN.matcher(filsti);
         if(matcher.find()) {
             return filsti.substring(filsti.lastIndexOf(matcher.group(3)), filsti.lastIndexOf("."));
         }
         return null;
+    }
+
+    public static Predicate<File> erLedetekstFil() {
+        return (File p) -> p.getPath().contains(FILE_PATH);
     }
 }
