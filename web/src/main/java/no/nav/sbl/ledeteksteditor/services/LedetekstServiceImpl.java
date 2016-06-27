@@ -2,6 +2,7 @@ package no.nav.sbl.ledeteksteditor.services;
 
 import com.jcraft.jsch.Session;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
+import no.nav.sbl.ledeteksteditor.utils.FileUtils;
 import no.nav.sbl.ledeteksteditor.utils.GitWrapper;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
@@ -37,15 +38,15 @@ public class LedetekstServiceImpl implements LedetekstService {
         });
     }
 
-    @Override
-    public List<Ledetekst> hentAlleTeksterFor(String stashurl, File fileDir) throws GitAPIException, IOException {
-        List<File> filer = hentAlleLedeteksterFor(stashurl, fileDir);
+    private FileUtils filUtils = new FileUtils();
+
+    public List<Ledetekst> hentAlleTeksterFor(String stashurl, String testDir) throws GitAPIException, IOException {
+        List<File> filer = hentAlleLedeteksterFor(stashurl, testDir);
         return mapTilLedetekst(filer);
     }
 
-    @Override
-    public List<File> hentAlleLedeteksterFor(String stashurl, File fileDir) throws GitAPIException, IOException {
-        Repository repo = GitWrapper.getRepo(stashurl, fileDir);
+    public List<File> hentAlleLedeteksterFor(String stashurl, String testDir) throws GitAPIException, IOException {
+        Repository repo = filUtils.hentTestRepo(stashurl, testDir);
         List<File> filer = GitWrapper.listFiles(repo);
 
         return filer.stream().filter(erLedetekstFil).collect(Collectors.toList());
@@ -56,16 +57,12 @@ public class LedetekstServiceImpl implements LedetekstService {
         Map<String, Map<String, String>> innhold = new HashMap<>();
 
         for (File file : filer) {
-            String filsti = file.getPath();
-            Matcher matcher = FILE_PATTERN.matcher(file.getPath());
-
-            if (matcher.find()) {
-                String nokkel = filsti.substring(filsti.lastIndexOf("\\") + 1, filsti.lastIndexOf(matcher.group(2)));
-                String locale = file.getPath().substring(file.getPath().lastIndexOf(matcher.group(3)), file.getPath().lastIndexOf("."));
+            String nokkel = filUtils.hentNokkel(file);
+            String locale = filUtils.hentLocale(file);
+            if(nokkel != null && locale != null) {
                 String innholdFil = GitWrapper.getContentFromFile(file);
                 innhold.computeIfAbsent(nokkel, (ignore) -> new HashMap<>()).put(locale, innholdFil);
             }
-
         }
         return innhold.entrySet().stream().map(entry -> new Ledetekst(entry.getKey(), entry.getValue())).collect(Collectors.toList());
     }
