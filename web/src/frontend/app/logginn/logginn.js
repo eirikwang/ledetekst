@@ -1,21 +1,30 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { loggInn } from './logginn-actions'
+import React, {PropTypes, Component} from 'react';
+import {connect} from 'react-redux';
+import {loggInn} from './logginn-actions'
 
-const LoggInn = ({ handleSubmit, navn, email }) => {
-    
-    return (
-        <form onSubmit={handleSubmit}>
-            <p><input type="text" {...navn} name="navn" placeholder="Navn" /></p>
-            <p><input type="text" {...email} name="email" placeholder="Email" /></p>
-            <button type="submit">Logg Inn</button>
-        </form>
-    )
-};
+class LoggInn extends Component {
+    //const {handleSubmit, navn, email} = this.props;
+
+    foo(event) {
+        event.preventDefault();
+        this.props.handleSubmit(this.refs.navn.value, this.refs.email.value)
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.foo.bind(this)}>
+                <p><input type="text" ref="navn" name="navn" placeholder="Navn"/></p>
+                <p><input type="text" ref="email" name="email" placeholder="Email"/></p>
+                <button type="submit">Logg Inn</button>
+            </form>
+        )
+    };
+}
 
 const mapStateToProps = (navn, email) => {
     return {
-        felter: {navn, email}
+        navn,
+        email
     }
 };
 
