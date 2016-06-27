@@ -15,7 +15,9 @@
         <ear groupId="no.nav.sbl" artifactId="ledeteksteditor-ear"/>
     </artifacts>
 
-    <resources></resources>
+    <resources>
+        <directory name="repos" mapToProperty="dirs.repos"/>
+    </resources>
 
     <loadBalancer isAlive="/ledeteksteditor/internal/isAlive" />
 
