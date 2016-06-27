@@ -7,16 +7,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FileUtils {
 
-    private static final String FILE_PATH = "tekster" + File.separator + "src" + File.separator + "main" + File.separator + "tekster";
     private static final Pattern FILE_PATTERN = Pattern.compile("(.*?)(_([a-zA-Z]{2}_?[a-zA-Z]{0,2}))?\\.([a-z]*)$");
 
-    public File lagTestMappe(String mappeNavn) {
+    private File lagTestMappe(String mappeNavn) {
         Path homeDir = Paths.get(System.getProperty("user.home"));
         Path testDir = homeDir.resolve(mappeNavn);
         System.out.println(testDir.toAbsolutePath());
