@@ -28,7 +28,6 @@ import static java.lang.String.format;
 @Api(value = "ledetekster", description = "Endpoint for ledetekster")
 public class TeksterRessurs {
     private static Logger logger = LoggerFactory.getLogger(TeksterRessurs.class);
-    public static final File REPO_DIR = new File("../repo/veiledningarbeidssoker/");
 
     @Inject
     private LedetekstService ledetekstService;
@@ -37,7 +36,7 @@ public class TeksterRessurs {
     @Path("/{stashurl}")
     public Response hentTeksterForUrl(@PathParam("stashurl") String stashUrl) {
         try {
-            List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(stashUrl, REPO_DIR);
+            List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(stashUrl, "Documents/testMappe");
             ArrayList<HashMap> toReturn = new ArrayList<>();
             for (Ledetekst l : applikasjonsTekster) {
                 HashMap<String, Object> tekstMap = new HashMap<>();
