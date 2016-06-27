@@ -3,7 +3,7 @@ package no.nav.sbl.ledeteksteditor.services;
 import com.jcraft.jsch.Session;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.utils.GitWrapper;
-import no.nav.sbl.ledeteksteditor.utils.GitWrapperException;
+import no.nav.sbl.ledeteksteditor.utils.exception.GitWrapperException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.JschConfigSessionFactory;

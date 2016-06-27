@@ -1,5 +1,6 @@
 package no.nav.sbl.ledeteksteditor.utils;
 
+import no.nav.sbl.ledeteksteditor.utils.exception.GitWrapperInvalidRemoteException;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;

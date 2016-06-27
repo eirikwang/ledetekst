@@ -1,4 +1,4 @@
-package no.nav.sbl.ledeteksteditor.utils;
+package no.nav.sbl.ledeteksteditor.utils.exception;
 
 public class GitWrapperException extends Exception{
     public GitWrapperException() {super();}

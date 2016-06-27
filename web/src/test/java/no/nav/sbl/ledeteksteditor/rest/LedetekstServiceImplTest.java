@@ -1,7 +1,7 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
 import no.nav.sbl.ledeteksteditor.services.LedetekstServiceImpl;
-import no.nav.sbl.ledeteksteditor.utils.GitWrapperException;
+import no.nav.sbl.ledeteksteditor.utils.exception.GitWrapperException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.junit.Before;
 import org.junit.Test;

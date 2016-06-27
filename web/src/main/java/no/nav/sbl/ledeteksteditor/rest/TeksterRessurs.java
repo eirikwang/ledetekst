@@ -4,7 +4,7 @@ package no.nav.sbl.ledeteksteditor.rest;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
 import no.nav.sbl.ledeteksteditor.services.LedetekstServiceImpl;
-import no.nav.sbl.ledeteksteditor.utils.GitWrapperInvalidRemoteException;
+import no.nav.sbl.ledeteksteditor.utils.exception.GitWrapperInvalidRemoteException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -2,7 +2,7 @@ package no.nav.sbl.ledeteksteditor.rest;
 
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
-import no.nav.sbl.ledeteksteditor.utils.GitWrapperInvalidRemoteException;
+import no.nav.sbl.ledeteksteditor.utils.exception.GitWrapperInvalidRemoteException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
