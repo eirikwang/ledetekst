@@ -41,6 +41,7 @@ public class TeksterRessurs {
             List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(
                     LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
                     getRepoDir(stashUrl));
+            System.out.println(applikasjonsTekster);
             ArrayList<HashMap> toReturn = new ArrayList<>();
             for (Ledetekst l : applikasjonsTekster) {
                 HashMap<String, Object> tekstMap = new HashMap<>();

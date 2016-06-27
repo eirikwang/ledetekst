@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.internal.matchers.Null;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.ws.rs.core.Response;
@@ -73,6 +74,15 @@ public class TeksterRessursTest {
         Response response = teksterRessurs.hentTeksterForUrl(TEST_REPO);
 
         assertThat(response.getStatus()).isEqualTo(503);
+    }
+
+    @Test
+    public void skalReturnereIkkeFunnetVedIkkeEksisterendeRepo() throws Exception{
+        when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenReturn(null);
+
+        Response response = teksterRessurs.hentTeksterForUrl(TEST_REPO);
+
+        assertThat(response.getStatus()).isEqualTo(404);
     }
 
     private Map<String, String> lagMockLedetekstMap() {
