@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class LedetekstServiceImpl implements LedetekstService {
 
     public static final Map<String, String> REPOSITORIES = new HashMap<String, String>() {{
-        put("sbl-veiledningarbeidssoker", "ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git");
+        put("sbl-veiledningarbeidssoker", "http://stash.devillo.no/scm/sbl/veiledningarbeidssoker.git");
     }};
     private static final String FILE_PATH = "tekster" + File.separator + "src" + File.separator + "main" + File.separator + "tekster";
     private final static Predicate<File> erLedetekstFil = (File p) -> p.getPath().contains(FILE_PATH);
