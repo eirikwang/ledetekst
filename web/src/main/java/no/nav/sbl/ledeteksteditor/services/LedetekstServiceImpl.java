@@ -21,7 +21,7 @@ public class LedetekstServiceImpl implements LedetekstService {
     private final static Predicate<File> erLedetekstFil = (File p) -> p.getPath().contains(FILE_PATH);
     private static final Pattern FILE_PATTERN = Pattern.compile("(.*?)(_([a-zA-Z]{2}_?[a-zA-Z]{0,2}))?\\.([a-z]*)$");
     public static final Map<String, String> REPOSITORIES = new HashMap<String, String>(){{
-        put("sbl/veiledningarbeidssoker", "ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git");
+        put("sbl-veiledningarbeidssoker", "ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git");
     }};
 
     @Override
