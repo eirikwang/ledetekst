@@ -5,10 +5,10 @@ let LoggInn = ({ dispatch }) => {
 
     return (
         <div>
-            <form action="">
+            <form onSubmit={handleSubmit}>
                 <p><input type="text" name="Logg inn" placeholder="Email"/></p>
                 <p><input type="password" name="Passord" placeholder="Passord"/></p>
-                <button type="submit">Logg Inn</button>
+                <button onClick={handleSubmit}>Logg Inn</button>
             </form>
         </div>
     )
