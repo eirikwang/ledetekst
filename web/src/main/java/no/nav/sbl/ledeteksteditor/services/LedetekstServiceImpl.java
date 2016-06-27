@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class LedetekstServiceImpl implements LedetekstService {
 
-    private static final String FILE_PATH = "tekster/src/main/tekster";
+    private static final String FILE_PATH = "tekster" + File.separator + "src" + File.separator + "main" + File.separator + "tekster";
     private final static Predicate<File> erLedetekstFil = (File p) -> p.getPath().contains(FILE_PATH);
     private static final Pattern FILE_PATTERN = Pattern.compile("(.*?)(_([a-zA-Z]{2}_?[a-zA-Z]{0,2}))?\\.([a-z]*)$");
 
