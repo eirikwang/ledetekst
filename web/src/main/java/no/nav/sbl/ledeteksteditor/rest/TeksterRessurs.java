@@ -28,8 +28,8 @@ import static java.lang.String.format;
 @Produces(APPLICATION_JSON + ";charset=utf-8")
 @Api(value = "ledetekster", description = "Endpoint for ledetekster")
 public class TeksterRessurs {
+
     private static Logger logger = LoggerFactory.getLogger(TeksterRessurs.class);
-    public static final File REPO_DIR = new File("../repo/veiledningarbeidssoker/");
 
     @Inject
     private LedetekstService ledetekstService;
@@ -40,7 +40,7 @@ public class TeksterRessurs {
         try {
             List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(
                     LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
-                    REPO_DIR);
+                    getRepoDir(stashUrl));
             ArrayList<HashMap> toReturn = new ArrayList<>();
             for (Ledetekst l : applikasjonsTekster) {
                 HashMap<String, Object> tekstMap = new HashMap<>();
@@ -53,6 +53,10 @@ public class TeksterRessurs {
             logger.warn(format("Kunne ikke hente ut tekster for %s", stashUrl), e);
             return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
         }
+    }
+    private File getRepoDir(String reponavn){
+        String datadir = System.getProperty("dirs.repos", "../");
+        return new File(datadir).toPath().resolve(reponavn).toFile();
     }
 }
 
