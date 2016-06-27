@@ -56,9 +56,7 @@ public class LedetekstServiceImpl implements LedetekstService {
             String locale = FileUtils.hentLocale(file);
             String innholdFil = GitWrapper.getContentFromFile(file);
             innhold.computeIfAbsent(nokkel, (ignore) -> new HashMap<>()).put(locale, innholdFil);
-
         }
         return innhold.entrySet().stream().map(entry -> new Ledetekst(entry.getKey(), entry.getValue())).collect(Collectors.toList());
     }
-
 }
