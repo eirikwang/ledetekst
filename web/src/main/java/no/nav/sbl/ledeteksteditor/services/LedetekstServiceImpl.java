@@ -51,12 +51,11 @@ public class LedetekstServiceImpl implements LedetekstService {
         Map<String, Map<String, String>> innhold = new HashMap<>();
 
         for (File file : filer) {
+            if(!FileUtils.matcherFilMonster(file)) continue;
             String nokkel = FileUtils.hentNokkel(file);
             String locale = FileUtils.hentLocale(file);
-            if(nokkel != null && locale != null) {
-                String innholdFil = GitWrapper.getContentFromFile(file);
-                innhold.computeIfAbsent(nokkel, (ignore) -> new HashMap<>()).put(locale, innholdFil);
-            }
+            String innholdFil = GitWrapper.getContentFromFile(file);
+            innhold.computeIfAbsent(nokkel, (ignore) -> new HashMap<>()).put(locale, innholdFil);
         }
         return innhold.entrySet().stream().map(entry -> new Ledetekst(entry.getKey(), entry.getValue())).collect(Collectors.toList());
     }

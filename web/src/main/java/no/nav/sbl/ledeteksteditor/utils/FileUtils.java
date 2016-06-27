@@ -19,32 +19,31 @@ public class FileUtils {
     private static File lagTestMappe(String mappeNavn) {
         Path homeDir = Paths.get(System.getProperty("user.home"));
         Path testDir = homeDir.resolve(mappeNavn);
-        System.out.println(testDir.toAbsolutePath());
-        File toReturn = testDir.toFile();
-        System.out.println(File.separator);
-        return toReturn;
+        return testDir.toFile();
     }
 
     public static Repository hentTestRepo(String repoURL, String testMappeNavn) throws GitAPIException, IOException {
         return GitWrapper.getRepo(repoURL, lagTestMappe(testMappeNavn));
     }
 
+    public static boolean matcherFilMonster(File tekstFil) {
+        String filsti = tekstFil.getPath();
+        Matcher matcher = FILE_PATTERN.matcher(filsti);
+        return matcher.find();
+    }
+
     public static String hentNokkel(File tekstFil) {
         String filsti = tekstFil.getPath();
         Matcher matcher = FILE_PATTERN.matcher(filsti);
-        if(matcher.find()) {
-            return filsti.substring(filsti.lastIndexOf(File.separator) + 1, filsti.lastIndexOf(matcher.group(2)));
-        }
-        return null;
+        matcher.matches();
+        return filsti.substring(filsti.lastIndexOf(File.separator) + 1, filsti.lastIndexOf(matcher.group(2)));
     }
 
     public static String hentLocale(File tekstFil) {
         String filsti = tekstFil.getPath();
         Matcher matcher = FILE_PATTERN.matcher(filsti);
-        if(matcher.find()) {
-            return filsti.substring(filsti.lastIndexOf(matcher.group(3)), filsti.lastIndexOf("."));
-        }
-        return null;
+        matcher.matches();
+        return filsti.substring(filsti.lastIndexOf(matcher.group(3)), filsti.lastIndexOf("."));
     }
 
     public static Predicate<File> erLedetekstFil() {

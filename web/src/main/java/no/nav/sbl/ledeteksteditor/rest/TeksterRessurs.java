@@ -37,12 +37,10 @@ public class TeksterRessurs {
     @GET
     @Path("/{stashurl}")
     public Response hentTeksterForUrl(@PathParam("stashurl") String stashUrl) {
-        System.out.println("stash URL fra frontend:" + stashUrl);
         try {
             List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(
                     LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
                     getRepoDir(stashUrl));
-            System.out.println("hentAlleTeksterFor ferdig kjørt");
             ArrayList<HashMap> toReturn = new ArrayList<>();
             for (Ledetekst l : applikasjonsTekster) {
                 HashMap<String, Object> tekstMap = new HashMap<>();
@@ -57,11 +55,8 @@ public class TeksterRessurs {
         }
     }
     private String getRepoDir(String reponavn) {
-        System.out.println(reponavn);
         String datadir = System.getProperty("dirs.repos", "../");
-        String finalName = new File(datadir).toPath().resolve(reponavn).toString();
-        System.out.println(finalName);
-        return finalName;
+        return new File(datadir).toPath().resolve(reponavn).toString();
     }
 }
 
