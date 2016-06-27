@@ -2,6 +2,7 @@ package no.nav.sbl.ledeteksteditor.utils;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -18,17 +19,20 @@ import java.util.List;
 
 public class GitWrapper {
 
-    public static Repository getRepo(String stashurl, File fileDir) throws GitAPIException, IOException {
+    public static Repository getRepo(String stashurl, File fileDir) throws GitAPIException, IOException, GitWrapperInvalidRemoteException {
         Git testResult;
-
-        if (isLegalRepo(fileDir.toPath())) {
-            testResult = Git.open(fileDir);
-            testResult.pull().call();
-        } else {
-            testResult = Git.cloneRepository()
-                    .setURI(stashurl)
-                    .setDirectory(fileDir)
-                    .call();
+        try{
+            if (isLegalRepo(fileDir.toPath())) {
+                testResult = Git.open(fileDir);
+                testResult.pull().call();
+            } else {
+                testResult = Git.cloneRepository()
+                        .setURI(stashurl)
+                        .setDirectory(fileDir)
+                        .call();
+            }
+        }catch(InvalidRemoteException e){
+            throw new GitWrapperInvalidRemoteException("Remote not found");
         }
         return testResult.getRepository();
     }

@@ -2,11 +2,11 @@ package no.nav.sbl.ledeteksteditor.rest;
 
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
+import no.nav.sbl.ledeteksteditor.utils.GitWrapperInvalidRemoteException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.internal.matchers.Null;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.ws.rs.core.Response;
@@ -78,9 +78,9 @@ public class TeksterRessursTest {
 
     @Test
     public void skalReturnereIkkeFunnetVedIkkeEksisterendeRepo() throws Exception{
-        when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenReturn(null);
+        when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenThrow(new GitWrapperInvalidRemoteException());
 
-        Response response = teksterRessurs.hentTeksterForUrl(TEST_REPO);
+        Response response = teksterRessurs.hentTeksterForUrl(TEST_REPO + "test");
 
         assertThat(response.getStatus()).isEqualTo(404);
     }

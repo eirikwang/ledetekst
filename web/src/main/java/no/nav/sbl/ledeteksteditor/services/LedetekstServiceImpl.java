@@ -3,6 +3,7 @@ package no.nav.sbl.ledeteksteditor.services;
 import com.jcraft.jsch.Session;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.utils.GitWrapper;
+import no.nav.sbl.ledeteksteditor.utils.GitWrapperException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.JschConfigSessionFactory;
@@ -38,16 +39,15 @@ public class LedetekstServiceImpl implements LedetekstService {
     }
 
     @Override
-    public List<Ledetekst> hentAlleTeksterFor(String stashurl, File fileDir) throws GitAPIException, IOException {
+    public List<Ledetekst> hentAlleTeksterFor(String stashurl, File fileDir) throws GitAPIException, IOException, GitWrapperException {
         List<File> filer = hentAlleLedeteksterFor(stashurl, fileDir);
         return mapTilLedetekst(filer);
     }
 
     @Override
-    public List<File> hentAlleLedeteksterFor(String stashurl, File fileDir) throws GitAPIException, IOException {
+    public List<File> hentAlleLedeteksterFor(String stashurl, File fileDir) throws GitAPIException, IOException, GitWrapperException {
         Repository repo = GitWrapper.getRepo(stashurl, fileDir);
         List<File> filer = GitWrapper.listFiles(repo);
-
         return filer.stream().filter(erLedetekstFil).collect(Collectors.toList());
     }
 

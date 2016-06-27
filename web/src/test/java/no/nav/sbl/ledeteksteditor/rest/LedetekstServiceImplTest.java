@@ -1,6 +1,7 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
 import no.nav.sbl.ledeteksteditor.services.LedetekstServiceImpl;
+import no.nav.sbl.ledeteksteditor.utils.GitWrapperException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class LedetekstServiceImplTest {
     }
 
     @Test
-    public void testHentAlleTekster() throws GitAPIException, IOException {
+    public void testHentAlleTekster() throws GitAPIException, IOException, GitWrapperException {
         String stashurl = "ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git";
         File fileDir = new File("../repo/veiledningarbeidssoker/");
         LedetekstServiceImpl ledetekstService = new LedetekstServiceImpl();
