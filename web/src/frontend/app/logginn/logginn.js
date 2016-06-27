@@ -1,19 +1,30 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { loggInn } from './logginn-actions'
 
-let LoggInn = ({ dispatch }) => {
-
+const LoggInn = ({ handleSubmit, navn, email }) => {
+    
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <p><input type="text" name="Logg inn" placeholder="Email"/></p>
-                <p><input type="password" name="Passord" placeholder="Passord"/></p>
-                <button onClick={handleSubmit}>Logg Inn</button>
-            </form>
-        </div>
+        <form onSubmit={handleSubmit}>
+            <p><input type="text" {...navn} name="navn" placeholder="Navn" /></p>
+            <p><input type="text" {...email} name="email" placeholder="Email" /></p>
+            <button type="submit">Logg Inn</button>
+        </form>
     )
-}
+};
 
-LoggInn = connect()(LoggInn)
+const mapStateToProps = (navn, email) => {
+    return {
+        felter: {navn, email}
+    }
+};
 
-export default LoggInn
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handleSubmit: (navn, email) => {
+            dispatch(loggInn(navn, email))
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoggInn);
