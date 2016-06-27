@@ -3,6 +3,7 @@ package no.nav.sbl.ledeteksteditor.rest;
 
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
+import no.nav.sbl.ledeteksteditor.services.LedetekstServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +38,9 @@ public class TeksterRessurs {
     @Path("/{stashurl}")
     public Response hentTeksterForUrl(@PathParam("stashurl") String stashUrl) {
         try {
-            List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(stashUrl, REPO_DIR);
+            List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(
+                    LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
+                    REPO_DIR);
             ArrayList<HashMap> toReturn = new ArrayList<>();
             for (Ledetekst l : applikasjonsTekster) {
                 HashMap<String, Object> tekstMap = new HashMap<>();
