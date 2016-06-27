@@ -3,6 +3,7 @@ target
 .idea
 *.log
 node_modules/
+repo/
 
 **/webapp/css/**/*
 **/webapp/img/**/*
