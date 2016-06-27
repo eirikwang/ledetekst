@@ -59,5 +59,4 @@ public class LedetekstServiceImpl implements LedetekstService {
         }
         return innhold.entrySet().stream().map(entry -> new Ledetekst(entry.getKey(), entry.getValue())).collect(Collectors.toList());
     }
-
 }
