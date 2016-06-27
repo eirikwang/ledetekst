@@ -54,9 +54,9 @@ public class TeksterRessurs {
             return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
         }
     }
-    private File getRepoDir(String reponavn){
+    private String getRepoDir(String reponavn) {
         String datadir = System.getProperty("dirs.repos", "../");
-        return new File(datadir).toPath().resolve(reponavn).toFile();
+        return new File(datadir).toPath().resolve(reponavn).toString();
     }
 }
 
