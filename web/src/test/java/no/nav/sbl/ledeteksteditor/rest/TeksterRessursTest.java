@@ -8,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.ws.rs.core.Response;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,9 +35,8 @@ public class TeksterRessursTest {
     @InjectMocks
     private TeksterRessurs teksterRessurs;
 
-
     @Test
-    public void skalReturnereMockData() throws Exception {
+    public void skalReturnereMockData() {
         when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenReturn(asList(
                 new Ledetekst("ledetekst1", lagMockLedetekstMap())
         ));
@@ -53,26 +51,16 @@ public class TeksterRessursTest {
     }
 
     @Test
-    public void skalReturnereTomListe() throws Exception {
+    public void skalReturnereTomListe() {
         when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenReturn(emptyList());
 
         ArrayList<HashMap> result = (ArrayList<HashMap>) teksterRessurs.hentTeksterForUrl(TEST_REPO).getEntity();
         List<String> nokler = result.stream().map((Map m) -> ((String) m.get("nokkel"))).collect(toList());
         List<Map> spraak = result.stream().map((Map m) -> ((Map) m.get("spraak"))).collect(toList());
 
-
         assertTrue(result.isEmpty());
         assertTrue(nokler.isEmpty());
         assertTrue(spraak.isEmpty());
-    }
-
-    @Test
-    public void skalReturnereFeilmeldingVedException() throws Exception {
-        when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenThrow(new RuntimeException("oops"));
-
-        Response response = teksterRessurs.hentTeksterForUrl(TEST_REPO);
-
-        assertThat(response.getStatus()).isEqualTo(503);
     }
 
     private Map<String, String> lagMockLedetekstMap() {

@@ -1,6 +1,5 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
-
 import io.swagger.annotations.Api;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static java.lang.String.format;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/tekster")
@@ -35,22 +33,17 @@ public class TeksterRessurs {
     @GET
     @Path("/{stashurl}")
     public Response hentTeksterForUrl(@PathParam("stashurl") String stashUrl) {
-        try {
-            List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(
-                    LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
-                    getRepoDir(stashUrl));
-            ArrayList<HashMap> toReturn = new ArrayList<>();
-            for (Ledetekst l : applikasjonsTekster) {
-                HashMap<String, Object> tekstMap = new HashMap<>();
-                tekstMap.put("nokkel", l.hentNavn());
-                tekstMap.put("spraak", l.hentInnhold());
-                toReturn.add(tekstMap);
-            }
-            return Response.ok(toReturn).build();
-        } catch (Exception e) {
-            logger.warn(format("Kunne ikke hente ut tekster for %s", stashUrl), e);
-            return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+        List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(
+                LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
+                getRepoDir(stashUrl));
+        ArrayList<HashMap> toReturn = new ArrayList<>();
+        for (Ledetekst l : applikasjonsTekster) {
+            HashMap<String, Object> tekstMap = new HashMap<>();
+            tekstMap.put("nokkel", l.hentNavn());
+            tekstMap.put("spraak", l.hentInnhold());
+            toReturn.add(tekstMap);
         }
+        return Response.ok(toReturn).build();
     }
 
     private File getRepoDir(String reponavn) {
@@ -58,4 +51,3 @@ public class TeksterRessurs {
         return new File(datadir).toPath().resolve(reponavn).toFile();
     }
 }
-
