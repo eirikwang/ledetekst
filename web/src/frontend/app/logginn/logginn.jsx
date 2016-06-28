@@ -13,7 +13,6 @@ class LoggInn extends Component {
         event.preventDefault();
         this.props.handleSubmit(this.refs.navn.value, this.refs.email.value);
     }
-
     render() {
         return (
             <form onSubmit={this.hentInput}>

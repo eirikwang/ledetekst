@@ -8,7 +8,7 @@ const reducers = combineReducers({
     routing: routerReducer,
     tekster: teksterReducer,
     intl: meldingerReducer,
-    logginn: logginnReducer
+    autentisert: logginnReducer
 });
 
 export default reducers;

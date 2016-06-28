@@ -13,7 +13,8 @@ export default function loggInn(state = DEFAULT_STATE, action) {
                 return state;
             }
             return {
-                type: InnloggingsStatus.LOGGET_INN,
+                ...state,
+                status: InnloggingsStatus.LOGGET_INN,
                 data: action.data
             };
         default:
