@@ -1,5 +1,6 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
+import io.swagger.annotations.Api;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
 import no.nav.sbl.ledeteksteditor.services.LedetekstServiceImpl;
@@ -13,8 +14,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import io.swagger.annotations.Api;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -42,9 +41,9 @@ public class TeksterRessurs {
             toReturn.add(tekstMap);
         }
         return Response.ok(toReturn).build();
-
     }
-    private File getRepoDir(String reponavn){
+
+    private File getRepoDir(String reponavn) {
         String datadir = System.getProperty("dirs.repos", "../");
         return new File(datadir).toPath().resolve(reponavn).toFile();
     }

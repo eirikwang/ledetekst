@@ -43,3 +43,12 @@ export function handterFeil(dispatch, action) {
         }
     };
 }
+
+export function autobind(ctx) {
+    Object.getOwnPropertyNames(ctx.constructor.prototype)
+        .filter((prop) => typeof ctx[prop] === 'function')
+        .forEach((method) => {
+            // eslint-disable-next-line
+            ctx[method] = ctx[method].bind(ctx);
+        });
+}

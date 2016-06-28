@@ -11,6 +11,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.FS;
 
@@ -21,11 +22,13 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.System.getProperty;
+
 public class GitWrapper {
 
     public static Repository getRepo(String stashurl, File fileDir) {
         Git testResult;
-        try{
+        try {
             if (isLegalRepo(fileDir.toPath())) {
                 testResult = Git.open(fileDir);
                 testResult.pull().call();
@@ -33,13 +36,14 @@ public class GitWrapper {
                 testResult = Git.cloneRepository()
                         .setURI(stashurl)
                         .setDirectory(fileDir)
+                        .setCredentialsProvider(new UsernamePasswordCredentialsProvider(getProperty("git.credential.username"), getProperty("git.credential.password")))
                         .call();
             }
-        }catch(InvalidRemoteException e){
+        } catch (InvalidRemoteException e){
             throw new RemoteIkkeFunnetException(e);
-        }catch(GitAPIException e){
+        } catch (GitAPIException e){
             throw new GitWrapperException(e);
-        }catch(IOException e){
+        } catch (IOException e){
             throw new AapneRepoException(e);
         }
         return testResult.getRepository();
@@ -51,19 +55,18 @@ public class GitWrapper {
         try {
             RevCommit commit = walk.parseCommit(repo.exactRef("HEAD").getObjectId());
             treeWalk.addTree(commit.getTree());
-        }
-        catch (IOException e){
+        } catch (IOException e){
             throw new AapneRepoException(e);
         }
         treeWalk.setRecursive(true);
 
         List<File> files = new ArrayList<>();
-        try{
+        try {
             while (treeWalk.next()) {
                 File file = new File(repo.getWorkTree(), treeWalk.getPathString());
                 files.add(file);
             }
-        }catch (IOException e){
+        } catch (IOException e){
             throw new AapneRepoException(e);
         }
         return files;
@@ -71,9 +74,9 @@ public class GitWrapper {
 
     public static String getContentFromFile(File file) throws LesLedetekstException {
         List<String> content;
-        try{
+        try {
             content = Files.readAllLines(file.toPath());
-        }catch (IOException e){
+        } catch (IOException e){
             throw new LesLedetekstException(e);
         }
         return String.join("\n", content);
