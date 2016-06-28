@@ -33,6 +33,7 @@ public class TeksterRessurs {
     @GET
     @Path("/{stashurl}")
     public Response hentTeksterForUrl(@PathParam("stashurl") String stashUrl) {
+
         List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(
                 LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
                 getRepoDir(stashUrl));
