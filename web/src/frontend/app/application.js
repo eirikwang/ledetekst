@@ -17,6 +17,7 @@ function Application() {
             <h1><FormattedMessage {...meldinger.overskrift} /></h1>
             <hr />
             <LoggInn />
+            <Tekster />
             <DevTools />
         </div>
     );
