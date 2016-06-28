@@ -10,7 +10,6 @@ export default function loggInn(state = DEFAULT_STATE, action){
             if (!(new RegExp('([a-zA-Z].+@nav.no)$').test(action.email))){
                 return state;
             }
-            console.log(action.email);
             return {
                 type: InnloggingsStatus.LOGGET_INN,
                 navn: action.navn,
