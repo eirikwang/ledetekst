@@ -21,7 +21,7 @@ export function receiveTekster(data) {
 export function receiveFeil(error) {
     return {
         type: RECEIVE_FEIL,
-        error
+        data: error
     };
 }
 
