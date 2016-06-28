@@ -16,6 +16,14 @@ public class Ledetekst {
         return navn;
     }
 
+    @Override
+    public String toString() {
+        return "Ledetekst{" +
+                "navn='" + navn + '\'' +
+                ", innhold=" + innhold +
+                '}';
+    }
+
     public Map<String, String> hentInnhold(){
         return innhold;
     }

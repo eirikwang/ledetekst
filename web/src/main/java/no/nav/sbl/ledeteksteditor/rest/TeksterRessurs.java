@@ -2,16 +2,14 @@ package no.nav.sbl.ledeteksteditor.rest;
 
 import io.swagger.annotations.Api;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
+import no.nav.sbl.ledeteksteditor.domain.Payload;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
 import no.nav.sbl.ledeteksteditor.services.LedetekstServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.util.ArrayList;
@@ -21,6 +19,7 @@ import java.util.List;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/tekster")
+@Consumes(APPLICATION_JSON + ";charset=utf-8")
 @Produces(APPLICATION_JSON + ";charset=utf-8")
 @Api(value = "ledetekster", description = "Endpoint for ledetekster")
 public class TeksterRessurs {
@@ -44,6 +43,12 @@ public class TeksterRessurs {
             toReturn.add(tekstMap);
         }
         return Response.ok(toReturn).build();
+    }
+
+    @PUT
+    @Path("/{stashurl}/{ledetekstnokkel}")
+    public Response oppdaterLedetekst(Payload payload, @PathParam("stashurl") String stashurl, @PathParam("ledetekstnokkel") String ledetekstnokkel){
+        return  Response.ok(payload.getData()).build();
     }
 
     private File getRepoDir(String reponavn) {
