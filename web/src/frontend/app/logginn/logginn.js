@@ -25,8 +25,6 @@ class LoggInn extends Component {
     };
 }
 
-const mapStateToProps = ({ navn, email }) => ({ navn, email });
-
 const mapDispatchToProps = (dispatch) => {
     return {
         handleSubmit: (navn, email) => {
@@ -35,4 +33,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoggInn);
+export default connect(() => ({}), mapDispatchToProps)(LoggInn);

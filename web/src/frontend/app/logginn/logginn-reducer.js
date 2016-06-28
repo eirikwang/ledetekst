@@ -7,7 +7,8 @@ const DEFAULT_STATE = {
 export default function loggInn(state = DEFAULT_STATE, action){
     switch (action.type) {
         case LOGG_INN:
-            if (!(new RegExp('([a-zA-Z].+@nav.no)$').test(action.email))){
+            var regexMail = '([a-zA-Z].+@nav.no)$';
+            if (!regexMail.test(action.email)){
                 return state;
             }
             return {
