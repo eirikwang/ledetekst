@@ -12,11 +12,12 @@ import static javax.ws.rs.core.Response.serverError;
 
 @Provider
 public class ThrowableMapper implements ExceptionMapper<Throwable>{
-    private static final Logger LOG = LoggerFactory.getLogger(ThrowableMapper.class);
-    private static final String NO_BIGIP_5XX_REDIRECT = "X-Escape-5xx-Redirect";
+    static final Logger LOG = LoggerFactory.getLogger(ThrowableMapper.class);
+    static final String NO_BIGIP_5XX_REDIRECT = "X-Escape-5xx-Redirect";
 
     @Override
     public Response toResponse(Throwable throwable) {
         LOG.error("Noe uventet feilet", throwable);
         return serverError().header(NO_BIGIP_5XX_REDIRECT, true).type(APPLICATION_JSON).build();
-    }}
+    }
+}

@@ -1,15 +1,14 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
+import no.nav.sbl.ledeteksteditor.utils.exception.ApplikasjonsException;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
-import no.nav.sbl.ledeteksteditor.utils.exception.GitWrapperInvalidRemoteException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.ws.rs.core.Response;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +38,7 @@ public class TeksterRessursTest {
 
 
     @Test
-    public void skalReturnereMockData() throws Exception {
+    public void skalReturnereMockData() throws ApplikasjonsException {
         when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenReturn(asList(
                 new Ledetekst("ledetekst1", lagMockLedetekstMap())
         ));
@@ -54,7 +53,7 @@ public class TeksterRessursTest {
     }
 
     @Test
-    public void skalReturnereTomListe() throws Exception {
+    public void skalReturnereTomListe() throws ApplikasjonsException {
         when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenReturn(emptyList());
 
         ArrayList<HashMap> result = (ArrayList<HashMap>) teksterRessurs.hentTeksterForUrl(TEST_REPO).getEntity();
@@ -65,24 +64,6 @@ public class TeksterRessursTest {
         assertTrue(result.isEmpty());
         assertTrue(nokler.isEmpty());
         assertTrue(spraak.isEmpty());
-    }
-
-    @Test
-    public void skalReturnereFeilmeldingVedException() throws Exception {
-        when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenThrow(new RuntimeException("oops"));
-
-        Response response = teksterRessurs.hentTeksterForUrl(TEST_REPO);
-
-        assertThat(response.getStatus()).isEqualTo(503);
-    }
-
-    @Test
-    public void skalReturnereIkkeFunnetVedIkkeEksisterendeRepo() throws Exception{
-        when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenThrow(new GitWrapperInvalidRemoteException());
-
-        Response response = teksterRessurs.hentTeksterForUrl(TEST_REPO + "test");
-
-        assertThat(response.getStatus()).isEqualTo(404);
     }
 
     private Map<String, String> lagMockLedetekstMap() {

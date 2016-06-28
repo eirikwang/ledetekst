@@ -1,17 +1,15 @@
 package no.nav.sbl.ledeteksteditor.services;
 
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
-import no.nav.sbl.ledeteksteditor.utils.exception.GitWrapperException;
-import org.eclipse.jgit.api.errors.GitAPIException;
+import no.nav.sbl.ledeteksteditor.utils.exception.ApplikasjonsException;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 public interface LedetekstService {
-    List<Ledetekst> hentAlleTeksterFor(String stashurl, File fileDir) throws GitAPIException, IOException, GitWrapperException;
+    List<Ledetekst> hentAlleTeksterFor(String stashurl, File fileDir);
 
-    List<File> hentAlleLedeteksterFor(String stashurl, File fileDir) throws GitAPIException, IOException, GitWrapperException;
+    List<File> hentAlleLedeteksterFor(String stashurl, File fileDir);
 
-    List<Ledetekst> mapTilLedetekst(List<File> filer) throws IOException;
+    List<Ledetekst> mapTilLedetekst(List<File> filer);
 }

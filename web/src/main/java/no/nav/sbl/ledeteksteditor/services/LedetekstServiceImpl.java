@@ -3,15 +3,13 @@ package no.nav.sbl.ledeteksteditor.services;
 import com.jcraft.jsch.Session;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.utils.GitWrapper;
-import no.nav.sbl.ledeteksteditor.utils.exception.GitWrapperException;
-import org.eclipse.jgit.api.errors.GitAPIException;
+import no.nav.sbl.ledeteksteditor.utils.exception.ApplikasjonsException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.JschConfigSessionFactory;
 import org.eclipse.jgit.transport.OpenSshConfig;
 import org.eclipse.jgit.transport.SshSessionFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,20 +37,20 @@ public class LedetekstServiceImpl implements LedetekstService {
     }
 
     @Override
-    public List<Ledetekst> hentAlleTeksterFor(String stashurl, File fileDir) throws GitAPIException, IOException, GitWrapperException {
+    public List<Ledetekst> hentAlleTeksterFor(String stashurl, File fileDir) {
         List<File> filer = hentAlleLedeteksterFor(stashurl, fileDir);
         return mapTilLedetekst(filer);
     }
 
     @Override
-    public List<File> hentAlleLedeteksterFor(String stashurl, File fileDir) throws GitAPIException, IOException, GitWrapperException {
+    public List<File> hentAlleLedeteksterFor(String stashurl, File fileDir) {
         Repository repo = GitWrapper.getRepo(stashurl, fileDir);
         List<File> filer = GitWrapper.listFiles(repo);
         return filer.stream().filter(erLedetekstFil).collect(Collectors.toList());
     }
 
     @Override
-    public List<Ledetekst> mapTilLedetekst(List<File> filer) throws IOException {
+    public List<Ledetekst> mapTilLedetekst(List<File> filer) throws ApplikasjonsException {
         Map<String, Map<String, String>> innhold = new HashMap<>();
 
         for (File file : filer) {
@@ -65,9 +63,7 @@ public class LedetekstServiceImpl implements LedetekstService {
                 String innholdFil = GitWrapper.getContentFromFile(file);
                 innhold.computeIfAbsent(nokkel, (ignore) -> new HashMap<>()).put(locale, innholdFil);
             }
-
         }
         return innhold.entrySet().stream().map(entry -> new Ledetekst(entry.getKey(), entry.getValue())).collect(Collectors.toList());
     }
-
 }
