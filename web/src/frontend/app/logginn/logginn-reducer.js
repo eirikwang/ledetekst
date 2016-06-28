@@ -7,17 +7,15 @@ const DEFAULT_STATE = {
 export default function loggInn(state = DEFAULT_STATE, action){
     switch (action.type) {
         case LOGG_INN:
-            var regexMail = '([a-zA-Z].+@nav.no)$';
-            if (!regexMail.test(action.email)){
+            var navEpostRegex = /([a-zA-Z].+@nav.no)$/;
+            if (!navEpostRegex.test(action.data.email)){
                 return state;
             }
             return {
                 type: InnloggingsStatus.LOGGET_INN,
-                navn: action.navn,
-                email: action.email
+                data: action.data
             };
         default:
             return state; 
     }
 };
-
