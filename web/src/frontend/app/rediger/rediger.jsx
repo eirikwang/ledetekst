@@ -1,6 +1,7 @@
 import React, { PropTypes as PT, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { hentLedetekst } from 'rediger-actions';
 
 class Rediger extends Component {
     render() {
@@ -14,7 +15,14 @@ class Rediger extends Component {
     }
 }
 
+function mapDispatchToProps(dispatch) {
+    return {
+        handleSubmit: (nokkel, spraak) => {
+            dispatch(hentLedetekst(nokkel, spraak));
+        }
+    };
+}
+
 Rediger.propTypes = {
-    nokkel: PT.string.isRequired,
-    spraak: PT.string.isRequired
+    handleSubmit: PT.func.isRequired
 };
