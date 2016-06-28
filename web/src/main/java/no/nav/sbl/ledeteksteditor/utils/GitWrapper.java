@@ -26,7 +26,8 @@ public class GitWrapper {
 
         if (isLegalRepo(fileDir.toPath())) {
             testResult = Git.open(fileDir);
-            testResult.pull().call();
+            testResult
+                    .pull().call();
         } else {
             testResult = Git.cloneRepository()
                     .setURI(stashurl)
