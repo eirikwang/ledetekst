@@ -1,4 +1,5 @@
 package no.nav.sbl.ledeteksteditor.domain;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Ledetekst {
@@ -14,6 +15,13 @@ public class Ledetekst {
 
     public String hentNavn() {
         return navn;
+    }
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> tekstMap = new HashMap<>();
+        tekstMap.put("nokkel", this.hentNavn());
+        tekstMap.put("spraak", this.hentInnhold());
+        return tekstMap;
     }
 
     @Override

@@ -13,8 +13,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -35,20 +35,31 @@ public class TeksterRessurs {
         List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(
                 LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
                 getRepoDir(stashUrl));
-        ArrayList<HashMap> toReturn = new ArrayList<>();
+        ArrayList<Map> toReturn = new ArrayList<>();
         for (Ledetekst l : applikasjonsTekster) {
-            HashMap<String, Object> tekstMap = new HashMap<>();
-            tekstMap.put("nokkel", l.hentNavn());
-            tekstMap.put("spraak", l.hentInnhold());
-            toReturn.add(tekstMap);
+            toReturn.add(l.toMap());
         }
         return Response.ok(toReturn).build();
     }
 
     @PUT
     @Path("/{stashurl}/{ledetekstnokkel}")
-    public Response oppdaterLedetekst(Payload payload, @PathParam("stashurl") String stashurl, @PathParam("ledetekstnokkel") String ledetekstnokkel){
+    public Response oppdaterLedetekst(Payload payload, @PathParam("stashurl") String stashUrl, @PathParam("ledetekstnokkel") String ledetekstnokkel){
         return  Response.ok(payload.getData()).build();
+    }
+
+    @GET
+    @Path("/{stashurl}/{ledetekstnokkel}")
+    public Response hentLedetekst(@PathParam("stashurl") String stashUrl, @PathParam("ledetekstnokkel") String ledetekstnokkel){
+        List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(
+                LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
+                getRepoDir(stashUrl));
+        for (Ledetekst l : applikasjonsTekster) {
+            if(l.hentNavn().equals(ledetekstnokkel)){
+                return Response.ok(l.toMap()).build();
+            }
+        }
+        return Response.ok("Fant ikke noe").build();
     }
 
     private File getRepoDir(String reponavn) {
