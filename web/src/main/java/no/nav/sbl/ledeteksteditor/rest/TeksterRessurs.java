@@ -1,6 +1,7 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
 
+import io.swagger.annotations.Api;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
 import no.nav.sbl.ledeteksteditor.services.LedetekstServiceImpl;
@@ -18,11 +19,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import io.swagger.annotations.Api;
-
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-
 import static java.lang.String.format;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/tekster")
 @Produces(APPLICATION_JSON + ";charset=utf-8")
@@ -55,6 +53,7 @@ public class TeksterRessurs {
             return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
         }
     }
+
     private String getRepoDir(String reponavn) {
         String datadir = System.getProperty("dirs.repos", "../");
         return new File(datadir).toPath().resolve(reponavn).toString();
