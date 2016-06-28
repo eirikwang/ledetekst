@@ -45,8 +45,8 @@ public class LedetekstServiceImpl implements LedetekstService {
             Matcher matcher = FILE_PATTERN.matcher(file.getPath());
 
             if (matcher.find()) {
-                String nokkel = filsti.substring(filsti.lastIndexOf("\\") + 1, filsti.lastIndexOf(matcher.group(2)));
-                String locale = file.getPath().substring(file.getPath().lastIndexOf(matcher.group(3)), file.getPath().lastIndexOf("."));
+                String nokkel = matcher.group(1).substring(matcher.group(1).lastIndexOf("\\") + 1);
+                String locale = matcher.group(3);
                 String innholdFil = GitWrapper.getContentFromFile(file);
                 innhold.computeIfAbsent(nokkel, (ignore) -> new HashMap<>()).put(locale, innholdFil);
             }
