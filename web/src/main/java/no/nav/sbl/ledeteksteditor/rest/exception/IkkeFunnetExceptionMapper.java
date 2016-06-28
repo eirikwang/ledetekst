@@ -6,7 +6,9 @@ import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
+@Provider
 public class IkkeFunnetExceptionMapper implements ExceptionMapper<ApplikasjonsException> {
     static final Logger LOG = LoggerFactory.getLogger(ThrowableMapper.class);
 

@@ -2,7 +2,6 @@ package no.nav.sbl.ledeteksteditor.services;
 
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.utils.GitWrapper;
-import no.nav.sbl.ledeteksteditor.utils.exception.ApplikasjonsException;
 import org.eclipse.jgit.lib.Repository;
 
 import java.io.File;
@@ -37,7 +36,7 @@ public class LedetekstServiceImpl implements LedetekstService {
     }
 
     @Override
-    public List<Ledetekst> mapTilLedetekst(List<File> filer) throws ApplikasjonsException {
+    public List<Ledetekst> mapTilLedetekst(List<File> filer) {
         Map<String, Map<String, String>> innhold = new HashMap<>();
 
         for (File file : filer) {

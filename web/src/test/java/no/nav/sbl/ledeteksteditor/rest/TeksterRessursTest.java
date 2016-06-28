@@ -1,7 +1,6 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
-import no.nav.sbl.ledeteksteditor.utils.exception.ApplikasjonsException;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,9 +35,8 @@ public class TeksterRessursTest {
     @InjectMocks
     private TeksterRessurs teksterRessurs;
 
-
     @Test
-    public void skalReturnereMockData() throws ApplikasjonsException {
+    public void skalReturnereMockData() {
         when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenReturn(asList(
                 new Ledetekst("ledetekst1", lagMockLedetekstMap())
         ));
@@ -53,13 +51,12 @@ public class TeksterRessursTest {
     }
 
     @Test
-    public void skalReturnereTomListe() throws ApplikasjonsException {
+    public void skalReturnereTomListe() {
         when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenReturn(emptyList());
 
         ArrayList<HashMap> result = (ArrayList<HashMap>) teksterRessurs.hentTeksterForUrl(TEST_REPO).getEntity();
         List<String> nokler = result.stream().map((Map m) -> ((String) m.get("nokkel"))).collect(toList());
         List<Map> spraak = result.stream().map((Map m) -> ((Map) m.get("spraak"))).collect(toList());
-
 
         assertTrue(result.isEmpty());
         assertTrue(nokler.isEmpty());

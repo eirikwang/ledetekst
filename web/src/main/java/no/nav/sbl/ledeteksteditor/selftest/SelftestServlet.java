@@ -1,6 +1,5 @@
 package no.nav.sbl.ledeteksteditor.selftest;
 
-
 import no.nav.sbl.dialogarena.common.web.selftest.SelfTestBaseServlet;
 import no.nav.sbl.dialogarena.types.Pingable;
 import org.springframework.context.ApplicationContext;

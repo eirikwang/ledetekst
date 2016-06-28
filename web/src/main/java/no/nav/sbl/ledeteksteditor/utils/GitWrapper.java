@@ -49,7 +49,7 @@ public class GitWrapper {
         return testResult.getRepository();
     }
 
-    public static List<File> listFiles(Repository repo)  {
+    public static List<File> listFiles(Repository repo) {
         TreeWalk treeWalk = new TreeWalk(repo);
         RevWalk walk = new RevWalk(repo);
         try {
@@ -72,7 +72,7 @@ public class GitWrapper {
         return files;
     }
 
-    public static String getContentFromFile(File file) throws LesLedetekstException {
+    public static String getContentFromFile(File file) {
         List<String> content;
         try {
             content = Files.readAllLines(file.toPath());
