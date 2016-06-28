@@ -6,6 +6,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.FS;
 
@@ -16,6 +17,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.System.getProperty;
+
 public class GitWrapper {
 
     public static Repository getRepo(String stashurl, File fileDir) throws GitAPIException, IOException {
@@ -23,11 +26,13 @@ public class GitWrapper {
 
         if (isLegalRepo(fileDir.toPath())) {
             testResult = Git.open(fileDir);
-            testResult.pull().call();
+            testResult
+                    .pull().call();
         } else {
             testResult = Git.cloneRepository()
                     .setURI(stashurl)
                     .setDirectory(fileDir)
+                    .setCredentialsProvider(new UsernamePasswordCredentialsProvider(getProperty("git.credential.username"), getProperty("git.credential.password")))
                     .call();
         }
         return testResult.getRepository();

@@ -6,11 +6,9 @@ export const InnloggingsStatus = {
 
 };
 
-export const loggInn = (navn, email) => {
-    console.log(navn);
+export function loggInn(navn, email) {
     return {
         type: LOGG_INN,
-        navn, 
-        email
-    }
-};
+        data: { navn, email }
+    };
+}
