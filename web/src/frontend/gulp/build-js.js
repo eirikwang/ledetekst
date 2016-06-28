@@ -45,6 +45,7 @@ function buildJs(gulp) {
         const browserify = require('browserify');
         var bundler = browserify('./app/index.js', {
             debug: isDevelopment(),
+            extensions: ['.js', '.jsx'],
             fullPaths: isDevelopment()
         }).external(getExternalVendors());
         return bundle(gulp, bundler.transform(babelifyReact), 'bundle.js');
@@ -73,6 +74,7 @@ function buildJsWatchify(gulp) {
         const browserifyOpts = {
             debug: isDevelopment(),
             entries: './app/index.js',
+            extensions: ['.js', '.jsx'],
             cache: {},
             packageCache: {},
             fullPaths: isDevelopment()
