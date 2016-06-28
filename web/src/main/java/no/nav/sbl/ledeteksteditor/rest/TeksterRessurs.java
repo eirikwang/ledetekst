@@ -32,7 +32,7 @@ public class TeksterRessurs {
     @GET
     @Path("/{stashurl}")
     public Response hentTeksterForUrl(@PathParam("stashurl") String stashUrl) {
-        List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(
+        List<Ledetekst> applikasjonsTekster =  ledetekstService.hentAlleLedeteksterFor(
                 LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
                 getRepoDir(stashUrl));
         ArrayList<Map> toReturn = new ArrayList<>();
@@ -51,16 +51,13 @@ public class TeksterRessurs {
     @GET
     @Path("/{stashurl}/{ledetekstnokkel}")
     public Response hentLedetekst(@PathParam("stashurl") String stashUrl, @PathParam("ledetekstnokkel") String ledetekstnokkel){
-        List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(
+        Ledetekst ledetekst = ledetekstService.hentLedeteksteFor(
                 LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
-                getRepoDir(stashUrl));
-        for (Ledetekst l : applikasjonsTekster) {
-            if(l.hentNavn().equals(ledetekstnokkel)){
-                return Response.ok(l.toMap()).build();
-            }
-        }
-        return Response.ok("Fant ikke noe").build();
+                getRepoDir(stashUrl), ledetekstnokkel);
+        return Response.ok(ledetekst.toMap()).build();
     }
+
+
 
     private File getRepoDir(String reponavn) {
         String datadir = System.getProperty("dirs.repos", "../");

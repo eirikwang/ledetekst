@@ -82,6 +82,14 @@ public class GitWrapper {
         return String.join("\n", content);
     }
 
+    public static void writeContentToFile(File file, String content){
+        try {
+            Files.write(file.toPath(), content.getBytes());
+        } catch (IOException e){
+            throw new LesLedetekstException(e);
+        }
+    }
+
     private static boolean isLegalRepo(Path path) {
         return RepositoryCache.FileKey.isGitRepository(path.resolve(".git").toFile(), FS.DETECTED);
     }

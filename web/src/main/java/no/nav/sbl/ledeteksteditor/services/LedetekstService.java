@@ -6,9 +6,11 @@ import java.io.File;
 import java.util.List;
 
 public interface LedetekstService {
-    List<Ledetekst> hentAlleTeksterFor(String stashurl, File fileDir);
+    List<Ledetekst> hentAlleLedeteksterFor(String stashurl, File fileDir);
 
-    List<File> hentAlleLedeteksterFor(String stashurl, File fileDir);
+    List<File> hentAlleLedetekstFilerFor(String stashurl, File fileDir);
 
     List<Ledetekst> mapTilLedetekst(List<File> filer);
+
+    Ledetekst hentLedeteksteFor(String stashurl, File fileDir, String ledetekstnokkel);
 }

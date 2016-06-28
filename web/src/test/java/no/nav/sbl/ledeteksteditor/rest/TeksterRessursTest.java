@@ -37,7 +37,7 @@ public class TeksterRessursTest {
 
     @Test
     public void skalReturnereMockData() {
-        when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenReturn(asList(
+        when(ledetekstServiceMock.hentAlleLedeteksterFor(anyString(), any(File.class))).thenReturn(asList(
                 new Ledetekst("ledetekst1", lagMockLedetekstMap())
         ));
 
@@ -52,7 +52,7 @@ public class TeksterRessursTest {
 
     @Test
     public void skalReturnereTomListe() {
-        when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenReturn(emptyList());
+        when(ledetekstServiceMock.hentAlleLedeteksterFor(anyString(), any(File.class))).thenReturn(emptyList());
 
         ArrayList<HashMap> result = (ArrayList<HashMap>) teksterRessurs.hentTeksterForUrl(TEST_REPO).getEntity();
         List<String> nokler = result.stream().map((Map m) -> ((String) m.get("nokkel"))).collect(toList());

@@ -21,7 +21,7 @@ public class LedetekstServiceImplTest {
         String stashurl = "ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git";
         File fileDir = new File("../repo/veiledningarbeidssoker/");
         LedetekstServiceImpl ledetekstService = new LedetekstServiceImpl();
-        List<no.nav.sbl.ledeteksteditor.domain.Ledetekst> ledetekster = ledetekstService.hentAlleTeksterFor(stashurl, fileDir);
+        List<no.nav.sbl.ledeteksteditor.domain.Ledetekst> ledetekster = ledetekstService.hentAlleLedeteksterFor(stashurl, fileDir);
         assertFalse(ledetekster.isEmpty());
     }
 }
