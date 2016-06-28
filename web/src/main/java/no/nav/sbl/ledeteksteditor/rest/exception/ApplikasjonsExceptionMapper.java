@@ -8,13 +8,17 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.Response.serverError;
+
 @Provider
 public class ApplikasjonsExceptionMapper implements ExceptionMapper<ApplikasjonsException> {
     static final Logger LOG = LoggerFactory.getLogger(ThrowableMapper.class);
+    static final String NO_BIGIP_5XX_REDIRECT = "X-Escape-5xx-Redirect";
 
     @Override
     public Response toResponse(ApplikasjonsException e) {
         LOG.error("Intern server feil", e);
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        return serverError().header(NO_BIGIP_5XX_REDIRECT, true).type(APPLICATION_JSON).build();
     }
 }
