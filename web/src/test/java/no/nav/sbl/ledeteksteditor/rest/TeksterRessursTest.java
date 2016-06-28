@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TeksterRessursTest {
-    public static final String TEST_REPO = "ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git";
+    public static final String TEST_REPO = "sbl-veiledningarbeidssoker";
 
     @Mock
     private LedetekstService ledetekstServiceMock;
