@@ -1,12 +1,6 @@
 package no.nav.sbl.ledeteksteditor.utils;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.lib.Repository;
-
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,16 +9,6 @@ public class FileUtils {
 
     private static final String FILE_PATH = "tekster" + File.separator + "src" + File.separator + "main" + File.separator + "tekster";
     private static final Pattern FILE_PATTERN = Pattern.compile("(.*?)(_([a-zA-Z]{2}_?[a-zA-Z]{0,2}))?\\.([a-z]*)$");
-
-    private static File lagTestMappe(String mappeNavn) {
-        Path homeDir = Paths.get(System.getProperty("user.home"));
-        Path testDir = homeDir.resolve(mappeNavn);
-        return testDir.toFile();
-    }
-
-    public static Repository hentTestRepo(String repoURL, String testMappeNavn) throws GitAPIException, IOException {
-        return GitWrapper.getRepo(repoURL, lagTestMappe(testMappeNavn));
-    }
 
     public static boolean matcherFilMonster(File tekstFil) {
         String filsti = tekstFil.getPath();

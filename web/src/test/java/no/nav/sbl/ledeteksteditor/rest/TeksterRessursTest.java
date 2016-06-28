@@ -38,7 +38,7 @@ public class TeksterRessursTest {
 
     @Test
     public void skalReturnereMockData() throws Exception {
-        when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), anyString())).thenReturn(asList(
+        when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenReturn(asList(
                 new Ledetekst("ledetekst1", lagMockLedetekstMap())
         ));
 
@@ -53,7 +53,7 @@ public class TeksterRessursTest {
 
     @Test
     public void skalReturnereTomListe() throws Exception {
-        when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), anyString())).thenReturn(emptyList());
+        when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenReturn(emptyList());
 
         ArrayList<HashMap> result = (ArrayList<HashMap>) teksterRessurs.hentTeksterForUrl(TEST_REPO).getEntity();
         List<String> nokler = result.stream().map((Map m) -> ((String) m.get("nokkel"))).collect(toList());
@@ -67,7 +67,7 @@ public class TeksterRessursTest {
 
     @Test
     public void skalReturnereFeilmeldingVedException() throws Exception {
-        when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), anyString())).thenThrow(new RuntimeException("oops"));
+        when(ledetekstServiceMock.hentAlleTeksterFor(anyString(), any(File.class))).thenThrow(new RuntimeException("oops"));
 
         Response response = teksterRessurs.hentTeksterForUrl(TEST_REPO);
 

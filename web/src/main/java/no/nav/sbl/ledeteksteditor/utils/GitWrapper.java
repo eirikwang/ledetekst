@@ -31,7 +31,7 @@ public class GitWrapper {
             testResult = Git.cloneRepository()
                     .setURI(stashurl)
                     .setDirectory(fileDir)
-                    .setCredentialsProvider(new UsernamePasswordCredentialsProvider(getProperty("git.credential.username"), getProperty("git.credential.password")))
+                    .setCredentialsProvider(new UsernamePasswordCredentialsProvider(getProperty("git.credential.username", ""), getProperty("git.credential.password", "")))
                     .call();
         }
         return testResult.getRepository();

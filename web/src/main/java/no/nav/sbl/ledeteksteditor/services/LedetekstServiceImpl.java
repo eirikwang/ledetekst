@@ -19,13 +19,15 @@ public class LedetekstServiceImpl implements LedetekstService {
         put("sbl-veiledningarbeidssoker", "http://stash.devillo.no/scm/sbl/veiledningarbeidssoker.git");
     }};
 
-    public List<Ledetekst> hentAlleTeksterFor(String stashurl, String testDir) throws GitAPIException, IOException {
-        List<File> filer = hentAlleLedeteksterFor(stashurl, testDir);
+    @Override
+    public List<Ledetekst> hentAlleTeksterFor(String stashurl, File fileDir) throws GitAPIException, IOException {
+        List<File> filer = hentAlleLedeteksterFor(stashurl, fileDir);
         return mapTilLedetekst(filer);
     }
 
-    public List<File> hentAlleLedeteksterFor(String stashurl, String testDir) throws GitAPIException, IOException {
-        Repository repo = FileUtils.hentTestRepo(stashurl, testDir);
+    @Override
+    public List<File> hentAlleLedeteksterFor(String stashurl, File fileDir) throws GitAPIException, IOException {
+        Repository repo = GitWrapper.getRepo(stashurl, fileDir);
         List<File> filer = GitWrapper.listFiles(repo);
         return filer.stream().filter(FileUtils.erLedetekstFil()).collect(Collectors.toList());
     }

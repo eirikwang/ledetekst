@@ -21,10 +21,9 @@ public class LedetekstServiceImplTest {
     @Test
     public void testHentAlleTekster() throws GitAPIException, IOException {
         String stashurl = "ssh://git@stash.devillo.no:7999/sbl/veiledningarbeidssoker.git";
-        String fileDir = "Documents/testMappe";
+        File fileDir = new File("../repo/veiledningarbeidssoker/");
         LedetekstServiceImpl ledetekstService = new LedetekstServiceImpl();
         List<no.nav.sbl.ledeteksteditor.domain.Ledetekst> ledetekster = ledetekstService.hentAlleTeksterFor(stashurl, fileDir);
         assertFalse(ledetekster.isEmpty());
     }
-
 }

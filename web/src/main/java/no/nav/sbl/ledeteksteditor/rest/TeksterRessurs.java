@@ -54,9 +54,9 @@ public class TeksterRessurs {
         }
     }
 
-    private String getRepoDir(String reponavn) {
+    private File getRepoDir(String reponavn) {
         String datadir = System.getProperty("dirs.repos", "../");
-        return new File(datadir).toPath().resolve(reponavn).toString();
+        return new File(datadir).toPath().resolve(reponavn).toFile();
     }
 }
 
