@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
-import { fetchLedetekst } from './../rediger/rediger-actions'
+import { fetchLedetekst } from './../rediger/rediger-actions';
 
 
-function RedigerLink({nokkel, spraak, redigerLedetekstDispatcher}){
+function RedigerLink({ nokkel, spraak, redigerLedetekstDispatcher }) {
     const redigerLedetekst = (event) => {
         event.preventDefault();
-        redigerLedetekstDispatcher(nokkel, spraak)
+        redigerLedetekstDispatcher(nokkel, spraak);
     };
 
     return (
@@ -16,12 +16,18 @@ function RedigerLink({nokkel, spraak, redigerLedetekstDispatcher}){
 }
 
 function mapDispatchToProps(dispatch) {
-    return  {
+    return {
         redigerLedetekstDispatcher: (nokkel, spraak) => {
             dispatch(fetchLedetekst(nokkel, spraak));
             dispatch(push('/nokkel&spraak'));
         }
-    }
+    };
 }
 
-export default connect(() => ({}), mapDispatchToProps)(RedigerLink)
+RedigerLink.propTypes = {
+    nokkel: PropTypes.string.isRequired,
+    spraak: PropTypes.string.isRequired,
+    redigerLedetekstDispatcher: PropTypes.func.isRequired
+};
+
+export default connect(() => ({}), mapDispatchToProps)(RedigerLink);

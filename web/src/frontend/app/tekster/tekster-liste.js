@@ -1,6 +1,6 @@
 import React, { PropTypes as PT } from 'react';
 import { storeShape } from './../felles/proptype-shapes';
-import RedigerLink from '../redigerlink/redigerlink'
+import RedigerLink from '../redigerlink/redigerlink';
 
 function mapTilHtml(tekstMap) {
     const nokkel = tekstMap[1].nokkel;
@@ -11,12 +11,11 @@ function mapTilHtml(tekstMap) {
             <div className="typo-element">{nokkel}</div>
             Språk
             <ul type="disc">
-                
-                {Object.entries(spraakObj).map(([key, value]) => <li key={key}><RedigerLink nokkel={nokkel} spraak={key} />: {value}</li>)}
+                {Object.entries(spraakObj).map(([key, value]) => <li key={key}>
+                    <RedigerLink nokkel={nokkel} spraak={key} />: {value}</li>)}
             </ul>
         </ul>
     );
-
 }
 
 function Tekster({ tekster }) {
