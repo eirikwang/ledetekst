@@ -56,6 +56,7 @@
     "gulp-util": "3.0.7",
     "jsdom": "9.2.1",
     "mocha": "2.5.3",
+    "modig-frontend": "git+http://stash.devillo.no/scm/felles/modig-frontend.git#modig-frontend-3.0.22",
     "nightwatch": "^0.9.4",
     "react-addons-test-utils": "15.1.0",
     "redux-devtools": "3.3.1",
