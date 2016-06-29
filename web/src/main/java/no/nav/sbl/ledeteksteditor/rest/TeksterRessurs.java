@@ -30,11 +30,11 @@ public class TeksterRessurs {
     private LedetekstService ledetekstService;
 
     @GET
-    @Path("/{stashurl}")
-    public Response hentTeksterForUrl(@PathParam("stashurl") String stashUrl) {
+    @Path("/{remoteUrl}")
+    public Response hentTeksterForUrl(@PathParam("remoteUrl") String remoteUrl) {
         List<Ledetekst> applikasjonsTekster =  ledetekstService.hentAlleLedeteksterFor(
-                LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
-                getRepoDir(stashUrl));
+                LedetekstServiceImpl.REPOSITORIES.get(remoteUrl),
+                getRepoDir(remoteUrl));
         ArrayList<Map> toReturn = new ArrayList<>();
         for (Ledetekst l : applikasjonsTekster) {
             toReturn.add(l.tilMap());
@@ -43,21 +43,21 @@ public class TeksterRessurs {
     }
 
     @PUT
-    @Path("/{stashurl}/{ledetekstnokkel}")
-    public Response oppdaterLedetekst(Ledetekst payload, @HeaderParam("navn") String navn, @HeaderParam("epost") String epost, @PathParam("stashurl") String stashUrl, @PathParam("ledetekstnokkel") String ledetekstnokkel){
+    @Path("/{remoteUrl}/{ledetekstnokkel}")
+    public Response oppdaterLedetekst(Ledetekst payload, @HeaderParam("navn") String navn, @HeaderParam("epost") String epost, @PathParam("remoteUrl") String remoteUrl, @PathParam("ledetekstnokkel") String ledetekstnokkel){
         Ident ident = new Ident(navn, epost);
         Ledetekst ledetekst = ledetekstService.oppdaterLedeteksteFor(
-            LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
-            getRepoDir(stashUrl),  payload, ident);
+            LedetekstServiceImpl.REPOSITORIES.get(remoteUrl),
+            getRepoDir(remoteUrl),  payload, ident);
         return Response.ok(ledetekst.tilMap()).build();
     }
 
     @GET
-    @Path("/{stashurl}/{ledetekstnokkel}")
-    public Response hentLedetekst(@PathParam("stashurl") String stashUrl, @PathParam("ledetekstnokkel") String ledetekstnokkel){
+    @Path("/{remoteUrl}/{ledetekstnokkel}")
+    public Response hentLedetekst(@PathParam("remoteUrl") String remoteUrl, @PathParam("ledetekstnokkel") String ledetekstnokkel){
         Ledetekst ledetekst = ledetekstService.hentLedeteksteFor(
-                LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
-                getRepoDir(stashUrl), ledetekstnokkel);
+                LedetekstServiceImpl.REPOSITORIES.get(remoteUrl),
+                getRepoDir(remoteUrl), ledetekstnokkel);
         return Response.ok(ledetekst.tilMap()).build();
     }
 

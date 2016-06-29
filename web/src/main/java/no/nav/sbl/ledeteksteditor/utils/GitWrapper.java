@@ -26,19 +26,21 @@ import static java.lang.System.getProperty;
 
 public class GitWrapper {
 
-    public static final UsernamePasswordCredentialsProvider CREDENTIALS_PROVIDER = new UsernamePasswordCredentialsProvider(getProperty("git.credential.username"), getProperty("git.credential.password"));
+    public static final UsernamePasswordCredentialsProvider CREDENTIALS_PROVIDER = new UsernamePasswordCredentialsProvider(getProperty("git.credential.username", ""), getProperty("git.credential.password", ""));
     static {
         CredentialsProvider.setDefault(CREDENTIALS_PROVIDER);
     }
-    public static Repository getRepo(String stashurl, File fileDir) {
+    public static Repository getRepo(String remoteUrl, File fileDir) {
+        System.out.println(remoteUrl);
+        System.out.println(fileDir.getAbsolutePath());
         Git testResult;
         try {
             if (isLegalRepo(fileDir.toPath())) {
                 testResult = Git.open(fileDir);
-                testResult.pull().call();
+                //testResult.pull().call();
             } else {
                 testResult = Git.cloneRepository()
-                        .setURI(stashurl)
+                        .setURI(remoteUrl)
                         .setDirectory(fileDir)
                         .call();
             }
@@ -102,10 +104,22 @@ public class GitWrapper {
         try {
             git.add().addFilepattern(".").call();
             git.commit().setMessage(kommentar).setAuthor(ident.navn, ident.epost).call();
-            git.push().call();
+            //git.push().call();
         } catch (TransportException e){
             throw new AutentiseringException(e);
         } catch (GitAPIException e) {
+            throw new ApplikasjonsException(e);
+        }
+    }
+
+    public static void initAndCommitRepo(File fileDir){
+        try {
+            Git.init().setDirectory(fileDir).call();
+            Git repo = Git.open(fileDir);
+            repo.commit().setMessage("init").setAuthor("GitWrapper", "Git@Wrapper.no");
+        } catch (GitAPIException e) {
+            throw new ApplikasjonsException(e);
+        } catch (IOException e) {
             throw new ApplikasjonsException(e);
         }
     }

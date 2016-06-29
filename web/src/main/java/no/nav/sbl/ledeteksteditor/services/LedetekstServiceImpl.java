@@ -18,27 +18,26 @@ import java.util.stream.Collectors;
 
 public class LedetekstServiceImpl implements LedetekstService {
 
-    private static final String FILE_PATH = "tekster" + File.separator + "src" + File.separator + "main" + File.separator + "tekster";
     public static final Map<String, String> REPOSITORIES = new HashMap<String, String>() {{
         put("ledertekst-temp", "http://S148209@stash.devillo.no/scm/hack/ledertekst-temp.git");
     }};
 
     @Override
-    public List<Ledetekst> hentAlleLedeteksterFor(String stashurl, File fileDir) {
-        List<File> filer = hentAlleLedetekstFilerFor(stashurl, fileDir);
+    public List<Ledetekst> hentAlleLedeteksterFor(String remoteUrl, File fileDir) {
+        List<File> filer = hentAlleLedetekstFilerFor(remoteUrl, fileDir);
         return mapTilLedetekst(filer);
     }
 
     @Override
-    public List<File> hentAlleLedetekstFilerFor(String stashurl, File fileDir) {
-        Repository repo = GitWrapper.getRepo(stashurl, fileDir);
+    public List<File> hentAlleLedetekstFilerFor(String remoteUrl, File fileDir) {
+        Repository repo = GitWrapper.getRepo(remoteUrl, fileDir);
         List<File> filer = GitWrapper.listFiles(repo);
         return filer.stream().filter(FileUtils.erLedetekstFil()).collect(Collectors.toList());
     }
 
     @Override
-    public List<File> hentAlleLedetekstFilerFor(String stashurl, File fileDir, String ledetekstnokkel) {
-        List<File> filer = hentAlleLedetekstFilerFor(stashurl, fileDir);
+    public List<File> hentAlleLedetekstFilerFor(String remoteUrl, File fileDir, String ledetekstnokkel) {
+        List<File> filer = hentAlleLedetekstFilerFor(remoteUrl, fileDir);
         List<File> ledetekstFiler = new ArrayList<File>();
         Pattern ledtekstPattern = Pattern.compile(ledetekstnokkel);
         for( File ledetekstFil : ledetekstFiler){
@@ -66,8 +65,8 @@ public class LedetekstServiceImpl implements LedetekstService {
     }
 
     @Override
-    public Ledetekst hentLedeteksteFor(String stashurl, File fileDir, String ledetekstnokkel) {
-        List<Ledetekst> ledetekster = hentAlleLedeteksterFor(stashurl, fileDir);
+    public Ledetekst hentLedeteksteFor(String remoteUrl, File fileDir, String ledetekstnokkel) {
+        List<Ledetekst> ledetekster = hentAlleLedeteksterFor(remoteUrl, fileDir);
         Ledetekst ledetekst = null;
         for (Ledetekst l : ledetekster) {
             if(l.nokkel.equals(ledetekstnokkel)){
@@ -82,14 +81,14 @@ public class LedetekstServiceImpl implements LedetekstService {
     }
 
     @Override
-    public Ledetekst oppdaterLedeteksteFor(String stashurl, File fileDir, Ledetekst ledetekst, Ident ident) {
-        List<File> filer = hentAlleLedetekstFilerFor(stashurl, fileDir);
+    public Ledetekst oppdaterLedeteksteFor(String remoteUrl, File fileDir, Ledetekst ledetekst, Ident ident) {
+        List<File> filer = hentAlleLedetekstFilerFor(remoteUrl, fileDir);
         for( Map.Entry<String, String> spraak : ledetekst.spraak.entrySet()){
             oppdaterLedetekstFor(filer, ledetekst.nokkel, spraak);
         }
-        Repository repo = GitWrapper.getRepo(stashurl, fileDir);
+        Repository repo = GitWrapper.getRepo(remoteUrl, fileDir);
         GitWrapper.commitChanges(repo, ident, ledetekst.kommentar);
-        return hentLedeteksteFor(stashurl, fileDir, ledetekst.nokkel);
+        return hentLedeteksteFor(remoteUrl, fileDir, ledetekst.nokkel);
     }
 
     private void oppdaterLedetekstFor(List<File> filer, String ledetekstnokkel, Map.Entry<String, String> spraak){

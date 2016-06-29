@@ -7,15 +7,15 @@ import java.io.File;
 import java.util.List;
 
 public interface LedetekstService {
-    List<Ledetekst> hentAlleLedeteksterFor(String stashurl, File fileDir);
+    List<Ledetekst> hentAlleLedeteksterFor(String remoteUrl, File fileDir);
 
-    List<File> hentAlleLedetekstFilerFor(String stashurl, File fileDir);
+    List<File> hentAlleLedetekstFilerFor(String remoteUrl, File fileDir);
 
-    List<File> hentAlleLedetekstFilerFor(String stashurl, File fileDir, String ledetekstnokkel);
+    List<File> hentAlleLedetekstFilerFor(String remoteUrl, File fileDir, String ledetekstnokkel);
 
     List<Ledetekst> mapTilLedetekst(List<File> filer);
 
-    Ledetekst hentLedeteksteFor(String stashurl, File fileDir, String ledetekstnokkel);
+    Ledetekst hentLedeteksteFor(String remoteUrl, File fileDir, String ledetekstnokkel);
 
-    Ledetekst oppdaterLedeteksteFor(String stashurl, File fileDir, Ledetekst ledetekst, Ident ident);
+    Ledetekst oppdaterLedeteksteFor(String remoteUrl, File fileDir, Ledetekst ledetekst, Ident ident);
 }
