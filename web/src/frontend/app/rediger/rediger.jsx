@@ -1,4 +1,5 @@
 import React, { PropTypes as PT, Component } from 'react';
+import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { fetchLedetekst } from './rediger-actions';
 import { autobind } from './../felles/utils';
@@ -28,6 +29,7 @@ function mapDispatchToProps(dispatch) {
     return {
         handleSubmit: (nokkel, spraak) => {
             dispatch(fetchLedetekst(nokkel, spraak));
+            dispatch(push('/nokkel&spraak'));
         }
     };
 }
