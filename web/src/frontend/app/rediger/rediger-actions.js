@@ -7,21 +7,33 @@ export const PUT_LEDETEKST = 'PUT_LEDETEKST';
 export function hentLedetekst(nokkel, spraak) {
     return {
         type: HENT_LEDETEKST,
-        data: [nokkel, spraak]
+        data: {
+            nokkel,
+            spraak,
+            innhold: ''
+        }
     };
 }
 
-export function faaLedetekst(data) {
+export function faaLedetekst(nokkel, spraak, innhold) {
     return {
         type: FAA_LEDETEKST,
-        data
+        data: {
+            nokkel,
+            spraak,
+            innhold
+        }
     };
 }
 
-export function putLedetekst(data) {
+export function putLedetekst(nokkel, spraak, innhold) {
     return {
         type: PUT_LEDETEKST,
-        data
+        data: {
+            nokkel,
+            spraak,
+            innhold
+        }
     };
 }
 
@@ -30,7 +42,7 @@ export function fetchLedetekst(nokkel, spraak) {
     console.log(`Språk: ${spraak}`);
     return dispatch => {
         dispatch(hentLedetekst(nokkel, spraak));
-        dispatch(faaLedetekst('Dummy ledetekst for å komme i gang!'));
+        dispatch(faaLedetekst(nokkel, spraak, 'Dummy ledetekst for å komme i gang!'));
     };
     /*
     const url = `/tekster/${encodeURIComponent('sbl-veiledningarbeidssoker')}/{nokkel}&{spraak}`;
@@ -46,7 +58,7 @@ export function fetchLedetekst(nokkel, spraak) {
 export function sendRedigertTekst(data) {
     console.log(`Redigert tekst: ${data}`);
     return dispatch => {
-        dispatch(putLedetekst(data));
+        dispatch(putLedetekst('', '', data));
     };
     /*
     const url = `/tekster/${encodeURIComponent('sbl-veiledningarbeidssoker')}/{nokkel}&{spraak}`;
