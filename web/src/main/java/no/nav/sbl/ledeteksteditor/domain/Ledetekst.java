@@ -4,27 +4,22 @@ import java.util.Map;
 
 public class Ledetekst {
 
-    private String nokkel;
-    private Map<String, String> innhold;
+    public String nokkel;
+    public Map<String, String> spraak;
+    public String kommentar;
 
+    public Ledetekst() {
+    }
 
-    public Ledetekst(String nokkel, Map<String, String> innhold) {
+    public Ledetekst(String nokkel, Map<String, String> spraak) {
         this.nokkel = nokkel;
-        this.innhold = innhold;
+        this.spraak = spraak;
     }
 
-    public String hentNokkel() {
-        return nokkel;
-    }
-
-    public Map<String, String> hentInnhold(){
-        return innhold;
-    }
-
-    public Map<String, Object> toMap() {
+    public Map<String, Object> tilMap() {
         HashMap<String, Object> tekstMap = new HashMap<>();
         tekstMap.put("nokkel", nokkel);
-        tekstMap.put("spraak", innhold);
+        tekstMap.put("spraak", spraak);
         return tekstMap;
     }
 
@@ -32,7 +27,7 @@ public class Ledetekst {
     public String toString() {
         return "Ledetekst{" +
                 "nokkel='" + nokkel + '\'' +
-                ", innhold=" + innhold +
+                ", spraak=" + spraak +
                 '}';
     }
 }

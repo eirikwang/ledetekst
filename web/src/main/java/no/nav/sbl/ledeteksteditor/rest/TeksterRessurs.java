@@ -1,8 +1,8 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
 import io.swagger.annotations.Api;
+import no.nav.sbl.ledeteksteditor.domain.Ident;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
-import no.nav.sbl.ledeteksteditor.domain.Payload;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
 import no.nav.sbl.ledeteksteditor.services.LedetekstServiceImpl;
 import org.slf4j.Logger;
@@ -37,15 +37,19 @@ public class TeksterRessurs {
                 getRepoDir(stashUrl));
         ArrayList<Map> toReturn = new ArrayList<>();
         for (Ledetekst l : applikasjonsTekster) {
-            toReturn.add(l.toMap());
+            toReturn.add(l.tilMap());
         }
         return Response.ok(toReturn).build();
     }
 
     @PUT
     @Path("/{stashurl}/{ledetekstnokkel}")
-    public Response oppdaterLedetekst(Payload payload, @PathParam("stashurl") String stashUrl, @PathParam("ledetekstnokkel") String ledetekstnokkel){
-        return  Response.ok(payload.getData()).build();
+    public Response oppdaterLedetekst(Ledetekst payload, @HeaderParam("navn") String navn, @HeaderParam("epost") String epost, @PathParam("stashurl") String stashUrl, @PathParam("ledetekstnokkel") String ledetekstnokkel){
+        Ident ident = new Ident(navn, epost);
+        Ledetekst ledetekst = ledetekstService.oppdaterLedeteksteFor(
+            LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
+            getRepoDir(stashUrl),  payload, ident);
+        return Response.ok(ledetekst.tilMap()).build();
     }
 
     @GET
@@ -54,7 +58,7 @@ public class TeksterRessurs {
         Ledetekst ledetekst = ledetekstService.hentLedeteksteFor(
                 LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
                 getRepoDir(stashUrl), ledetekstnokkel);
-        return Response.ok(ledetekst.toMap()).build();
+        return Response.ok(ledetekst.tilMap()).build();
     }
 
 

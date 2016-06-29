@@ -68,7 +68,8 @@
     "vinyl-source-stream": "1.1.0",
     "watchify": "3.7.0",
     "whatwg-fetch": "1.0.0",
-    "yargs": "4.7.1"
+    "yargs": "4.7.1",
+    "modig-frontend": "git+http://stash.devillo.no/scm/felles/modig-frontend.git#modig-frontend-3.0.22"
   },
   "dependencies": {
     "babel-polyfill": "^6.9.1",

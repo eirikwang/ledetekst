@@ -1,9 +1,7 @@
 package no.nav.sbl.ledeteksteditor.utils;
 
-import no.nav.sbl.ledeteksteditor.utils.exception.AapneRepoException;
-import no.nav.sbl.ledeteksteditor.utils.exception.GitWrapperException;
-import no.nav.sbl.ledeteksteditor.utils.exception.LesLedetekstException;
-import no.nav.sbl.ledeteksteditor.utils.exception.RemoteIkkeFunnetException;
+import no.nav.sbl.ledeteksteditor.domain.Ident;
+import no.nav.sbl.ledeteksteditor.utils.exception.*;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
@@ -53,7 +51,7 @@ public class GitWrapper {
         TreeWalk treeWalk = new TreeWalk(repo);
         RevWalk walk = new RevWalk(repo);
         try {
-            RevCommit commit = walk.parseCommit(repo.exactRef("HEAD").getObjectId());
+            RevCommit commit = walk.parseCommit(repo.exactRef("HEAD").getObjectId()); //ToDo denne feiler om repo en peker til ikke er init
             treeWalk.addTree(commit.getTree());
         } catch (IOException e){
             throw new AapneRepoException(e);
@@ -75,7 +73,7 @@ public class GitWrapper {
     public static String getContentFromFile(File file) {
         List<String> content;
         try {
-            content = Files.readAllLines(file.toPath());
+            content = Files.readAllLines(file.toPath()); //todo breakker på feil charset?
         } catch (IOException e){
             throw new LesLedetekstException(e);
         }
@@ -86,11 +84,22 @@ public class GitWrapper {
         try {
             Files.write(file.toPath(), content.getBytes());
         } catch (IOException e){
-            throw new LesLedetekstException(e);
+            throw new SkrivLedetekstException(e);
         }
     }
 
     private static boolean isLegalRepo(Path path) {
         return RepositoryCache.FileKey.isGitRepository(path.resolve(".git").toFile(), FS.DETECTED);
+    }
+
+    public static void commitChanges(Repository repo, Ident ident, String kommentar) {
+        Git git = new Git(repo);
+        try {
+            git.add().addFilepattern(".").call();
+            git.commit().setMessage(kommentar).setAuthor(ident.navn, ident.epost).call();
+            git.push().call();
+        } catch (GitAPIException e) {
+            throw new ApplikasjonsException(e);
+        }
     }
 }
