@@ -5,15 +5,17 @@ const DEFAULT_STATE = {
     status: STATUS.ikkelastet,
     nokkel: '',
     spraak: ''
-}
+};
 
 export default function rediger(state = DEFAULT_STATE, action) {
     switch(action.type) {
         case HENT_LEDETEKST:
-            return {...state, status: STATUS.laster};
+            return { ...state, status: STATUS.laster };
         case FAA_LEDETEKST:
-            return {...state, status: STATUS.lastet};
+            return { ...state, status: STATUS.lastet };
         case PUT_LEDETEKST:
-            return {...state, status: STATUS.laster};
+            return { ...state, status: STATUS.laster };
+        default:
+            return state;
     }
 }

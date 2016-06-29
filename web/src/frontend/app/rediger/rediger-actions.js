@@ -26,6 +26,13 @@ export function putLedetekst(data) {
 }
 
 export function fetchLedetekst(nokkel, spraak) {
+    console.log(`Nøkkel: ${nokkel}`);
+    console.log(`Språk: ${spraak}`);
+    return dispatch => {
+        dispatch(hentLedetekst(nokkel, spraak));
+        dispatch(faaLedetekst('Dummy ledetekst for å komme i gang!'));
+    };
+    /*
     const url = `/tekster/${encodeURIComponent('sbl-veiledningarbeidssoker')}/{nokkel}&{spraak}`;
     return dispatch => {
         dispatch(hentLedetekst(nokkel, spraak));
@@ -33,9 +40,15 @@ export function fetchLedetekst(nokkel, spraak) {
             .then((response) =>
                 dispatch(faaLedetekst(response)));
     };
+    */
 }
 
 export function sendRedigertTekst(data) {
+    console.log(`Redigert tekst: ${data}`);
+    return dispatch => {
+        dispatch(putLedetekst(data));
+    };
+    /*
     const url = `/tekster/${encodeURIComponent('sbl-veiledningarbeidssoker')}/{nokkel}&{spraak}`;
     return dispatch => {
         dispatch(putLedetekst(data));
@@ -44,4 +57,5 @@ export function sendRedigertTekst(data) {
             body: data
         });
     };
+    */
 }
