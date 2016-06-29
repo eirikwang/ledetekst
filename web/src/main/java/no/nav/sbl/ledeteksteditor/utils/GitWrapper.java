@@ -10,6 +10,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.FS;
@@ -25,6 +26,10 @@ import static java.lang.System.getProperty;
 
 public class GitWrapper {
 
+    public static final UsernamePasswordCredentialsProvider CREDENTIALS_PROVIDER = new UsernamePasswordCredentialsProvider(getProperty("git.credential.username"), getProperty("git.credential.password"));
+    static {
+        CredentialsProvider.setDefault(CREDENTIALS_PROVIDER);
+    }
     public static Repository getRepo(String stashurl, File fileDir) {
         Git testResult;
         try {
@@ -35,7 +40,6 @@ public class GitWrapper {
                 testResult = Git.cloneRepository()
                         .setURI(stashurl)
                         .setDirectory(fileDir)
-                        .setCredentialsProvider(new UsernamePasswordCredentialsProvider(getProperty("git.credential.username"), getProperty("git.credential.password")))
                         .call();
             }
         } catch (InvalidRemoteException e){
@@ -52,7 +56,7 @@ public class GitWrapper {
         TreeWalk treeWalk = new TreeWalk(repo);
         RevWalk walk = new RevWalk(repo);
         try {
-            RevCommit commit = walk.parseCommit(repo.exactRef("HEAD").getObjectId()); //ToDo denne feiler om repo en peker til ikke er init
+            RevCommit commit = walk.parseCommit(repo.exactRef("HEAD").getObjectId());
             treeWalk.addTree(commit.getTree());
         } catch (IOException e){
             throw new AapneRepoException(e);
@@ -74,7 +78,7 @@ public class GitWrapper {
     public static String getContentFromFile(File file) {
         List<String> content;
         try {
-            content = Files.readAllLines(file.toPath()); //todo breakker på feil charset?
+            content = Files.readAllLines(file.toPath());
         } catch (IOException e){
             throw new LesLedetekstException(e);
         }

@@ -18,13 +18,12 @@ import java.util.stream.Collectors;
 
 public class LedetekstServiceImpl implements LedetekstService {
 
-    public static final Map<String, String> REPOSITORIES = new HashMap<String, String>() {{
-        put("ledertekst-temp", "http://S148209@stash.devillo.no/scm/hack/ledertekst-temp.git");
-        put("test-repo-clone", "../test-repo");
-    }};
     private static final String FILE_PATH = "tekster" + File.separator + "src" + File.separator + "main" + File.separator + "tekster";
     private final static Predicate<File> erLedetekstFil = (File p) -> p.getPath().contains(FILE_PATH);
     private static final Pattern FILE_PATTERN = Pattern.compile("(.*?)(_([a-zA-Z]{2}_?[a-zA-Z]{0,2}))?\\.([a-z]*)$");
+    public static final Map<String, String> REPOSITORIES = new HashMap<String, String>() {{
+        put("ledertekst-temp", "http://S148209@stash.devillo.no/scm/hack/ledertekst-temp.git");
+    }};
 
     @Override
     public List<Ledetekst> hentAlleLedeteksterFor(String stashurl, File fileDir) {
