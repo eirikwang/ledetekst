@@ -43,7 +43,7 @@ function bundle(gulp, bundle, bundleFileName) {
 function buildJs(gulp) {
     return () => {
         const browserify = require('browserify');
-        var bundler = browserify('./app/index.js', {
+        var bundler = browserify('./app/index.jsx', {
             debug: isDevelopment(),
             extensions: ['.js', '.jsx'],
             fullPaths: isDevelopment()
@@ -73,7 +73,7 @@ function buildJsWatchify(gulp) {
 
         const browserifyOpts = {
             debug: isDevelopment(),
-            entries: './app/index.js',
+            entries: './app/index.jsx',
             extensions: ['.js', '.jsx'],
             cache: {},
             packageCache: {},

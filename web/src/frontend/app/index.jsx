@@ -1,9 +1,9 @@
 import 'babel-polyfill';
 import React from 'react';
-import { render } from 'react-dom';
-import { Router, Route, IndexRoute, useRouterHistory } from 'react-router';
-import { createHistory } from 'history';
-import { syncHistoryWithStore } from 'react-router-redux';
+import {render} from 'react-dom';
+import {Router, Route, IndexRoute, useRouterHistory} from 'react-router';
+import {createHistory} from 'history';
+import {syncHistoryWithStore} from 'react-router-redux';
 import createStore from './store.js';
 import Application from './application';
 import TekstBoks from './rediger/rediger-tekstboks';
@@ -21,11 +21,11 @@ function Root({ children }) {
 }
 
 render((
-    <Provider store={store} >
+    <Provider store={store}>
         <Router history={history}>
             <Route path="/" component={Root}>
-                <IndexRoute component={Application} />
-                <Route path="nokkel&spraak" component={TekstBoks} />
+                <IndexRoute component={Application}/>
+                <Route path="nokkel&spraak" component={TekstBoks}/>
             </Route>
         </Router>
     </Provider>
