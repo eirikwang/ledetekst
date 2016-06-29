@@ -4,13 +4,13 @@ export const HENT_LEDETEKST = 'HENT_LEDETEKST';
 export const FAA_LEDETEKST = 'FAA_LEDETEKST';
 export const PUT_LEDETEKST = 'PUT_LEDETEKST';
 
-export function hentLedetekst(nokkel, spraak) {
+export function hentLedetekst(nokkel, spraak, innhold) {
     return {
         type: HENT_LEDETEKST,
         data: {
             nokkel,
             spraak,
-            innhold: ''
+            innhold
         }
     };
 }
@@ -41,7 +41,8 @@ export function fetchLedetekst(nokkel, spraak) {
     console.log(`Nøkkel: ${nokkel}`);
     console.log(`Språk: ${spraak}`);
     return dispatch => {
-        dispatch(hentLedetekst(nokkel, spraak));
+        dispatch(hentLedetekst(nokkel, spraak, ''));
+        //Må finne igjen riktig tekst her!
         dispatch(faaLedetekst(nokkel, spraak, 'Dummy ledetekst for å komme i gang!'));
     };
     /*
