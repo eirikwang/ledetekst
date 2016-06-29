@@ -1,7 +1,7 @@
 {
-  "name": "veiledningarbeidssoker",
+  "name": "ledeteksteditor",
   "version": "0.1.0",
-  "description": "Veileder for arbeidssøkere",
+  "description": "Editor for ledetekster",
   "main": "index.js",
   "scripts": {
     "watch": "gulp watch",

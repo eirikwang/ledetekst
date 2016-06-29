@@ -1,3 +1,4 @@
+/* eslint-env mocha */
 import { expect } from './../../test-helper';
 import { LOGG_INN, InnloggingsStatus } from './logginn-actions';
 import loggInn from './logginn-reducer';

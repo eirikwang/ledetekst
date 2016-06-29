@@ -2,6 +2,7 @@ package no.nav.sbl.ledeteksteditor.services;
 
 import no.nav.sbl.ledeteksteditor.domain.Ident;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
+import no.nav.sbl.ledeteksteditor.utils.FileUtils;
 import no.nav.sbl.ledeteksteditor.utils.GitWrapper;
 import no.nav.sbl.ledeteksteditor.utils.exception.IkkeFunnetException;
 import org.eclipse.jgit.lib.Repository;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 public class LedetekstServiceImpl implements LedetekstService {
 
     private static final String FILE_PATH = "tekster" + File.separator + "src" + File.separator + "main" + File.separator + "tekster";
-    private final static Predicate<File> erLedetekstFil = (File p) -> p.getPath().contains(FILE_PATH);
-    private static final Pattern FILE_PATTERN = Pattern.compile("(.*?)(_([a-zA-Z]{2}_?[a-zA-Z]{0,2}))?\\.([a-z]*)$");
     public static final Map<String, String> REPOSITORIES = new HashMap<String, String>() {{
         put("ledertekst-temp", "http://S148209@stash.devillo.no/scm/hack/ledertekst-temp.git");
     }};
@@ -35,7 +33,7 @@ public class LedetekstServiceImpl implements LedetekstService {
     public List<File> hentAlleLedetekstFilerFor(String stashurl, File fileDir) {
         Repository repo = GitWrapper.getRepo(stashurl, fileDir);
         List<File> filer = GitWrapper.listFiles(repo);
-        return filer.stream().filter(erLedetekstFil).collect(Collectors.toList());
+        return filer.stream().filter(FileUtils.erLedetekstFil()).collect(Collectors.toList());
     }
 
     @Override
@@ -57,14 +55,12 @@ public class LedetekstServiceImpl implements LedetekstService {
         Map<String, Map<String, String>> innhold = new HashMap<>();
 
         for (File file : filer) {
-            Matcher matcher = FILE_PATTERN.matcher(file.getPath());
 
-            if (matcher.find()) {
-                String nokkel = matcher.group(1).substring(matcher.group(1).lastIndexOf("\\") + 1);
-                String locale = matcher.group(3);
-                String innholdFil = GitWrapper.getContentFromFile(file);
-                innhold.computeIfAbsent(nokkel, (ignore) -> new HashMap<>()).put(locale, innholdFil);
-            }
+            if(!FileUtils.matcherFilMonster(file)) continue;
+            String nokkel = FileUtils.hentNokkel(file);
+            String locale = FileUtils.hentLocale(file);
+            String innholdFil = GitWrapper.getContentFromFile(file);
+            innhold.computeIfAbsent(nokkel, (ignore) -> new HashMap<>()).put(locale, innholdFil);
         }
         return innhold.entrySet().stream().map(entry -> new Ledetekst(entry.getKey(), entry.getValue())).collect(Collectors.toList());
     }
