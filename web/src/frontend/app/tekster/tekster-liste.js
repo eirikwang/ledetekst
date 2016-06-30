@@ -1,5 +1,6 @@
 import React, { PropTypes as PT } from 'react';
 import { storeShape } from './../felles/proptype-shapes';
+import RedigerLink from './../redigerlink/redigerlink';
 
 function mapTilHtml(tekstMap) {
     const nokkel = tekstMap[1].nokkel;
@@ -15,7 +16,6 @@ function mapTilHtml(tekstMap) {
             </ul>
         </ul>
     );
-
 }
 
 function Tekster({ tekster }) {
