@@ -47,9 +47,10 @@ public class TeksterRessursTest {
                 new Ledetekst("ledetekst1", lagMockLedetekstMap())
         ));
 
-        ArrayList<HashMap> result = (ArrayList<HashMap>) teksterRessurs.hentTeksterForUrl(TEST_REPO).getEntity();
-        List<String> nokler = result.stream().map((Map m) -> ((String) m.get("nokkel"))).collect(toList());
-        List<Map> spraak = result.stream().map((Map m) -> ((Map) m.get("spraak"))).collect(toList());
+
+        List<Ledetekst> result = (List<Ledetekst>) teksterRessurs.hentTeksterForUrl(TEST_REPO).getEntity();
+        List<String> nokler = result.stream().map(l -> l.nokkel).collect(toList());
+        List<Map> spraak = result.stream().map(l -> l.spraak).collect(toList());
 
         assertFalse(result.isEmpty());
         assertEquals(nokler.get(0), "ledetekst1");
@@ -60,9 +61,9 @@ public class TeksterRessursTest {
     public void teksterSkalReturnereTomListe() {
         when(ledetekstServiceMock.hentAlleLedeteksterFor(anyString(), any(File.class))).thenReturn(emptyList());
 
-        ArrayList<HashMap> result = (ArrayList<HashMap>) teksterRessurs.hentTeksterForUrl(TEST_REPO).getEntity();
-        List<String> nokler = result.stream().map((Map m) -> ((String) m.get("nokkel"))).collect(toList());
-        List<Map> spraak = result.stream().map((Map m) -> ((Map) m.get("spraak"))).collect(toList());
+        List<Ledetekst> result = (List<Ledetekst>) teksterRessurs.hentTeksterForUrl(TEST_REPO).getEntity();
+        List<String> nokler = result.stream().map(l -> l.nokkel).collect(toList());
+        List<Map> spraak = result.stream().map(l -> l.spraak).collect(toList());
 
         assertTrue(result.isEmpty());
         assertTrue(nokler.isEmpty());
@@ -81,11 +82,11 @@ public class TeksterRessursTest {
             put("en", "en");
             put("no", "no");
         }}));
-        HashMap ledetekst = (HashMap) teksterRessurs.hentLedetekst(TEST_REPO, TEST_LEDETEKSTNOKKEL).getEntity();
+        Ledetekst ledetekst = (Ledetekst)teksterRessurs.hentLedetekst(TEST_REPO, TEST_LEDETEKSTNOKKEL).getEntity();
         assertFalse(ledetekst == null);
-        assertEquals(ledetekst.get("nokkel"), "prop1");
-        assertEquals(((HashMap)ledetekst.get("spraak")).get("en"), "en");
-        assertEquals(((HashMap)ledetekst.get("spraak")).get("no"), "no");
+        assertEquals(ledetekst.nokkel, "prop1");
+        assertEquals(ledetekst.spraak.get("en"), "en");
+        assertEquals(ledetekst.spraak.get("no"), "no");
     }
 
     @Test
@@ -97,15 +98,15 @@ public class TeksterRessursTest {
             }
         });
 
-        HashMap ledetekst = (HashMap) teksterRessurs.oppdaterLedetekst(new Ledetekst("prop1", new HashMap<String, String>(){{
+        Ledetekst ledetekst = (Ledetekst) teksterRessurs.oppdaterLedetekst(new Ledetekst("prop1", new HashMap<String, String>(){{
                 put("en", "en");
                 put("no", "no");
         }}), "Test Bruker", "test@bruker.no", "test-repo").getEntity();
 
         assertFalse(ledetekst == null);
-        assertEquals(ledetekst.get("nokkel"), "prop1");
-        assertEquals(((HashMap)ledetekst.get("spraak")).get("en"), "en");
-        assertEquals(((HashMap)ledetekst.get("spraak")).get("no"), "no");
+        assertEquals(ledetekst.nokkel, "prop1");
+        assertEquals(ledetekst.spraak.get("en"), "en");
+        assertEquals(ledetekst.spraak.get("no"), "no");
     }
 
     private Map<String, String> lagMockLedetekstMap() {
