@@ -84,16 +84,20 @@ public class LedetekstServiceImpl implements LedetekstService {
     @Override
     public Ledetekst oppdaterLedeteksteFor(String remoteUrl, File fileDir, Ledetekst ledetekst, Ident ident) {
         List<File> filer = hentAlleLedetekstFilerFor(remoteUrl, fileDir);
+        boolean nyeEndringer = false;
         for( Map.Entry<String, String> spraak : ledetekst.spraak.entrySet()){
-            oppdaterLedetekstFor(filer, ledetekst.nokkel, spraak);
+            nyeEndringer |= oppdaterLedetekstFor(filer, ledetekst.nokkel, spraak);
         }
         Repository repo = GitWrapper.getRepo(remoteUrl, fileDir);
-        GitWrapper.commitChanges(repo, ident, ledetekst.kommentar);
+        if (nyeEndringer){
+            GitWrapper.commitChanges(repo, ident, ledetekst.kommentar);
+            GitWrapper.push(repo);
+        }
         repo.close();
         return hentLedeteksteFor(remoteUrl, fileDir, ledetekst.nokkel);
     }
 
-    private void oppdaterLedetekstFor(List<File> filer, String ledetekstnokkel, Map.Entry<String, String> spraak){
+    private boolean oppdaterLedetekstFor(List<File> filer, String ledetekstnokkel, Map.Entry<String, String> spraak){
         File ledetekstfil = null;
         for(File fil : filer){
             if(fil.getName().contains(ledetekstnokkel + "_" + spraak.getKey())){
@@ -104,6 +108,11 @@ public class LedetekstServiceImpl implements LedetekstService {
         if(ledetekstfil == null){
             throw new IkkeFunnetException("Fant ikke fil: " + ledetekstnokkel + "_" + spraak.getKey());
         }
-        GitWrapper.writeContentToFile(ledetekstfil, spraak.getValue());
+        boolean endretFil = false;
+        if(!GitWrapper.getContentFromFile(ledetekstfil).equals(spraak.getValue())){
+            GitWrapper.writeContentToFile(ledetekstfil, spraak.getValue());
+            endretFil = true;
+        }
+        return endretFil;
     }
 }
