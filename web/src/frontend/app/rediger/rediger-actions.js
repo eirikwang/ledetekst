@@ -29,20 +29,16 @@ export function fetchLedetekst(nokkel, spraak, tekst) {
     };
 }
 
-export function sendRedigertTekst(nokkel, spraak, data) {
-    console.log(`Redigert tekst: ${data}`);
-    /*
-    return dispatch => {
-        dispatch(putLedetekst(nokkel, spraak, data));
-    };
-    */
+export function sendRedigertTekst(nokkel, spraak, tekst, navn, epost) {
+    console.log(`Redigert tekst: ${tekst}`);
+    console.log(`Navn: ${navn}, Epost: ${epost}`);
     const url = `/tekster/${encodeURIComponent('sbl-veiledningarbeidssoker')}/{nokkel}&{spraak}`;
     return dispatch => {
-        dispatch(putLedetekst(data));
+        dispatch(putLedetekst(nokkel, spraak, tekst));
         return fetch(url, {
             method: 'PUT',
-            body: data
+            header: [navn, epost],
+            body: tekst
         });
     };
-
 }

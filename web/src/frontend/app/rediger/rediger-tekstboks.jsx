@@ -12,7 +12,8 @@ class TekstBoks extends Component {
 
     hentRedigert(event) {
         event.preventDefault();
-        this.props.handleSubmit(this.props.nokkel, this.props.spraak, this.refs.tekst.value);
+        this.props.handleSubmit(this.props.nokkel, this.props.spraak, this.refs.tekst.value,
+            this.props.navn, this.props.email);
     }
     render() {
         const tekst = this.props.tekst;
@@ -31,8 +32,8 @@ class TekstBoks extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        handleSubmit: (nokkel, spraak, tekst) => {
-            dispatch(sendRedigertTekst(nokkel, spraak, tekst));
+        handleSubmit: (nokkel, spraak, tekst, navn, email) => {
+            dispatch(sendRedigertTekst(nokkel, spraak, tekst, navn, email));
         }
     };
 }
@@ -41,7 +42,9 @@ function mapStateToProps(state) {
     return {
         nokkel: state.rediger.data.nokkel,
         spraak: state.rediger.data.spraak,
-        tekst: state.rediger.data.innhold
+        tekst: state.rediger.data.innhold,
+        navn: state.autentisert.data.navn,
+        email: state.autentisert.data.email
     };
 }
 
@@ -49,6 +52,8 @@ TekstBoks.propTypes = {
     nokkel: PT.string.isRequired,
     spraak: PT.string.isRequired,
     tekst: PT.string.isRequired,
+    navn: PT.string.isRequired,
+    email: PT.string.isRequired,
     handleSubmit: PT.func.isRequired
 };
 
