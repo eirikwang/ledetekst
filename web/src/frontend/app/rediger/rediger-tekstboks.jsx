@@ -12,10 +12,10 @@ class TekstBoks extends Component {
 
     hentRedigert(event) {
         event.preventDefault();
-        this.props.handleSubmit(this.refs.tekst.value);
+        this.props.handleSubmit(this.props.nokkel, this.props.spraak, this.refs.tekst.value);
     }
     render() {
-        const tekst = 'Dummy ledetekst for å komme i gang!';
+        const tekst = this.props.tekst;
         return (
             <div>
                 <form onSubmit={this.hentRedigert}>
@@ -31,17 +31,23 @@ class TekstBoks extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        handleSubmit: (tekst) => {
-            dispatch(sendRedigertTekst(tekst));
+        handleSubmit: (nokkel, spraak, tekst) => {
+            dispatch(sendRedigertTekst(nokkel, spraak, tekst));
         }
     };
 }
 
-function mapStateToProps({ tekst }) {
-    return { tekst };
+function mapStateToProps(state) {
+    return {
+        nokkel: state.rediger.data.nokkel,
+        spraak: state.rediger.data.spraak,
+        tekst: state.rediger.data.innhold
+    };
 }
 
 TekstBoks.propTypes = {
+    nokkel: PT.string.isRequired,
+    spraak: PT.string.isRequired,
     tekst: PT.string.isRequired,
     handleSubmit: PT.func.isRequired
 };

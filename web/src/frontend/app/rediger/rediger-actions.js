@@ -1,23 +1,9 @@
-import { fetchToJson } from './../felles/utils';
-
-export const HENT_LEDETEKST = 'HENT_LEDETEKST';
-export const FAA_LEDETEKST = 'FAA_LEDETEKST';
+export const FAATT_LEDETEKST = 'FAA_LEDETEKST';
 export const PUT_LEDETEKST = 'PUT_LEDETEKST';
 
-export function hentLedetekst(nokkel, spraak, innhold) {
+export function faattLedetekst(nokkel, spraak, innhold) {
     return {
-        type: HENT_LEDETEKST,
-        data: {
-            nokkel,
-            spraak,
-            innhold
-        }
-    };
-}
-
-export function faaLedetekst(nokkel, spraak, innhold) {
-    return {
-        type: FAA_LEDETEKST,
+        type: FAATT_LEDETEKST,
         data: {
             nokkel,
             spraak,
@@ -37,31 +23,19 @@ export function putLedetekst(nokkel, spraak, innhold) {
     };
 }
 
-export function fetchLedetekst(nokkel, spraak) {
-    console.log(`Nøkkel: ${nokkel}`);
-    console.log(`Språk: ${spraak}`);
+export function fetchLedetekst(nokkel, spraak, tekst) {
     return dispatch => {
-        dispatch(hentLedetekst(nokkel, spraak, ''));
-        //Må finne igjen riktig tekst her!
-        dispatch(faaLedetekst(nokkel, spraak, 'Dummy ledetekst for å komme i gang!'));
+        dispatch(faattLedetekst(nokkel, spraak, tekst));
     };
-    /*
-    const url = `/tekster/${encodeURIComponent('sbl-veiledningarbeidssoker')}/{nokkel}&{spraak}`;
-    return dispatch => {
-        dispatch(hentLedetekst(nokkel, spraak));
-        return fetchToJson(url)
-            .then((response) =>
-                dispatch(faaLedetekst(response)));
-    };
-    */
 }
 
-export function sendRedigertTekst(data) {
+export function sendRedigertTekst(nokkel, spraak, data) {
     console.log(`Redigert tekst: ${data}`);
-    return dispatch => {
-        dispatch(putLedetekst('', '', data));
-    };
     /*
+    return dispatch => {
+        dispatch(putLedetekst(nokkel, spraak, data));
+    };
+    */
     const url = `/tekster/${encodeURIComponent('sbl-veiledningarbeidssoker')}/{nokkel}&{spraak}`;
     return dispatch => {
         dispatch(putLedetekst(data));
@@ -70,5 +44,5 @@ export function sendRedigertTekst(data) {
             body: data
         });
     };
-    */
+
 }
