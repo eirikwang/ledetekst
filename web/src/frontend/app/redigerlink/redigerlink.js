@@ -7,7 +7,7 @@ import { fetchLedetekst } from './../rediger/rediger-actions';
 export function RedigerLink({ nokkel, spraak, redigerLedetekstDispatcher }) {
 
     return (
-        <>{spraak}</a> // eslint-disable-line no-script-url
+        <Link to={`rediger?nokkel=${nokkel}&spraak=${spraak}`}>{spraak}</Link> // eslint-disable-line no-script-url
     );
 }
 
