@@ -35,7 +35,7 @@ function mapDispatchToProps(dispatch) {
     return {
         handleSubmit: (nokkel, spraak, tekst) => {
             dispatch(fetchLedetekst(nokkel, spraak, tekst));
-            dispatch(push('/nokkel&spraak'));
+            dispatch(push({ pathname: "/rediger", query: { nokkel, spraak }}));
         }
     };
 }
