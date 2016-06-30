@@ -24,8 +24,6 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Api(value = "ledetekster", description = "Endpoint for ledetekster")
 public class TeksterRessurs {
 
-    private static Logger logger = LoggerFactory.getLogger(TeksterRessurs.class);
-
     @Inject
     private LedetekstService ledetekstService;
 
@@ -44,7 +42,7 @@ public class TeksterRessurs {
 
     @PUT
     @Path("/{remoteUrl}/{ledetekstnokkel}")
-    public Response oppdaterLedetekst(Ledetekst payload, @HeaderParam("navn") String navn, @HeaderParam("epost") String epost, @PathParam("remoteUrl") String remoteUrl, @PathParam("ledetekstnokkel") String ledetekstnokkel){
+    public Response oppdaterLedetekst(Ledetekst payload, @HeaderParam("navn") String navn, @HeaderParam("epost") String epost, @PathParam("remoteUrl") String remoteUrl){
         Ident ident = new Ident(navn, epost);
         Ledetekst ledetekst = ledetekstService.oppdaterLedeteksteFor(
             LedetekstServiceImpl.REPOSITORIES.get(remoteUrl),

@@ -39,7 +39,7 @@ public class LedetekstServiceImpl implements LedetekstService {
     @Override
     public List<File> hentAlleLedetekstFilerFor(String remoteUrl, File fileDir, String ledetekstnokkel) {
         List<File> filer = hentAlleLedetekstFilerFor(remoteUrl, fileDir);
-        List<File> ledetekstFiler = new ArrayList<File>();
+        List<File> ledetekstFiler = new ArrayList<>();
         Pattern ledtekstPattern = Pattern.compile(ledetekstnokkel);
         for( File ledetekstFil : ledetekstFiler){
             Matcher matcher = ledtekstPattern.matcher(ledetekstFil.getName());
@@ -56,7 +56,9 @@ public class LedetekstServiceImpl implements LedetekstService {
 
         for (File file : filer) {
 
-            if(!FileUtils.matcherFilMonster(file)) continue;
+            if(!FileUtils.matcherFilMonster(file)){
+                continue;
+            }
             String nokkel = FileUtils.hentNokkel(file);
             String locale = FileUtils.hentLocale(file);
             String innholdFil = GitWrapper.getContentFromFile(file);

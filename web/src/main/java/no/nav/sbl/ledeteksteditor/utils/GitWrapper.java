@@ -26,18 +26,16 @@ import static java.lang.System.getProperty;
 
 public class GitWrapper {
 
-    public static final UsernamePasswordCredentialsProvider CREDENTIALS_PROVIDER = new UsernamePasswordCredentialsProvider(getProperty("git.credential.username", ""), getProperty("git.credential.password", ""));
+    public static final UsernamePasswordCredentialsProvider CREDENTIALS_PROVIDER = new UsernamePasswordCredentialsProvider(getProperty("git.credential.username", ""), getProperty("git.credential" +
+            ".password", ""));
     static {
         CredentialsProvider.setDefault(CREDENTIALS_PROVIDER);
     }
     public static Repository getRepo(String remoteUrl, File fileDir) {
-        System.out.println(remoteUrl);
-        System.out.println(fileDir.getAbsolutePath());
         Git testResult;
         try {
             if (isLegalRepo(fileDir.toPath())) {
                 testResult = Git.open(fileDir);
-                //testResult.pull().call();
             } else {
                 testResult = Git.cloneRepository()
                         .setURI(remoteUrl)
