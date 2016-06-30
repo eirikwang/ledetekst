@@ -2,7 +2,7 @@ import React, { PropTypes as PT, Component } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { fetchLedetekst } from './rediger-actions';
-import { autobind } from './../felles/utils';
+import { autobind, finnTekst } from './../felles/utils';
 
 class Rediger extends Component {
     constructor(props) {
@@ -12,7 +12,13 @@ class Rediger extends Component {
 
     hentInput(event) {
         event.preventDefault();
-        this.props.handleSubmit(this.refs.nokkel.value, this.refs.spraak.value);
+        if (!this.props.loggetInn) {
+            console.log('Du må logge inn før du kan redigere tekster');
+            return;
+        }
+        const queryTekst = finnTekst(this.refs.nokkel.value, this.refs.spraak.value, this.props.tekster.data);
+        if (queryTekst === '') return;
+        this.props.handleSubmit(this.refs.nokkel.value, this.refs.spraak.value, queryTekst);
     }
     render() {
         return (
@@ -27,15 +33,24 @@ class Rediger extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        handleSubmit: (nokkel, spraak) => {
-            dispatch(fetchLedetekst(nokkel, spraak));
-            dispatch(push('/nokkel&spraak'));
+        handleSubmit: (nokkel, spraak, tekst) => {
+            dispatch(fetchLedetekst(nokkel, spraak, tekst));
+            dispatch(push({ pathname: "/rediger", query: { nokkel, spraak }}));
         }
     };
 }
 
+function mapStateToProps(state) {
+    return {
+        tekster: state.tekster,
+        loggetInn: state.autentisert.status === 'LOGGET_INN'
+    };
+}
+
 Rediger.propTypes = {
+    tekster: PT.object.isRequired,
+    loggetInn: PT.bool.isRequired,
     handleSubmit: PT.func.isRequired
 };
 
-export default connect(() => ({}), mapDispatchToProps)(Rediger);
+export default connect(mapStateToProps, mapDispatchToProps)(Rediger);

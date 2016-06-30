@@ -1,21 +1,24 @@
-import React, { Component, PropTypes as PT } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { autobind } from './../felles/utils';
+import { autobind, finnTekst } from './../felles/utils';
 import { sendRedigertTekst } from './rediger-actions';
 
-class TekstBoks extends Component {
+class RedigerTekstboks extends Component {
 
     constructor(props) {
         super(props);
         autobind(this);
+        this.nokkel = this.props.location.query.nokkel;
+        this.spraak = this.props.location.query.spraak;
     }
 
     hentRedigert(event) {
         event.preventDefault();
-        this.props.handleSubmit(this.refs.tekst.value);
+        this.props.handleSubmit(this.nokkel, this.spraak, this.refs.tekst.value,
+            this.props.navn, this.props.email);
     }
     render() {
-        const tekst = 'Dummy ledetekst for å komme i gang!';
+        const tekst = finnTekst(this.nokkel, this.spraak, this.props.tekster.data);
         return (
             <div>
                 <form onSubmit={this.hentRedigert}>
@@ -31,19 +34,18 @@ class TekstBoks extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        handleSubmit: (tekst) => {
-            dispatch(sendRedigertTekst(tekst));
+        handleSubmit: (nokkel, spraak, tekst, navn, email) => {
+            dispatch(sendRedigertTekst(nokkel, spraak, tekst, navn, email));
         }
     };
 }
 
-function mapStateToProps({ tekst }) {
-    return { tekst };
+function mapStateToProps(state) {
+    return {
+        tekster: state.tekster,
+        navn: state.autentisert.data.navn,
+        email: state.autentisert.data.email
+    }
 }
 
-TekstBoks.propTypes = {
-    tekst: PT.string.isRequired,
-    handleSubmit: PT.func.isRequired
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TekstBoks);
+export default connect(mapStateToProps, mapDispatchToProps)(RedigerTekstboks);
