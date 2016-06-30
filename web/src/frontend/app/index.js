@@ -6,7 +6,7 @@ import { createHistory } from 'history';
 import { syncHistoryWithStore } from 'react-router-redux';
 import createStore from './store.js';
 import Application from './application';
-import TekstBoks from './rediger/rediger-tekstboks';
+import RedigerTekstboks from './rediger/rediger-tekstboks';
 import Provider from './provider';
 
 const history = useRouterHistory(createHistory)({
@@ -25,7 +25,7 @@ render((
         <Router history={history}>
             <Route path="/" component={Root}>
                 <IndexRoute component={Application} />
-                <Route path="nokkel&spraak" component={TekstBoks} />
+                <Route path="/rediger" component={RedigerTekstboks} />
             </Route>
         </Router>
     </Provider>
