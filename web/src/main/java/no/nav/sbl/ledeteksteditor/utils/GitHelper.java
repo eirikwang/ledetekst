@@ -48,6 +48,19 @@ public class GitHelper {
         return fileDir;
     }
 
+    public static String createTomtTestRepo(){
+        String fileDir = createRepo();
+        try {
+            Files.write(new File(fileDir + File.separator + "prop3_no.txt").toPath(), "test data".getBytes(), CREATE_NEW);
+        } catch (IOException e) {
+            throw new ApplikasjonsException(e);
+        }
+        Repository repo = GitWrapper.getRepo(new File(fileDir));
+        GitWrapper.commitChanges(repo, new Ident("Test", "test@test.test"), "init");
+        repo.close();
+        return fileDir;
+    }
+
     public static void removeTestRepo(String localUrl) {
         try {
             org.apache.commons.io.FileUtils.deleteDirectory(new File(localUrl));
