@@ -2,6 +2,7 @@ package no.nav.sbl.ledeteksteditor.utils;
 
 import no.nav.sbl.ledeteksteditor.domain.Ident;
 import no.nav.sbl.ledeteksteditor.utils.exception.ApplikasjonsException;
+import org.eclipse.jgit.lib.Repository;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,8 +42,9 @@ public class GitHelper {
         } else {
             throw new ApplikasjonsException("Kunne ikke lage mappastruktur i testrepo");
         }
-        GitWrapper.commitChanges(
-                GitWrapper.getRepo(null, new File(fileDir)),new Ident("Test", "test@test.test"), "init");
+        Repository repo = GitWrapper.getRepo(null, new File(fileDir));
+        GitWrapper.commitChanges(repo, new Ident("Test", "test@test.test"), "init");
+        repo.close();
         return fileDir;
     }
 

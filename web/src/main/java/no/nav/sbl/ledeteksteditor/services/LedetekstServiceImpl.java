@@ -32,6 +32,7 @@ public class LedetekstServiceImpl implements LedetekstService {
     public List<File> hentAlleLedetekstFilerFor(String remoteUrl, File fileDir) {
         Repository repo = GitWrapper.getRepo(remoteUrl, fileDir);
         List<File> filer = GitWrapper.listFiles(repo);
+        repo.close();
         return filer.stream().filter(FileUtils.erLedetekstFil()).collect(Collectors.toList());
     }
 
@@ -88,6 +89,7 @@ public class LedetekstServiceImpl implements LedetekstService {
         }
         Repository repo = GitWrapper.getRepo(remoteUrl, fileDir);
         GitWrapper.commitChanges(repo, ident, ledetekst.kommentar);
+        repo.close();
         return hentLedeteksteFor(remoteUrl, fileDir, ledetekst.nokkel);
     }
 
