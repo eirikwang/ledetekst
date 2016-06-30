@@ -31,34 +31,26 @@ public class GitWrapper {
     static {
         CredentialsProvider.setDefault(CREDENTIALS_PROVIDER);
     }
+
     public static Repository getRepo(String remoteUrl, File fileDir) {
+        return getRepo(remoteUrl, fileDir, true);
+    }
+
+    public static Repository getRepo(File fileDir) {
+        return getRepo(null, fileDir, false);
+    }
+
+    public static Repository getRepo(String remoteUrl, File fileDir, boolean pullEtterAapnet) {
         Git testResult;
         try {
             if (isLegalRepo(fileDir.toPath())) {
                 testResult = Git.open(fileDir);
+                if(pullEtterAapnet){
+                    testResult.push().call();
+                }
             } else {
                 testResult = Git.cloneRepository()
                         .setURI(remoteUrl)
-                        .setDirectory(fileDir)
-                        .call();
-            }
-        } catch (InvalidRemoteException e){
-            throw new RemoteIkkeFunnetException(e);
-        } catch (GitAPIException e){
-            throw new GitWrapperException(e);
-        } catch (IOException e){
-            throw new AapneRepoException(e);
-        }
-        return testResult.getRepository();
-    }
-
-    public static Repository getLocalRepo(File fileDir) {
-        Git testResult;
-        try {
-            if (isLegalRepo(fileDir.toPath())) {
-                testResult = Git.open(fileDir);
-            } else {
-                testResult = Git.cloneRepository()
                         .setDirectory(fileDir)
                         .call();
             }
