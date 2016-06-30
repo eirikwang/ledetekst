@@ -4,17 +4,17 @@ import { storeShape } from './../felles/proptype-shapes';
 function mapTilHtml(tekstMap) {
     const nokkel = tekstMap[1].nokkel;
     const spraakObj = tekstMap[1].spraak;
-    const htmltekst = (
-        <ul key={nokkel}>
-            <li>{nokkel}</li>
-            <li>Språk
-                <ul>
+    return (
+
+        <ul key={nokkel} className="ustilet blokk">
+            <div className="typo-element">{nokkel}</div>
+            Språk
+            <ul type="disc">
                 {Object.entries(spraakObj).map(([key, value]) => <li key={key}>{key}: {value}</li>)}
-                </ul>
-            </li>
+            </ul>
         </ul>
     );
-    return htmltekst;
+
 }
 
 function Tekster({ tekster }) {
@@ -24,7 +24,7 @@ function Tekster({ tekster }) {
 
     return (
         <div>
-            <h1>Ledertekster</h1>
+            <h1 className="typo-sidetittel">Ledertekster</h1>
             <ul className="tekster">
                 {teksterElement}
             </ul>
