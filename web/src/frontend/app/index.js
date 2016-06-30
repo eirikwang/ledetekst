@@ -3,7 +3,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, useRouterHistory } from 'react-router';
 import { createHistory } from 'history';
-import { syncHistoryWithStore } from 'react-router-redux';
 import createStore from './store.js';
 import Application from './application';
 import RedigerTekstboks from './rediger/rediger-tekstboks';
@@ -13,8 +12,6 @@ const history = useRouterHistory(createHistory)({
     basename: '/ledeteksteditor'
 });
 const store = createStore(history);
-
-//history = syncHistoryWithStore(useRouterHistory(history, store));
 
 function Root({ children }) {
     return children;

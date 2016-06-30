@@ -46,8 +46,6 @@ export function fetchLedetekst(nokkel, spraak, tekst) {
 }
 
 export function sendRedigertTekst(nokkel, spraak, tekst, navn, email) {
-    console.log(`Redigert tekst: ${tekst}`);
-    console.log(`Navn: ${navn}, Epost: ${email}`);
     const url = `/tekster/${encodeURIComponent('sbl-veiledningarbeidssoker')}/?nokkel={nokkel}&spraak={spraak}`;
     return dispatch => {
         dispatch(putLedetekst(nokkel, spraak, tekst));

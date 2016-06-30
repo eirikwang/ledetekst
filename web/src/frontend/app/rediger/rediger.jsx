@@ -13,7 +13,7 @@ class Rediger extends Component {
     hentInput(event) {
         event.preventDefault();
         if (!this.props.loggetInn) {
-            console.log('Du må logge inn før du kan redigere tekster');
+            console.log('Du må logge inn før du kan redigere tekster'); /* eslint-disable no-console*/
             return;
         }
         const queryTekst = finnTekst(this.refs.nokkel.value, this.refs.spraak.value, this.props.tekster.data);
@@ -35,7 +35,7 @@ function mapDispatchToProps(dispatch) {
     return {
         handleSubmit: (nokkel, spraak, tekst) => {
             dispatch(fetchLedetekst(nokkel, spraak, tekst));
-            dispatch(push({ pathname: "/rediger", query: { nokkel, spraak }}));
+            dispatch(push({ pathname: '/rediger', query: { nokkel, spraak } }));
         }
     };
 }
