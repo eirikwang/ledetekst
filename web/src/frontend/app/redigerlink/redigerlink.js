@@ -11,7 +11,7 @@ function RedigerLink({ nokkel, spraak, redigerLedetekstDispatcher }) {
     };
 
     return (
-        <a onClick={redigerLedetekst} href="javascript:void(0)">{spraak}</a>
+        <a onClick={redigerLedetekst} href="javascript:void(0)">{spraak}</a> // eslint-disable-line no-script-url
     );
 }
 
