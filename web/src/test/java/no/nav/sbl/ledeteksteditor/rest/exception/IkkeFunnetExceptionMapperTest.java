@@ -1,6 +1,5 @@
 package no.nav.sbl.ledeteksteditor.rest.exception;
 
-import no.nav.sbl.ledeteksteditor.utils.exception.ApplikasjonsException;
 import no.nav.sbl.ledeteksteditor.utils.exception.IkkeFunnetException;
 import org.junit.Test;
 import org.junit.runner.RunWith;

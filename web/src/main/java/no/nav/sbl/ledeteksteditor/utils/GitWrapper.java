@@ -46,7 +46,7 @@ public class GitWrapper {
             if (isLegalRepo(fileDir.toPath())) {
                 testResult = Git.open(fileDir);
                 if(pullEtterAapnet){
-                    GitWrapper.pull(testResult.getRepository());
+                    pull(testResult.getRepository());
                 }
             } else {
                 testResult = Git.cloneRepository()

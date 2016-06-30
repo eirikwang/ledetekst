@@ -76,6 +76,19 @@ public class TeksterRessursTest {
     }
 
     @Test
+    public void testSkalReturnereLedetekst(){
+        when(ledetekstServiceMock.hentLedeteksteFor(anyString(), any(File.class), anyString())).thenReturn(new Ledetekst("prop1", new HashMap<String, String>(){{
+            put("en", "en");
+            put("no", "no");
+        }}));
+        HashMap ledetekst = (HashMap) teksterRessurs.hentLedetekst(TEST_REPO, TEST_LEDETEKSTNOKKEL).getEntity();
+        assertFalse(ledetekst == null);
+        assertEquals(ledetekst.get("nokkel"), "prop1");
+        assertEquals(((HashMap)ledetekst.get("spraak")).get("en"), "en");
+        assertEquals(((HashMap)ledetekst.get("spraak")).get("no"), "no");
+    }
+
+    @Test
     public void tekstSkalReturnereOppdatertLedetekst(){
         when(ledetekstServiceMock.oppdaterLedeteksteFor(anyString(), any(File.class), any(Ledetekst.class), any(Ident.class))).thenAnswer(new Answer<Ledetekst>() {
             @Override
