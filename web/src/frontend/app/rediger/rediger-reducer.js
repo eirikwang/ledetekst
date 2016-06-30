@@ -1,5 +1,5 @@
 import { STATUS } from './../felles/konstanter';
-import { FAATT_LEDETEKST, PUT_LEDETEKST } from './rediger-actions';
+import { FAATT_LEDETEKST, PUT_LEDETEKST, PUTSUCC_LEDETEKST, PUTFEIL_LEDETEKST } from './rediger-actions';
 
 const DEFAULT_STATE = {
     status: STATUS.ikkelastet,
@@ -16,6 +16,10 @@ export default function rediger(state = DEFAULT_STATE, action) {
             return { ...state, status: STATUS.lastet, data: action.data };
         case PUT_LEDETEKST:
             return { ...state, status: STATUS.laster, data: action.data };
+        case PUTSUCC_LEDETEKST:
+            return { ...state, status: STATUS.lastet, data: action.data };
+        case PUTFEIL_LEDETEKST:
+            return { ...state, status: STATUS.feilet, data: action.data };
         default:
             return state;
     }

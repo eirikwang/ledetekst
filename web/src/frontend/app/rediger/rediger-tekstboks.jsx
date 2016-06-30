@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PropTypes as PT, Component } from 'react';
 import { connect } from 'react-redux';
 import { autobind, finnTekst } from './../felles/utils';
 import { sendRedigertTekst } from './rediger-actions';
@@ -45,7 +45,15 @@ function mapStateToProps(state) {
         tekster: state.tekster,
         navn: state.autentisert.data.navn,
         email: state.autentisert.data.email
-    }
+    };
 }
+
+RedigerTekstboks.propTypes = {
+    navn: PT.string.isRequired,
+    email: PT.string.isRequired,
+    tekster: PT.object.isRequired,
+    location: PT.object.isRequired,
+    handleSubmit: PT.func.isRequired
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(RedigerTekstboks);

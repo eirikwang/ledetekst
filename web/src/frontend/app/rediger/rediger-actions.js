@@ -1,5 +1,7 @@
 export const FAATT_LEDETEKST = 'FAA_LEDETEKST';
 export const PUT_LEDETEKST = 'PUT_LEDETEKST';
+export const PUTSUCC_LEDETEKST = 'PUTSUCC_LEDETEKST';
+export const PUTFEIL_LEDETEKST = 'PUTFEIL_LEDETEKST';
 
 export function faattLedetekst(nokkel, spraak, innhold) {
     return {
@@ -23,6 +25,20 @@ export function putLedetekst(nokkel, spraak, innhold) {
     };
 }
 
+export function putfeilLedetekst(error) {
+    return {
+        type: PUTFEIL_LEDETEKST,
+        data: error
+    };
+}
+
+export function putsuccLedetekst(data) {
+    return {
+        type: PUTSUCC_LEDETEKST,
+        data
+    };
+}
+
 export function fetchLedetekst(nokkel, spraak, tekst) {
     return dispatch => {
         dispatch(faattLedetekst(nokkel, spraak, tekst));
@@ -30,8 +46,6 @@ export function fetchLedetekst(nokkel, spraak, tekst) {
 }
 
 export function sendRedigertTekst(nokkel, spraak, tekst, navn, email) {
-    console.log(`Redigert tekst: ${tekst}`);
-    console.log(`Navn: ${navn}, Epost: ${email}`);
     const url = `/tekster/${encodeURIComponent('sbl-veiledningarbeidssoker')}/?nokkel={nokkel}&spraak={spraak}`;
     return dispatch => {
         dispatch(putLedetekst(nokkel, spraak, tekst));
@@ -42,6 +56,10 @@ export function sendRedigertTekst(nokkel, spraak, tekst, navn, email) {
                 email
             }),
             body: tekst
-        });
+        })
+            .then((response) =>
+                dispatch(putsuccLedetekst(response)))
+            .catch((error) =>
+                dispatch(putfeilLedetekst(error)));
     };
 }
