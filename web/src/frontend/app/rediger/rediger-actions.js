@@ -29,15 +29,18 @@ export function fetchLedetekst(nokkel, spraak, tekst) {
     };
 }
 
-export function sendRedigertTekst(nokkel, spraak, tekst, navn, epost) {
+export function sendRedigertTekst(nokkel, spraak, tekst, navn, email) {
     console.log(`Redigert tekst: ${tekst}`);
-    console.log(`Navn: ${navn}, Epost: ${epost}`);
-    const url = `/tekster/${encodeURIComponent('sbl-veiledningarbeidssoker')}/{nokkel}&{spraak}`;
+    console.log(`Navn: ${navn}, Epost: ${email}`);
+    const url = `/tekster/${encodeURIComponent('sbl-veiledningarbeidssoker')}/?nokkel={nokkel}&spraak={spraak}`;
     return dispatch => {
         dispatch(putLedetekst(nokkel, spraak, tekst));
         return fetch(url, {
             method: 'PUT',
-            header: [navn, epost],
+            headers: new Headers({
+                navn,
+                email
+            }),
             body: tekst
         });
     };

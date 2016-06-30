@@ -2,7 +2,7 @@ import React, { PropTypes as PT, Component } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { fetchLedetekst } from './rediger-actions';
-import { autobind } from './../felles/utils';
+import { autobind, finnTekst } from './../felles/utils';
 
 class Rediger extends Component {
     constructor(props) {
@@ -12,22 +12,13 @@ class Rediger extends Component {
 
     hentInput(event) {
         event.preventDefault();
-        const tekster = this.props.tekster.data;
-        const queryNokkel = this.refs.nokkel.value;
-        const querySpraak = this.refs.spraak.value;
-        const teksterForNokkel = tekster.filter(t => t.nokkel === queryNokkel);
-        if (teksterForNokkel.length < 1) {
-            console.log('Fant ikke tekster for denne nøkkelen');
+        if (!this.props.loggetInn) {
+            console.log('Du må logge inn før du kan redigere tekster');
             return;
         }
-        console.log(teksterForNokkel);
-        const teksterForSpraak = teksterForNokkel[0].spraak;
-        if (!(querySpraak in teksterForSpraak)) {
-            console.log('Fant ikke tekst for språket og nøkkelen');
-            return;
-        }
-        console.log(teksterForSpraak[querySpraak]);
-        this.props.handleSubmit(queryNokkel, querySpraak, teksterForSpraak[querySpraak]);
+        const queryTekst = finnTekst(this.refs.nokkel.value, this.refs.spraak.value, this.props.tekster.data);
+        if (queryTekst === '') return;
+        this.props.handleSubmit(this.refs.nokkel.value, this.refs.spraak.value, queryTekst);
     }
     render() {
         return (
@@ -51,12 +42,14 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        tekster: state.tekster
+        tekster: state.tekster,
+        loggetInn: state.autentisert.status === 'LOGGET_INN'
     };
 }
 
 Rediger.propTypes = {
     tekster: PT.object.isRequired,
+    loggetInn: PT.bool.isRequired,
     handleSubmit: PT.func.isRequired
 };
 
