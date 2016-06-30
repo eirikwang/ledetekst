@@ -1,13 +1,9 @@
 import React, { PropTypes } from 'react';
-import { push } from 'react-router-redux';
-import { connect } from 'react-redux';
-import { fetchLedetekst } from './../rediger/rediger-actions';
+import { Link } from 'react-router';
 
-
-export function RedigerLink({ nokkel, spraak, redigerLedetekstDispatcher }) {
-
+export function RedigerLink({ nokkel, spraak }) {
     return (
-        <Link to={`rediger?nokkel=${nokkel}&spraak=${spraak}`}>{spraak}</Link> // eslint-disable-line no-script-url
+        <Link to={`rediger?nokkel=${nokkel}&spraak=${spraak}`}>{spraak}</Link> 
     );
 }
 
