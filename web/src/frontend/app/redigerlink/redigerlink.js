@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 export function RedigerLink({ nokkel, spraak }) {
     return (
-        <Link to={`rediger?nokkel=${nokkel}&spraak=${spraak}`}>{spraak}</Link> 
+        <Link to={`rediger?nokkel=${nokkel}&spraak=${spraak}`}>{spraak}</Link>
     );
 }
 
