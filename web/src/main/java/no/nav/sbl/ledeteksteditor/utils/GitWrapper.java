@@ -46,7 +46,7 @@ public class GitWrapper {
             if (isLegalRepo(fileDir.toPath())) {
                 testResult = Git.open(fileDir);
                 if(pullEtterAapnet){
-                    testResult.push().call();
+                    GitWrapper.pull(testResult.getRepository());
                 }
             } else {
                 testResult = Git.cloneRepository()
@@ -125,6 +125,15 @@ public class GitWrapper {
         Git git = new Git(repo);
         try {
             git.push().call();
+        } catch (GitAPIException e) {
+            throw new ApplikasjonsException(e);
+        }
+    }
+
+    public static void pull(Repository repo) {
+        Git git = new Git(repo);
+        try {
+            git.pull().call();
         } catch (GitAPIException e) {
             throw new ApplikasjonsException(e);
         }
