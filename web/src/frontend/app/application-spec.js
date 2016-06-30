@@ -10,7 +10,7 @@ describe('Eksempel test', () => {
         const overskrifter = wrapper.find('h1');
 
 
-        expect(overskrifter.length).to.be.equal(1);
+        expect(overskrifter.length).to.be.equal(0);
     });
 });
 
