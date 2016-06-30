@@ -54,6 +54,26 @@ public class GitWrapper {
         return testResult.getRepository();
     }
 
+    public static Repository getLocalRepo(File fileDir) {
+        Git testResult;
+        try {
+            if (isLegalRepo(fileDir.toPath())) {
+                testResult = Git.open(fileDir);
+            } else {
+                testResult = Git.cloneRepository()
+                        .setDirectory(fileDir)
+                        .call();
+            }
+        } catch (InvalidRemoteException e){
+            throw new RemoteIkkeFunnetException(e);
+        } catch (GitAPIException e){
+            throw new GitWrapperException(e);
+        } catch (IOException e){
+            throw new AapneRepoException(e);
+        }
+        return testResult.getRepository();
+    }
+
     public static List<File> listFiles(Repository repo) {
         TreeWalk treeWalk = new TreeWalk(repo);
         RevWalk walk = new RevWalk(repo);
@@ -104,9 +124,17 @@ public class GitWrapper {
         try {
             git.add().addFilepattern(".").call();
             git.commit().setMessage(kommentar).setAuthor(ident.navn, ident.epost).call();
-            //git.push().call();
         } catch (TransportException e){
             throw new AutentiseringException(e);
+        } catch (GitAPIException e) {
+            throw new ApplikasjonsException(e);
+        }
+    }
+
+    public static void push(Repository repo) {
+        Git git = new Git(repo);
+        try {
+            git.push().call();
         } catch (GitAPIException e) {
             throw new ApplikasjonsException(e);
         }

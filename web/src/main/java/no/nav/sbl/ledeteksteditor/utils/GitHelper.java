@@ -42,7 +42,7 @@ public class GitHelper {
         } else {
             throw new ApplikasjonsException("Kunne ikke lage mappastruktur i testrepo");
         }
-        Repository repo = GitWrapper.getRepo(null, new File(fileDir));
+        Repository repo = GitWrapper.getLocalRepo(new File(fileDir));
         GitWrapper.commitChanges(repo, new Ident("Test", "test@test.test"), "init");
         repo.close();
         return fileDir;
