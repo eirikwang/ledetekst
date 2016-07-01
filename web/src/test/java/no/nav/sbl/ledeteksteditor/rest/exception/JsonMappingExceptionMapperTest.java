@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class JsonMappingExceptionMapperTest {
     @Test
-    public void skalReturnereInternServerError() {
+    public void skalReturnereBadRequest() {
         Response response = new JsonMappingExceptionMapper().toResponse(new JsonMappingException(null, "Test"));
         assertThat(response.getStatus()).isEqualTo(400);
     }
