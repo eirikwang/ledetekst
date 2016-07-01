@@ -19,8 +19,8 @@ import static org.junit.Assert.*;
 public class LedetekstServiceImplTest {
     private String localUrlTestRepo;
     private String localUrlTomtTestRepo;
-    private static final File fileDirTestRepo = new File("../../test/repo/ledertekst-temp/");
-    private static final File fileDirTomtTestRepo = new File("../../test/repo/ledertekst-temp-tomt/");
+    private static final File fileDirTestRepo = new File(".." + File.separator + ".." + File.separator + "test" + File.separator + "repo" + File.separator + "ledertekst-temp");
+    private static final File fileDirTomtTestRepo = new File(".." + File.separator + ".." + File.separator + "test" + File.separator + "repo" + File.separator + "ledertekst-temp-tomt");
 
     @Before
     public void setUp(){
