@@ -1,51 +1,57 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
 import io.swagger.annotations.Api;
+import no.nav.sbl.ledeteksteditor.domain.Ident;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
 import no.nav.sbl.ledeteksteditor.services.LedetekstServiceImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/tekster")
+@Consumes(APPLICATION_JSON + ";charset=utf-8")
 @Produces(APPLICATION_JSON + ";charset=utf-8")
 @Api(value = "ledetekster", description = "Endpoint for ledetekster")
 public class TeksterRessurs {
-
-    private static Logger logger = LoggerFactory.getLogger(TeksterRessurs.class);
 
     @Inject
     private LedetekstService ledetekstService;
 
     @GET
-    @Path("/{stashurl}")
-    public Response hentTeksterForUrl(@PathParam("stashurl") String stashUrl) {
+    @Path("/{remoteUrl}")
+    public Response hentTeksterForUrl(@PathParam("remoteUrl") String remoteUrl) {
+        List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleLedeteksterFor(
+                LedetekstServiceImpl.REPOSITORIES.get(remoteUrl),
+                getRepoDir(remoteUrl));
 
-        List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleTeksterFor(
-                LedetekstServiceImpl.REPOSITORIES.get(stashUrl),
-                getRepoDir(stashUrl));
-        ArrayList<HashMap> toReturn = new ArrayList<>();
-        for (Ledetekst l : applikasjonsTekster) {
-            HashMap<String, Object> tekstMap = new HashMap<>();
-            tekstMap.put("nokkel", l.hentNavn());
-            tekstMap.put("spraak", l.hentInnhold());
-            toReturn.add(tekstMap);
-        }
-        return Response.ok(toReturn).build();
+        return Response.ok(applikasjonsTekster).build();
     }
+
+    @PUT
+    @Path("/{remoteUrl}/{ledetekstnokkel}")
+    public Response oppdaterLedetekst(Ledetekst payload, @HeaderParam("navn") String navn, @HeaderParam("epost") String epost, @PathParam("remoteUrl") String remoteUrl) {
+        Ident ident = new Ident(navn, epost);
+        Ledetekst ledetekst = ledetekstService.oppdaterLedeteksteFor(
+                LedetekstServiceImpl.REPOSITORIES.get(remoteUrl),
+                getRepoDir(remoteUrl), payload, ident);
+        return Response.ok(ledetekst).build();
+    }
+
+    @GET
+    @Path("/{remoteUrl}/{ledetekstnokkel}")
+    public Response hentLedetekst(@PathParam("remoteUrl") String remoteUrl, @PathParam("ledetekstnokkel") String ledetekstnokkel) {
+        Ledetekst ledetekst = ledetekstService.hentLedeteksteFor(
+                LedetekstServiceImpl.REPOSITORIES.get(remoteUrl),
+                getRepoDir(remoteUrl), ledetekstnokkel);
+        return Response.ok(ledetekst).build();
+    }
+
 
     private File getRepoDir(String reponavn) {
         String datadir = System.getProperty("dirs.repos", "../");
