@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class LedetekstServiceImpl implements LedetekstService {
 
     public static final Map<String, String> REPOSITORIES = new HashMap<String, String>() {{
-        put("ledertekst-temp", "http://S148209@stash.devillo.no/scm/hack/ledertekst-temp.git");
+        put("ledertekst-temp", "http://stash.adeo.no/scm/hack/ledertekst-temp.git");
     }};
 
     @Override
