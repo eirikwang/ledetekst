@@ -2,27 +2,23 @@ import React, { PropTypes as PT } from 'react';
 import { storeShape } from './../felles/proptype-shapes';
 import RedigerLink from './../redigerlink/redigerlink';
 
-function hentInnholdFor(ledetekst) {
-    return (
-        <ul type="disc">
-            {Object.entries(ledetekst.spraak).map(([spraak, innhold]) =>
-                <li key={spraak}>
-                    <RedigerLink nokkel={ledetekst.nokkel} spraak={spraak} />: {innhold}
-                </li>)}
-        </ul>
-    );
-}
-
 function Tekster({ tekster }) {
-    const teksterElement = tekster.data.map((ledetekst) => {
-        return (
-            <li key={ledetekst.nokkel}>
-                <div className="typo-element">{ledetekst.nokkel}</div>
-                Språk
-                {hentInnholdFor(ledetekst)}
-            </li>
-        );
-    });
+    const hentInnholdFor = (ledetekst) =>
+        <ul type="disc">
+            {Object.keys(ledetekst.spraak).map((spraak) =>
+                <li key={spraak}>
+                    <RedigerLink nokkel={ledetekst.nokkel} spraak={spraak} />: {ledetekst.spraak[spraak]}
+                </li>)}
+        </ul>;
+
+
+    const teksterElement = tekster.data.map((ledetekst) =>
+        <li key={ledetekst.nokkel}>
+            <div className="typo-element">{ledetekst.nokkel}</div>
+            Språk
+            {hentInnholdFor(ledetekst)}
+        </li>
+    );
 
     return (
         <div>
