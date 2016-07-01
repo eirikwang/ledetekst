@@ -14,7 +14,6 @@ function mapTilHtml(tekstMap) {
             </ul>
         </ul>
     );
-
 }
 
 function Tekster({ tekster }) {
