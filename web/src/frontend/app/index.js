@@ -18,7 +18,7 @@ function Root({ children }) {
 }
 
 render((
-    <Provider store={store} >
+    <Provider store={store}>
         <Router history={history}>
             <Route path="/" component={Root}>
                 <IndexRoute component={Application} />

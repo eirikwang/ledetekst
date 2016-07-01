@@ -13,7 +13,7 @@ class Rediger extends Component {
     hentInput(event) {
         event.preventDefault();
         if (!this.props.loggetInn) {
-            console.log('Du må logge inn før du kan redigere tekster'); /* eslint-disable no-console*/
+            console.log('Du må logge inn før du kan redigere tekster'); // eslint-disable-line no-console
             return;
         }
         const queryTekst = finnTekst(this.refs.nokkel.value, this.refs.spraak.value, this.props.tekster.data);
