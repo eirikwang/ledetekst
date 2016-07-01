@@ -37,6 +37,7 @@
         <swagger.version>1.5.0</swagger.version>
         <swaggerui.version>2.1.8-M1</swaggerui.version>
         <mockito.version>1.10.19</mockito.version>
+        <powermock-api-mockito.version>1.6.5</powermock-api-mockito.version>
         <commons-io.version>2.4</commons-io.version>
     </properties>
 
@@ -178,11 +179,19 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>
                 <version>${mockito.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-api-mockito</artifactId>
+                <version>${powermock-api-mockito.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>no.nav.modig</groupId>

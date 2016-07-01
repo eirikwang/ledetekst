@@ -8,12 +8,9 @@ import no.nav.sbl.ledeteksteditor.utils.exception.IkkeFunnetException;
 import org.eclipse.jgit.lib.Repository;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class LedetekstServiceImpl implements LedetekstService {
@@ -74,7 +71,7 @@ public class LedetekstServiceImpl implements LedetekstService {
         List<File> filer = hentAlleLedetekstFilerFor(remoteUrl, fileDir);
         boolean nyeEndringer = false;
         for( Map.Entry<String, String> spraak : ledetekst.spraak.entrySet()){
-            nyeEndringer |= oppdaterLedetekstFor(filer, ledetekst.nokkel, spraak);
+            nyeEndringer |= oppdaterLedetekstForHjelper(filer, ledetekst.nokkel, spraak);
         }
         Repository repo = GitWrapper.getRepo(remoteUrl, fileDir);
         if (nyeEndringer){
@@ -85,7 +82,7 @@ public class LedetekstServiceImpl implements LedetekstService {
         return hentLedeteksteFor(remoteUrl, fileDir, ledetekst.nokkel);
     }
 
-    private boolean oppdaterLedetekstFor(List<File> filer, String ledetekstnokkel, Map.Entry<String, String> spraak){
+    private boolean oppdaterLedetekstForHjelper(List<File> filer, String ledetekstnokkel, Map.Entry<String, String> spraak){
         File ledetekstfil = null;
         for(File fil : filer){
             if(fil.getName().contains(ledetekstnokkel + "_" + spraak.getKey())){
