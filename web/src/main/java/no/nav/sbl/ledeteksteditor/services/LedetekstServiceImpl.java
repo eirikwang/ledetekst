@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class LedetekstServiceImpl implements LedetekstService {
-    private static final String stashBaseUrl = System.getProperty("stash.baseUrl", "http://stash.devillo.no");
+    private static final String stashBaseUrl = System.getProperty("stash", "http://stash.devillo.no");
     public static final Map<String, String> REPOSITORIES = new HashMap<String, String>() {{
         put("ledertekst-temp", stashBaseUrl + "/scm/hack/ledertekst-temp.git");
     }};
