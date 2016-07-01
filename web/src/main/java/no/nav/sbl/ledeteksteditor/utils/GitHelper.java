@@ -32,10 +32,10 @@ public class GitHelper {
         String fileDir = createRepo();
         if(new File(fileDir + File.separator + FileUtils.FILE_PATH).mkdirs()){
             try {
-                Files.write(new File(fileDir + File.separator + FileUtils.FILE_PATH + File.separator + "prop1_no.txt").toPath(), "test data".getBytes(), CREATE_NEW);
-                Files.write(new File(fileDir + File.separator + FileUtils.FILE_PATH + File.separator + "prop1_en.txt").toPath(), "test data".getBytes(), CREATE_NEW);
-                Files.write(new File(fileDir + File.separator + FileUtils.FILE_PATH + File.separator + "prop2_en.txt").toPath(), "test data".getBytes(), CREATE_NEW);
-                Files.write(new File(fileDir + File.separator + FileUtils.FILE_PATH + File.separator + "prop3_no.txt").toPath(), "test data".getBytes(), CREATE_NEW);
+                Files.write(new File(fileDir + File.separator + FileUtils.FILE_PATH + File.separator + "prop1_no.txt").toPath(), "test data prop1 no".getBytes(), CREATE_NEW);
+                Files.write(new File(fileDir + File.separator + FileUtils.FILE_PATH + File.separator + "prop1_en.txt").toPath(), "test data prop1 en".getBytes(), CREATE_NEW);
+                Files.write(new File(fileDir + File.separator + FileUtils.FILE_PATH + File.separator + "prop2_en.txt").toPath(), "test data prop2 en".getBytes(), CREATE_NEW);
+                Files.write(new File(fileDir + File.separator + FileUtils.FILE_PATH + File.separator + "prop3_no.txt").toPath(), "test data prop3 no".getBytes(), CREATE_NEW);
             } catch (IOException e) {
                 throw new ApplikasjonsException(e);
             }

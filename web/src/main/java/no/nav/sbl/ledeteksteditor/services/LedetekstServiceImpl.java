@@ -37,20 +37,6 @@ public class LedetekstServiceImpl implements LedetekstService {
     }
 
     @Override
-    public List<File> hentAlleLedetekstFilerFor(String remoteUrl, File fileDir, String ledetekstnokkel) {
-        List<File> filer = hentAlleLedetekstFilerFor(remoteUrl, fileDir);
-        List<File> ledetekstFiler = new ArrayList<>();
-        Pattern ledtekstPattern = Pattern.compile(ledetekstnokkel);
-        for( File ledetekstFil : ledetekstFiler){
-            Matcher matcher = ledtekstPattern.matcher(ledetekstFil.getName());
-            if(matcher.find()){
-                filer.add(ledetekstFil);
-            }
-        }
-        return ledetekstFiler;
-    }
-
-    @Override
     public List<Ledetekst> mapTilLedetekst(List<File> filer) {
         Map<String, Map<String, String>> innhold = new HashMap<>();
 

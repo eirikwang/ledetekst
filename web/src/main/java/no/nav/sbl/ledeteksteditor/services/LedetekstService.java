@@ -11,8 +11,6 @@ public interface LedetekstService {
 
     List<File> hentAlleLedetekstFilerFor(String remoteUrl, File fileDir);
 
-    List<File> hentAlleLedetekstFilerFor(String remoteUrl, File fileDir, String ledetekstnokkel);
-
     List<Ledetekst> mapTilLedetekst(List<File> filer);
 
     Ledetekst hentLedeteksteFor(String remoteUrl, File fileDir, String ledetekstnokkel);
