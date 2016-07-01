@@ -2,7 +2,7 @@ import React, { PropTypes as PT } from 'react';
 import { storeShape } from './../felles/proptype-shapes';
 import RedigerLink from './../redigerlink/redigerlink';
 
-function hentLedetekstListe(ledetekst) {
+function hentInnholdFor(ledetekst) {
     return (
         <ul type="disc">
             {Object.entries(ledetekst.spraak).map(([spraak, innhold]) =>
@@ -19,7 +19,7 @@ function Tekster({ tekster }) {
             <li key={ledetekst.nokkel}>
                 <div className="typo-element">{ledetekst.nokkel}</div>
                 Språk
-                {hentLedetekstListe(ledetekst)}
+                {hentInnholdFor(ledetekst)}
             </li>
         );
     });
