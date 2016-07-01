@@ -16,6 +16,12 @@ public class Ledetekst {
         this.spraak = spraak;
     }
 
+    public Ledetekst(String nokkel, Map<String, String> spraak, String kommentar) {
+        this.nokkel = nokkel;
+        this.spraak = spraak;
+        this.kommentar = kommentar;
+    }
+
     @Override
     public String toString() {
         return "Ledetekst{" +

@@ -1,6 +1,8 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
+import no.nav.sbl.ledeteksteditor.domain.Ident;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
+import no.nav.sbl.ledeteksteditor.services.LedetekstService;
 import no.nav.sbl.ledeteksteditor.services.LedetekstServiceImpl;
 import no.nav.sbl.ledeteksteditor.utils.GitHelper;
 import no.nav.sbl.ledeteksteditor.utils.exception.IkkeFunnetException;
@@ -9,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -64,5 +67,29 @@ public class LedetekstServiceImplTest {
         assertEquals(ledetekst.nokkel, "prop1");
         assertEquals(ledetekst.spraak.get("no"), "test data prop1 no");
         assertEquals(ledetekst.spraak.get("en"), "test data prop1 en");
+    }
+
+    @Test( expected = IkkeFunnetException.class )
+    public void testOppdaterLedeteksteForReturnererIkkeFunnet(){
+        LedetekstService ledetekstService = new LedetekstServiceImpl();
+        ledetekstService.oppdaterLedeteksteFor(localUrlTomtTestRepo, fileDirTomtTestRepo,new Ledetekst("prop1", new HashMap<String, String>(){{
+            put("no", "verdi");
+            put("en", "value");
+        }}), null);
+    }
+
+    @Test
+    public void testOppdaterLedeteksteForReturnererOppdatertLedetekst(){
+        LedetekstService ledetekstService = new LedetekstServiceImpl();
+        Ledetekst ledetekst = ledetekstService.oppdaterLedeteksteFor(localUrlTestRepo, fileDirTestRepo,new Ledetekst("prop1", new HashMap<String, String>(){{
+            put("no", "verdi");
+            put("en", "value");
+        }}, "Kommentar"), new Ident("navn", "epost"));
+
+
+        assertNotEquals(ledetekst, null);
+        assertEquals(ledetekst.nokkel, "prop1");
+        assertEquals(ledetekst.spraak.get("no"), "verdi");
+        assertEquals(ledetekst.spraak.get("en"), "value");
     }
 }
