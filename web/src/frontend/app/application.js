@@ -8,7 +8,6 @@ function Application() {
     return (
         <div className="application">
             <LoggInn />
-            <Rediger />
             <Tekster />
             <DevTools />
         </div>

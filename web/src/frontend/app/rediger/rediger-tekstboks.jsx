@@ -16,15 +16,19 @@ class RedigerTekstboks extends Component {
             this.refs.tekst.value, this.props.navn, this.props.email);
     }
     render() {
-        const tekst = finnTekst(this.props.location.query.nokkel, this.props.location.query.spraak,
-            this.props.tekster.data);
+        //const tekst = finnTekst(this.props.location.query.nokkel, this.props.location.query.spraak,
+            //this.props.tekster.data);
+        const tekst = "Dummy data, dette er litt tekst";
         return (
-            <div>
-                <form onSubmit={this.hentRedigert}>
-                    <textarea rows="4" cols="50" name="tekst" ref="tekst">
+            <div className="rediger-ledetekst-element">
+                <div className="typo-etikett-stor tekst-uendret-innhold">{tekst}</div>
+                Ny tekst:
+                <form className="redigertekst-form" onSubmit={this.hentRedigert}>
+                    <textarea className="redigertekst-textarea" name="tekst" ref="tekst">
                         {tekst}
                     </textarea>
-                    <button type="submit">Lagre tekst</button>
+                    <button type="submit" className="knapp knapp-hoved knapp-liten knapp-lagretekst">Lagre</button>
+                    <button className="knapp knapp-fare knapp-liten knapp-avbryt-rediger">Avbryt</button>
                 </form>
             </div>
         );
@@ -42,8 +46,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         tekster: state.tekster,
-        navn: state.autentisert.data.navn,
-        email: state.autentisert.data.email
+        navn: 'caro',
+        email: 'caro@nav.no'
     };
 }
 

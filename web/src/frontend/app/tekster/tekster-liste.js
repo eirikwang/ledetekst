@@ -13,7 +13,7 @@ function Tekster({ tekster }) {
 
 
     const teksterElement = tekster.data.map((ledetekst) =>
-        <li key={ledetekst.nokkel}>
+        <li key={ledetekst.nokkel} className="blokk-s">
             <div className="typo-element">{ledetekst.nokkel}</div>
             Språk
             {hentInnholdFor(ledetekst)}
