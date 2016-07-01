@@ -18,6 +18,7 @@
     <resources>
         <directory name="repos" mapToProperty="dirs.repos"/>
         <credential alias="git.credential" mapToProperty="git.credential"/>
+        <credential alias="stash.baseUrl" mapToProperty="stash.baseUrl"/>
     </resources>
 
     <loadBalancer isAlive="/ledeteksteditor/internal/isAlive" />

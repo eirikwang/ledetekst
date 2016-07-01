@@ -14,9 +14,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class LedetekstServiceImpl implements LedetekstService {
-    private static final String gitRemoteHost = System.getProperty("git.remote.host", "devillo");
+    private static final String stashBaseUrl = System.getProperty("stash.baseUrl", "http://stash.devillo.no");
     public static final Map<String, String> REPOSITORIES = new HashMap<String, String>() {{
-        put("ledertekst-temp", "http://stash." + gitRemoteHost + ".no/scm/hack/ledertekst-temp.git");
+        put("ledertekst-temp", stashBaseUrl + "/scm/hack/ledertekst-temp.git");
     }};
 
     @Override
