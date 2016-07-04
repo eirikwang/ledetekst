@@ -46,16 +46,23 @@ export function fetchLedetekst(nokkel, spraak, tekst) {
 }
 
 export function sendRedigertTekst(nokkel, spraak, tekst) {
-    const url = `/tekster/${'sbl-veiledningarbeidssoker'}/?$nokkel={nokkel}&$spraak={spraak}`;
+    const url = `api/tekster/ledertekst-temp/${nokkel}`;
+    const body = {
+        nokkel,
+        spraak: {}
+    };
+    body.spraak[spraak] = tekst;
+
     return (dispatch, getState) => {
         dispatch(putLedetekst(nokkel, spraak, tekst));
         return fetch(url, {
             method: 'PUT',
             headers: new Headers({
                 navn: getState().autentisert.data.navn,
-                email: getState().autentisert.data.email
+                epost: getState().autentisert.data.epost,
+                'Content-Type': 'application/json'
             }),
-            body: tekst
+            body: JSON.stringify(body)
         })
             .then((response) =>
                 dispatch(putsuccLedetekst(response)))

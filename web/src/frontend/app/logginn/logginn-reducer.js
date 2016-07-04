@@ -9,7 +9,7 @@ const DEFAULT_STATE = {
 export default function loggInn(state = DEFAULT_STATE, action) {
     switch (action.type) {
         case LOGG_INN:
-            if (!navEpostRegex.test(action.data.email)) {
+            if (!navEpostRegex.test(action.data.epost)) {
                 return state;
             }
             return {

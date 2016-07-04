@@ -6,7 +6,7 @@ import DevTools from './devtools';
 
 function Application() {
     return (
-        <div className="application">
+        <div className="container">
             <LoggInn />
             <Tekster />
             <DevTools />
