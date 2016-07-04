@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class IkkeFunnetExceptionMapperTest {
     @Test
-    public void skalReturnereInternServerError() {
+    public void skalReturnereIkkeFunnetError() {
         Response response = new IkkeFunnetExceptionMapper().toResponse(new IkkeFunnetException("Test"));
         assertThat(response.getStatus()).isEqualTo(404);
     }
