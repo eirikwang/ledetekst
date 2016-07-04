@@ -46,7 +46,7 @@ export function fetchLedetekst(nokkel, spraak, tekst) {
 }
 
 export function sendRedigertTekst(nokkel, spraak, tekst) {
-    const url = `/tekster/${'sbl-veiledningarbeidssoker'}/?$nokkel={nokkel}&$spraak={spraak}`;
+    const url = `/tekster/ledertekst-temp/?$nokkel=${nokkel}&$spraak=${spraak}`;
     return (dispatch, getState) => {
         dispatch(putLedetekst(nokkel, spraak, tekst));
         return fetch(url, {
