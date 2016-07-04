@@ -22,7 +22,7 @@ function Tekster({ tekster }) {
 
     return (
         <div>
-            <h1 className="typo-sidetittel">Ledertekster</h1>
+            <h1 className="typo-sidetittel text-center">Ledertekster</h1>
             <ul className="tekster">
                 {teksterElement}
             </ul>
