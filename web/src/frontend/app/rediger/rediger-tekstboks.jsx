@@ -21,14 +21,12 @@ class RedigerTekstboks extends Component {
         const tekst = "Dummy data, dette er litt tekst";
         return (
             <div className="rediger-ledetekst-element">
-                <div className="typo-etikett-stor tekst-uendret-innhold">{tekst}</div>
+                <div className="typo-etikett-stor tekst-uendretinnhold">{tekst}</div>
                 Ny tekst:
-                <form className="redigertekst-form" onSubmit={this.hentRedigert}>
-                    <textarea className="redigertekst-textarea" name="tekst" ref="tekst">
-                        {tekst}
-                    </textarea>
+                <form className="form-redigertekst" onSubmit={this.hentRedigert}>
+                    <textarea className="textarea-redigertekst" name="tekst" ref="tekst" defaultValue={tekst} />
                     <button type="submit" className="knapp knapp-hoved knapp-liten knapp-lagretekst">Lagre</button>
-                    <button className="knapp knapp-fare knapp-liten knapp-avbryt-rediger">Avbryt</button>
+                    <button className="knapp knapp-fare knapp-liten knapp-avbrytrediger">Avbryt</button>
                 </form>
             </div>
         );
