@@ -33,8 +33,8 @@ class RedigerTekstboks extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        handleSubmit: (nokkel, spraak, tekst, navn, email) => {
-            dispatch(sendRedigertTekst(nokkel, spraak, tekst, navn, email));
+        handleSubmit: (nokkel, spraak, tekst) => {
+            dispatch(sendRedigertTekst(nokkel, spraak, tekst));
         }
     };
 }

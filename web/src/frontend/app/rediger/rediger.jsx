@@ -20,7 +20,7 @@ class Rediger extends Component {
         if (queryTekst === '') return;
         this.props.handleSubmit(this.refs.nokkel.value, this.refs.spraak.value, queryTekst);
     }
-    
+
     render() {
         return (
             <form onSubmit={this.hentInput}>

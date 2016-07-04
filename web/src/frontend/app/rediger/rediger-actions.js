@@ -45,15 +45,15 @@ export function fetchLedetekst(nokkel, spraak, tekst) {
     };
 }
 
-export function sendRedigertTekst(nokkel, spraak, tekst, navn, email) {
+export function sendRedigertTekst(nokkel, spraak, tekst) {
     const url = `/tekster/${'sbl-veiledningarbeidssoker'}/?$nokkel={nokkel}&$spraak={spraak}`;
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(putLedetekst(nokkel, spraak, tekst));
         return fetch(url, {
             method: 'PUT',
             headers: new Headers({
-                navn,
-                email
+                navn: getState().autentisert.data.navn,
+                email: getState().autentisert.data.email
             }),
             body: tekst
         })
