@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class FileUtils {
 
-    private static final String FILE_PATH = "tekster" + File.separator + "src" + File.separator + "main" + File.separator + "tekster";
+    public static final String FILE_PATH = "tekster" + File.separator + "src" + File.separator + "main" + File.separator + "tekster";
     private static final Pattern FILE_PATTERN = Pattern.compile("(.*?)(_([a-zA-Z]{2}_?[a-zA-Z]{0,2}))?\\.([a-z]*)$");
 
     public static boolean matcherFilMonster(File tekstFil) {

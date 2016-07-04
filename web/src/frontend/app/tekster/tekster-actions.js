@@ -26,7 +26,7 @@ export function receiveFeil(error) {
 }
 
 export function fetchTekster() {
-    const url = `/tekster/${encodeURIComponent('sbl-veiledningarbeidssoker')}`;
+    const url = `/tekster/${encodeURIComponent('ledertekst-temp')}`;
     return dispatch => {
         dispatch(sendRequest(url));
         return fetchToJson(url)
