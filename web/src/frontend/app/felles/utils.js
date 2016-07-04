@@ -54,12 +54,12 @@ export function autobind(ctx) {
 }
 
 export function finnTekst(queryNokkel, querySpraak, tekster) {
-    const teksterForNokkel = tekster.filter(t => t.nokkel === queryNokkel);
+    const teksterForNokkel = tekster.find(t => t.nokkel === queryNokkel);
     if (teksterForNokkel.length < 1) {
         console.log('Fant ikke tekster for denne nøkkelen'); // eslint-disable-line no-console
         return '';
     }
-    const teksterForSpraak = teksterForNokkel[0].spraak;
+    const teksterForSpraak = teksterForNokkel.spraak;
     if (!(querySpraak in teksterForSpraak)) {
         console.log('Fant ikke tekst for språket og nøkkelen'); // eslint-disable-line no-console
         return '';
