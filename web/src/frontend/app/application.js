@@ -4,7 +4,7 @@ import DevTools from './devtools';
 
 function Application() {
     return (
-        <div className="center-container">
+        <div className="container">
             <Tekster />
             <DevTools />
         </div>
