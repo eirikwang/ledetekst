@@ -13,7 +13,7 @@ class RedigerTekstboks extends Component {
     hentRedigert(event) {
         event.preventDefault();
         this.props.handleSubmit(this.props.location.query.nokkel, this.props.location.query.spraak,
-            this.refs.tekst.value, this.props.navn, this.props.email);
+            this.refs.tekst.value);
     }
 
     render() {
@@ -42,15 +42,11 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        tekster: state.tekster,
-        navn: state.autentisert.data.navn,
-        email: state.autentisert.data.email
+        tekster: state.tekster
     };
 }
 
 RedigerTekstboks.propTypes = {
-    navn: PT.string.isRequired,
-    email: PT.string.isRequired,
     tekster: PT.object.isRequired,
     location: PT.object.isRequired,
     handleSubmit: PT.func.isRequired
