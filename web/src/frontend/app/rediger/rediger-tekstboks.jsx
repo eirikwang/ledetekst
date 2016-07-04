@@ -13,8 +13,9 @@ class RedigerTekstboks extends Component {
     hentRedigert(event) {
         event.preventDefault();
         this.props.handleSubmit(this.props.location.query.nokkel, this.props.location.query.spraak,
-            this.refs.tekst.value, this.props.navn, this.props.email);
+            this.refs.tekst.value);
     }
+
     render() {
         //const tekst = finnTekst(this.props.location.query.nokkel, this.props.location.query.spraak,
             //this.props.tekster.data);
@@ -35,23 +36,19 @@ class RedigerTekstboks extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        handleSubmit: (nokkel, spraak, tekst, navn, email) => {
-            dispatch(sendRedigertTekst(nokkel, spraak, tekst, navn, email));
+        handleSubmit: (nokkel, spraak, tekst) => {
+            dispatch(sendRedigertTekst(nokkel, spraak, tekst));
         }
     };
 }
 
 function mapStateToProps(state) {
     return {
-        tekster: state.tekster,
-        navn: 'caro',
-        email: 'caro@nav.no'
+        tekster: state.tekster
     };
 }
 
 RedigerTekstboks.propTypes = {
-    navn: PT.string.isRequired,
-    email: PT.string.isRequired,
     tekster: PT.object.isRequired,
     location: PT.object.isRequired,
     handleSubmit: PT.func.isRequired

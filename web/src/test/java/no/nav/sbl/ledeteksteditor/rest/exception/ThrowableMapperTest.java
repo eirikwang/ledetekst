@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 public class ThrowableMapperTest {
     @Test
     public void skalReturnereServerError() {
-        Response response = new ThrowableMapper().toResponse(new Throwable("Test"));
+        Response response = new ThrowableMapper().toResponse(new Exception("Test"));
         assertTrue( response.getHeaderString(ThrowableMapper.NO_BIGIP_5XX_REDIRECT).equals("true"));
     }
 }

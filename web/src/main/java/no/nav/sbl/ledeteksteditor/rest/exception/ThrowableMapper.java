@@ -11,13 +11,13 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.serverError;
 
 @Provider
-public class ThrowableMapper implements ExceptionMapper<Throwable>{
+public class ThrowableMapper implements ExceptionMapper<Exception>{
     static final Logger LOG = LoggerFactory.getLogger(ThrowableMapper.class);
     static final String NO_BIGIP_5XX_REDIRECT = "X-Escape-5xx-Redirect";
 
     @Override
-    public Response toResponse(Throwable throwable) {
-        LOG.error("Noe uventet feilet", throwable);
+    public Response toResponse(Exception exception) {
+        LOG.error("Noe uventet feilet", exception);
         return serverError().header(NO_BIGIP_5XX_REDIRECT, true).type(APPLICATION_JSON).build();
     }
 }

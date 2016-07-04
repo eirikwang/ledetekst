@@ -1,22 +1,32 @@
 package no.nav.sbl.ledeteksteditor.domain;
+
 import java.util.Map;
 
 public class Ledetekst {
 
-    private String navn;
-    private Map<String, String> innhold;
+    public String nokkel;
+    public Map<String, String> spraak;
+    public String kommentar;
 
-
-    public Ledetekst(String navn, Map<String, String> innhold) {
-        this.navn = navn;
-        this.innhold = innhold;
+    public Ledetekst() {
     }
 
-    public String hentNavn() {
-        return navn;
+    public Ledetekst(String nokkel, Map<String, String> spraak) {
+        this.nokkel = nokkel;
+        this.spraak = spraak;
     }
 
-    public Map<String, String> hentInnhold(){
-        return innhold;
+    public Ledetekst(String nokkel, Map<String, String> spraak, String kommentar) {
+        this.nokkel = nokkel;
+        this.spraak = spraak;
+        this.kommentar = kommentar;
+    }
+
+    @Override
+    public String toString() {
+        return "Ledetekst{" +
+                "nokkel='" + nokkel + '\'' +
+                ", spraak=" + spraak +
+                '}';
     }
 }

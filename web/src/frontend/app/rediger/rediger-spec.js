@@ -8,7 +8,7 @@ describe('Reducer for Rediger-komponent', () => {
         expect(rediger(undefined, {}).status).to.be.equal('ikkelastet');
     });
 
-    it('Skal oppdatere staten riktig for FAATT_LEDETEKST', () => {
+    it('Skal oppdatere staten riktig for GET_LEDETEKST', () => {
         const action = faattLedetekst('testnokkel', 'testspraak', 'testinnhold');
         expect(rediger({}, action)).to.be.eql({
             status: 'lastet',

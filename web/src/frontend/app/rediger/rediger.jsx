@@ -13,18 +13,19 @@ class Rediger extends Component {
     hentInput(event) {
         event.preventDefault();
         if (!this.props.loggetInn) {
-            console.log('Du må logge inn før du kan redigere tekster'); // eslint-disable-line no-console
+            console.log('Du må logge inn før du kan redigere tekster');
             return;
         }
         const queryTekst = finnTekst(this.refs.nokkel.value, this.refs.spraak.value, this.props.tekster.data);
         if (queryTekst === '') return;
         this.props.handleSubmit(this.refs.nokkel.value, this.refs.spraak.value, queryTekst);
     }
+
     render() {
         return (
             <form onSubmit={this.hentInput}>
-                <p><input type="text" ref="nokkel" name="nokkel" placeholder="Nokkel" /></p>
-                <p><input type="text" ref="spraak" name="spraak" placeholder="Spraak" /></p>
+                <p><input type="text" ref="nokkel" name="nokkel" placeholder="Nøkkel" label="ledetekstnøkkel" /></p>
+                <p><input type="text" ref="spraak" name="spraak" placeholder="Språk" label="språk" /></p>
                 <button type="submit">Hent tekst</button>
             </form>
         );

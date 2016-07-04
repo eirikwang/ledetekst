@@ -1,16 +1,16 @@
 package no.nav.sbl.ledeteksteditor.utils;
 
-import no.nav.sbl.ledeteksteditor.utils.exception.AapneRepoException;
-import no.nav.sbl.ledeteksteditor.utils.exception.GitWrapperException;
-import no.nav.sbl.ledeteksteditor.utils.exception.LesLedetekstException;
-import no.nav.sbl.ledeteksteditor.utils.exception.RemoteIkkeFunnetException;
+import no.nav.sbl.ledeteksteditor.domain.Ident;
+import no.nav.sbl.ledeteksteditor.utils.exception.*;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
+import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.FS;
@@ -26,17 +26,32 @@ import static java.lang.System.getProperty;
 
 public class GitWrapper {
 
-    public static Repository getRepo(String stashurl, File fileDir) {
+    public static final UsernamePasswordCredentialsProvider CREDENTIALS_PROVIDER = new UsernamePasswordCredentialsProvider(getProperty("git.credential.username", ""), getProperty("git.credential" +
+            ".password", ""));
+    static {
+        CredentialsProvider.setDefault(CREDENTIALS_PROVIDER);
+    }
+
+    public static Repository getRepo(String remoteUrl, File fileDir) {
+        return getRepo(remoteUrl, fileDir, true);
+    }
+
+    public static Repository getRepo(File fileDir) {
+        return getRepo(null, fileDir, false);
+    }
+
+    public static Repository getRepo(String remoteUrl, File fileDir, boolean pullEtterAapnet) {
         Git testResult;
         try {
             if (isLegalRepo(fileDir.toPath())) {
                 testResult = Git.open(fileDir);
-                testResult.pull().call();
+                if(pullEtterAapnet){
+                    pull(testResult.getRepository());
+                }
             } else {
                 testResult = Git.cloneRepository()
-                        .setURI(stashurl)
+                        .setURI(remoteUrl)
                         .setDirectory(fileDir)
-                        .setCredentialsProvider(new UsernamePasswordCredentialsProvider(getProperty("git.credential.username"), getProperty("git.credential.password")))
                         .call();
             }
         } catch (InvalidRemoteException e){
@@ -82,7 +97,57 @@ public class GitWrapper {
         return String.join("\n", content);
     }
 
+    public static void writeContentToFile(File file, String content){
+        try {
+            Files.write(file.toPath(), content.getBytes());
+        } catch (IOException e){
+            throw new SkrivLedetekstException(e);
+        }
+    }
+
     private static boolean isLegalRepo(Path path) {
         return RepositoryCache.FileKey.isGitRepository(path.resolve(".git").toFile(), FS.DETECTED);
+    }
+
+    public static void commitChanges(Repository repo, Ident ident, String kommentar) {
+        Git git = new Git(repo);
+        try {
+            git.add().addFilepattern(".").call();
+            git.commit().setMessage(kommentar).setAuthor(ident.navn, ident.epost).call();
+        } catch (TransportException e){
+            throw new AutentiseringException(e);
+        } catch (GitAPIException e) {
+            throw new ApplikasjonsException(e);
+        }
+    }
+
+    public static void push(Repository repo) {
+        Git git = new Git(repo);
+        try {
+            git.push().call();
+        } catch (GitAPIException e) {
+            throw new ApplikasjonsException(e);
+        }
+    }
+
+    public static void pull(Repository repo) {
+        Git git = new Git(repo);
+        try {
+            git.pull().call();
+        } catch (GitAPIException e) {
+            throw new ApplikasjonsException(e);
+        }
+    }
+
+    public static void initAndCommitRepo(File fileDir){
+        try {
+            Git.init().setDirectory(fileDir).call();
+            Git repo = Git.open(fileDir);
+            repo.commit().setMessage("init").setAuthor("GitWrapper", "Git@Wrapper.no");
+        } catch (GitAPIException e) {
+            throw new ApplikasjonsException(e);
+        } catch (IOException e) {
+            throw new ApplikasjonsException(e);
+        }
     }
 }

@@ -19,6 +19,6 @@ public class ApplikasjonsExceptionMapper implements ExceptionMapper<Applikasjons
     @Override
     public Response toResponse(ApplikasjonsException e) {
         LOG.error("Intern server feil", e);
-        return serverError().header(NO_BIGIP_5XX_REDIRECT, true).type(APPLICATION_JSON).build();
+        return serverError().entity(e.getMessage()).header(NO_BIGIP_5XX_REDIRECT, true).type(APPLICATION_JSON).build();
     }
 }
