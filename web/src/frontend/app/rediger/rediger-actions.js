@@ -48,8 +48,8 @@ export function fetchLedetekst(nokkel, spraak, tekst) {
 export function sendRedigertTekst(nokkel, spraak, tekst) {
     const url = `api/tekster/ledertekst-temp/${nokkel}`;
     const body = {
-        'nokkel': nokkel,
-        'spraak': {}
+        nokkel,
+        spraak: {}
     };
     body.spraak[spraak] = tekst;
 
@@ -59,7 +59,7 @@ export function sendRedigertTekst(nokkel, spraak, tekst) {
             method: 'PUT',
             headers: new Headers({
                 navn: getState().autentisert.data.navn,
-                email: getState().autentisert.data.email,
+                epost: getState().autentisert.data.epost,
                 'Content-Type': 'application/json'
             }),
             body: JSON.stringify(body)

@@ -5,16 +5,16 @@ import loggInn from './logginn-reducer';
 
 describe('Innlogging Reducer', () => {
     it('Skal godta bruker@nav.no', () => {
-        const emailTest = 'bruker@nav.no';
-        const action = { type: LOGG_INN, data: { navn: '', email: emailTest } };
+        const epostTest = 'bruker@nav.no';
+        const action = { type: LOGG_INN, data: { navn: '', epost: epostTest } };
         const state = loggInn({}, action);
 
         expect(state.status).to.be.equal(InnloggingsStatus.LOGGET_INN);
     });
 
     it('Skal ikke godta bruker@nav.no.no', () => {
-        const emailTest = 'bruker@nav.no.no';
-        const action = { type: LOGG_INN, data: { navn: '', email: emailTest } };
+        const epostTest = 'bruker@nav.no.no';
+        const action = { type: LOGG_INN, data: { navn: '', epost: epostTest } };
         const state = loggInn(undefined, action);
         expect(state.status).to.be.equal(InnloggingsStatus.LOGGET_UT);
     });

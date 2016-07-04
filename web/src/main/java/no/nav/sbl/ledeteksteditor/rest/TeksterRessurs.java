@@ -36,7 +36,7 @@ public class TeksterRessurs {
 
     @PUT
     @Path("/{remoteUrl}/{ledetekstnokkel}")
-    public Response oppdaterLedetekst(Ledetekst payload, @HeaderParam("navn") String navn, @HeaderParam("email") String epost, @PathParam("remoteUrl") String remoteUrl) {
+    public Response oppdaterLedetekst(Ledetekst payload, @HeaderParam("navn") String navn, @HeaderParam("epost") String epost, @PathParam("remoteUrl") String remoteUrl) {
         if( navn == null || epost == null){
             throw new UautentisertException("Navn eller epost mangler fra request header");
         }
