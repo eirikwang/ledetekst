@@ -1,11 +1,11 @@
-export const FAATT_LEDETEKST = 'FAA_LEDETEKST';
-export const PUT_LEDETEKST = 'PUT_LEDETEKST';
-export const PUTSUCC_LEDETEKST = 'PUTSUCC_LEDETEKST';
-export const PUTFEIL_LEDETEKST = 'PUTFEIL_LEDETEKST';
+export const GET_TEKSTER = 'GET_TEKSTER';
+export const PUT_TEKSTER = 'PUT_TEKSTER';
+export const PUTSUCC_TEKSTER = 'PUTSUCC_TEKSTER';
+export const PUTFAIL_TEKSTER = 'PUTFEIL_TEKSTER';
 
 export function faattLedetekst(nokkel, spraak, innhold) {
     return {
-        type: FAATT_LEDETEKST,
+        type: GET_TEKSTER,
         data: {
             nokkel,
             spraak,
@@ -16,7 +16,7 @@ export function faattLedetekst(nokkel, spraak, innhold) {
 
 export function putLedetekst(nokkel, spraak, innhold) {
     return {
-        type: PUT_LEDETEKST,
+        type: PUT_TEKSTER,
         data: {
             nokkel,
             spraak,
@@ -27,14 +27,14 @@ export function putLedetekst(nokkel, spraak, innhold) {
 
 export function putfeilLedetekst(error) {
     return {
-        type: PUTFEIL_LEDETEKST,
+        type: PUTFAIL_TEKSTER,
         data: error
     };
 }
 
 export function putsuccLedetekst(data) {
     return {
-        type: PUTSUCC_LEDETEKST,
+        type: PUTSUCC_TEKSTER,
         data
     };
 }
