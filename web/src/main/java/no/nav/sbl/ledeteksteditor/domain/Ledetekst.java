@@ -6,7 +6,7 @@ public class Ledetekst {
 
     public String nokkel;
     public Map<String, String> spraak;
-    public String kommentar;
+    public String kommentar = "default git commit message";
 
     public Ledetekst() {
     }
