@@ -6,7 +6,7 @@ public class Ledetekst {
 
     public String nokkel;
     public Map<String, String> spraak;
-    public String kommentar = "Endret via ledeteksteditor";
+    public String kommentar = "";
 
     public Ledetekst() {
     }

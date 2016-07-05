@@ -111,6 +111,7 @@ public class GitWrapper {
 
     public static void commitChanges(Repository repo, Ident ident, String kommentar) {
         Git git = new Git(repo);
+        kommentar = kommentar != null && kommentar != "" ? kommentar : "Endret via ledeteksteditor";
         try {
             git.add().addFilepattern(".").call();
             git.commit().setMessage(kommentar).setAuthor(ident.navn, ident.epost).call();

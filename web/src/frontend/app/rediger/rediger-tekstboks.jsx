@@ -14,7 +14,7 @@ class RedigerTekstboks extends Component {
     hentRedigert(event) {
         event.preventDefault();
         this.props.handleSubmit(this.props.location.query.nokkel, this.props.location.query.spraak,
-            this.refs.endretTekst.value);
+            this.refs.endretTekst.value, this.refs.kommentar.value);
     }
 
     render() {
@@ -32,6 +32,13 @@ class RedigerTekstboks extends Component {
                             name="endretTekst"
                             ref="endretTekst"
                             defaultValue={tekst}
+                        />
+                        <label htmlFor="kommentar">Kommentar:</label>
+                        <textarea
+                            className="input-fullbredde textarea-redigertekst"
+                            name="kommentar"
+                            ref="kommentar"
+                            placeholder='Endret via ledeteksteditor'
                         />
                     </div>
                     <div className="knapperad knapperad-adskilt knapperad-hoyrestilt">
@@ -52,8 +59,8 @@ class RedigerTekstboks extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        handleSubmit: (nokkel, spraak, tekst) => {
-            dispatch(sendRedigertTekst(nokkel, spraak, tekst));
+        handleSubmit: (nokkel, spraak, tekst, kommentar) => {
+            dispatch(sendRedigertTekst(nokkel, spraak, tekst, kommentar));
         },
         onClickHandler: () => {
             dispatch(goBack());
