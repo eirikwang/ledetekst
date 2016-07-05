@@ -11,8 +11,8 @@ const DEFAULT_STATE = {
 export default function loggInn(state = DEFAULT_STATE, action) {
     switch (action.type) {
         case LOGG_INN:
-            localStorage.setItem('epost', epost);
-            localStorage.setItem('navn', navn);
+            localStorage.setItem('epost', action.data.epost);
+            localStorage.setItem('navn', action.data.navn);
             return {
                 ...state,
                 status: InnloggingsStatus.LOGGET_INN,
