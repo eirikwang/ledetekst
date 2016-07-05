@@ -49,9 +49,8 @@ export function sendRedigertTekst(nokkel, spraak, tekst) {
     const url = `api/tekster/ledertekst-temp/${nokkel}`;
     const body = {
         nokkel,
-        spraak: {}
+        spraak: {[spraak]: tekst}
     };
-    body.spraak[spraak] = tekst;
 
     return (dispatch, getState) => {
         dispatch(putLedetekst(nokkel, spraak, tekst));
