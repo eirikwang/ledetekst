@@ -11,7 +11,7 @@ class LoggInn extends Component {
 
     hentInput(event) {
         event.preventDefault();
-        this.props.handleSubmit(this.refs.navn.value, this.refs.epost.value);
+        this.props.handleSubmit(this.refs.epost.value);
     }
     render() {
         return (
