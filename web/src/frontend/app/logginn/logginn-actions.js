@@ -6,9 +6,9 @@ export const InnloggingsStatus = {
 
 };
 
-export function loggInn(navn, email) {
+export function loggInn(navn, epost) {
     return {
         type: LOGG_INN,
-        data: { navn, email }
+        data: { navn, epost }
     };
 }
