@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { fetchTekster } from './tekster/tekster-actions';
 import { bindActionCreators } from 'redux';
