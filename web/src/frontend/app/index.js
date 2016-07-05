@@ -7,6 +7,7 @@ import createStore from './store.js';
 import Application from './application';
 import RedigerTekstboks from './rediger/rediger-tekstboks';
 import Provider from './provider';
+import Forside from './forside/forside';
 
 const history = useRouterHistory(createHistory)({
     basename: '/ledeteksteditor'
@@ -20,8 +21,8 @@ function Root({ children }) {
 render((
     <Provider store={store}>
         <Router history={history}>
-            <Route path="/" component={Root}>
-                <IndexRoute component={Application} />
+            <Route path="/" component={Application}>
+                <IndexRoute component={Forside} />
                 <Route path="/rediger" component={RedigerTekstboks} />
             </Route>
         </Router>

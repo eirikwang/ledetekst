@@ -1,18 +1,30 @@
-import React from 'react';
-import Tekster from './tekster/tekster';
-import LoggInn from './logginn/logginn';
-import Rediger from './rediger/rediger';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {fetchTekster} from './tekster/tekster-actions'
+import {bindActionCreators} from "redux";
+import Innholdslaster from './felles/innholdslaster/innholdslaster';
 import DevTools from './devtools';
 
-function Application() {
-    return (
-        <div className="container">
-            <LoggInn />
-            <Rediger />
-            <Tekster />
-            <DevTools />
-        </div>
-    );
+class Application extends Component {
+    componentWillMount() {
+        this.props.actions.fetchTekster();
+    }
+    render() {
+        const {tekster} = this.props;
+        return (
+            <div className="container">
+                <Innholdslaster avhengigheter={[ tekster ]}>
+                    {this.props.children}
+                </Innholdslaster>
+                <DevTools />
+            </div>
+        );
+    }
 }
 
-export default Application;
+function mapDispatchToProps(dispatch) {
+    return { actions: bindActionCreators({ fetchTekster }, dispatch) };
+}
+export default connect(state => ({tekster: state.tekster}),
+    mapDispatchToProps
+)(Application)
