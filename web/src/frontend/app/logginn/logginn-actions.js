@@ -13,7 +13,8 @@ function erGyldigEpost(epost) {
 
 export function loggInn(navn, epost) {
     if (erGyldigEpost(epost)) {
-        document.cookie = `epost=${epost};path='/'`;
+        localStorage.setItem('epost', epost);
+        localStorage.setItem('navn', navn);
         return {
             type: LOGG_INN,
             data: { navn, epost }

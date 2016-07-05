@@ -1,7 +1,11 @@
 import { InnloggingsStatus, LOGG_INN, EPOST_UGYLDIG } from './logginn-actions';
 
 const DEFAULT_STATE = {
-    status: InnloggingsStatus.LOGGET_UT
+    status: localStorage.getItem('epost') ? InnloggingsStatus.LOGGET_INN : InnloggingsStatus.LOGGET_UT,
+    data: localStorage.getItem('epost') ? {
+        epost: localStorage.getItem('epost'),
+        navn: localStorage.getItem('navn')
+    } : {}
 };
 
 export default function loggInn(state = DEFAULT_STATE, action) {

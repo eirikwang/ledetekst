@@ -1,5 +1,6 @@
 /* eslint-env mocha */
 import { expect } from './../../test-helper';
+global.localStorage = { getItem: () => {}, setItem: () => {} };
 import { LOGG_INN, EPOST_UGYLDIG, loggInn } from './logginn-actions';
 
 describe('Innlogging Action', () => {
