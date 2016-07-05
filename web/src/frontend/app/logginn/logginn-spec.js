@@ -1,21 +1,17 @@
 /* eslint-env mocha */
 import { expect } from './../../test-helper';
-import { LOGG_INN, InnloggingsStatus } from './logginn-actions';
-import loggInn from './logginn-reducer';
+import { LOGG_INN, EPOST_UGYLDIG, loggInn } from './logginn-actions';
 
-describe('Innlogging Reducer', () => {
+describe('Innlogging Action', () => {
     it('Skal godta bruker@nav.no', () => {
         const epostTest = 'bruker@nav.no';
-        const action = { type: LOGG_INN, data: { navn: '', epost: epostTest } };
-        const state = loggInn({}, action);
-
-        expect(state.status).to.be.equal(InnloggingsStatus.LOGGET_INN);
+        const action = loggInn(' ', epostTest);
+        expect(action.type).to.be.equal(LOGG_INN);
     });
 
     it('Skal ikke godta bruker@nav.no.no', () => {
         const epostTest = 'bruker@nav.no.no';
-        const action = { type: LOGG_INN, data: { navn: '', epost: epostTest } };
-        const state = loggInn(undefined, action);
-        expect(state.status).to.be.equal(InnloggingsStatus.LOGGET_UT);
+        const action = loggInn(' ', epostTest);
+        expect(action.type).to.be.equal(EPOST_UGYLDIG);
     });
 });
