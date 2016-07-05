@@ -1,3 +1,5 @@
+import { hentNavnFraEpost } from './../felles/utils';
+
 export const LOGG_INN = 'LOGG_INN';
 export const EPOST_UGYLDIG = 'EPOST_UGYLDIG';
 
@@ -11,10 +13,10 @@ function erGyldigEpost(epost) {
     return navEpostRegex.test(epost);
 }
 
-export function loggInn(navn, epost) {
+export function loggInn(epost) {
     if (erGyldigEpost(epost)) {
         localStorage.setItem('epost', epost);
-        localStorage.setItem('navn', navn);
+        const navn = hentNavnFraEpost(epost);
         return {
             type: LOGG_INN,
             data: { navn, epost }
