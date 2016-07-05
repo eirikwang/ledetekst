@@ -49,7 +49,7 @@ export function sendRedigertTekst(nokkel, spraak, tekst) {
     const url = `api/tekster/ledertekst-temp/${nokkel}`;
     const body = {
         nokkel,
-        spraak: {[spraak]: tekst}
+        spraak: { [spraak]: tekst }
     };
 
     return (dispatch, getState) => {

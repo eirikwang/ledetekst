@@ -36,7 +36,11 @@ class RedigerTekstboks extends Component {
                     </div>
                     <div className="knapperad knapperad-adskilt knapperad-hoyrestilt">
                         <button type="submit" className="knapp knapp-hoved knapp-liten">Lagre</button>
-                        <a href="/" onClick={this.props.onClickHandler} className="lenke-fremhevet lenke-avstand">
+                        <a
+                            href="javascript:void(0)" // eslint-disable-line no-script-url
+                            onClick={this.props.onClickHandler}
+                            className="lenke-fremhevet lenke-avstand"
+                        >
                             Avbryt
                         </a>
                     </div>
