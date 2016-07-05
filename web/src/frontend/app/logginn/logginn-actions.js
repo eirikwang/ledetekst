@@ -13,7 +13,6 @@ function erGyldigEpost(epost) {
 
 export function loggInn(epost) {
     if (erGyldigEpost(epost)) {
-        localStorage.setItem('epost', epost);
         const navn = hentNavnFraEpost(epost);
         return {
             type: LOGG_INN,
