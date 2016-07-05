@@ -1,5 +1,6 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
+import no.nav.sbl.ledeteksteditor.domain.Commitable;
 import no.nav.sbl.ledeteksteditor.domain.Ident;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
@@ -13,6 +14,7 @@ import org.junit.Test;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -72,24 +74,25 @@ public class LedetekstServiceImplTest {
     @Test( expected = IkkeFunnetException.class )
     public void testOppdaterLedeteksteForReturnererIkkeFunnet(){
         LedetekstService ledetekstService = new LedetekstServiceImpl();
-        ledetekstService.oppdaterLedeteksteFor(localUrlTomtTestRepo, fileDirTomtTestRepo,new Ledetekst("prop1", new HashMap<String, String>(){{
-            put("no", "verdi");
-            put("en", "value");
-        }}), null);
+        ledetekstService.oppdaterLedeteksteFor(localUrlTomtTestRepo, fileDirTomtTestRepo, lagDummyCommit(), null);
     }
 
     @Test
     public void testOppdaterLedeteksteForReturnererOppdatertLedetekst(){
         LedetekstService ledetekstService = new LedetekstServiceImpl();
-        Ledetekst ledetekst = ledetekstService.oppdaterLedeteksteFor(localUrlTestRepo, fileDirTestRepo,new Ledetekst("prop1", new HashMap<String, String>(){{
-            put("no", "verdi");
-            put("en", "value");
-        }}, "Kommentar"), new Ident("navn", "epost"));
+        Ledetekst ledetekst = ledetekstService.oppdaterLedeteksteFor(localUrlTestRepo, fileDirTestRepo, lagDummyCommit(), new Ident("navn", "epost"));
 
 
         assertNotEquals(ledetekst, null);
         assertEquals(ledetekst.nokkel, "prop1");
         assertEquals(ledetekst.spraak.get("no"), "verdi");
         assertEquals(ledetekst.spraak.get("en"), "value");
+    }
+
+    private static Commitable<Ledetekst> lagDummyCommit() {
+        return new Commitable<Ledetekst>(Optional.of("Kommentar"), new Ledetekst("prop1", new HashMap<String, String>(){{
+            put("no", "verdi");
+            put("en", "value");
+        }}));
     }
 }

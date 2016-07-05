@@ -1,5 +1,6 @@
 package no.nav.sbl.ledeteksteditor.services;
 
+import no.nav.sbl.ledeteksteditor.domain.Commitable;
 import no.nav.sbl.ledeteksteditor.domain.Ident;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 
@@ -15,5 +16,5 @@ public interface LedetekstService {
 
     Ledetekst hentLedeteksteFor(String remoteUrl, File fileDir, String ledetekstnokkel);
 
-    Ledetekst oppdaterLedeteksteFor(String remoteUrl, File fileDir, Ledetekst ledetekst, Ident ident);
+    Ledetekst oppdaterLedeteksteFor(String remoteUrl, File fileDir, Commitable<Ledetekst> ledetekst, Ident ident);
 }

@@ -1,5 +1,16 @@
 package no.nav.sbl.ledeteksteditor.domain;
 
-public abstract class Commitable {
-    public String kommentar;
+import java.util.Optional;
+
+public class Commitable<T> {
+    public Optional<String> kommentar;
+    public T payload;
+
+    public Commitable() {
+    }
+
+    public Commitable(Optional<String> kommentar, T payload) {
+        this.kommentar = kommentar;
+        this.payload = payload;
+    }
 }
