@@ -1,15 +1,14 @@
 /* eslint-env mocha */
-import { expect, React } from './../test-helper';
+import { expect, React } from './../../test-helper';
 import { shallow } from 'enzyme';
-import Application from './application';
+import Forside from './forside';
 
 
-describe('Eksempel test', () => {
+describe('Forside test', () => {
     it('Skal vise en overskrift', () => {
-        const wrapper = shallow(<Application />);
+        const wrapper = shallow(<Forside />);
         const overskrifter = wrapper.find('h1');
-
-
+        
         expect(overskrifter.length).to.be.equal(0);
     });
 });
