@@ -8,6 +8,10 @@ function Tekster({ tekster }) {
     );
 }
 
+Application.propTypes = {
+    tekster: PT.object.isRequired
+};
+
 function mapStateToProps({ tekster }) {
     return { tekster };
 }
