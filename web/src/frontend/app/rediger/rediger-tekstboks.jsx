@@ -17,9 +17,8 @@ class RedigerTekstboks extends Component {
     }
 
     render() {
-        //const tekst = finnTekst(this.props.location.query.nokkel, this.props.location.query.spraak,
-            //this.props.tekster.data);
-        const tekst = "Dummy data, dette er litt tekst";
+        const tekst = finnTekst(this.props.location.query.nokkel, this.props.location.query.spraak,
+            this.props.tekster.data);
         return (
             <div className="rediger-ledetekst-element">
                 <div className="typo-etikett-stor tekst-uendretinnhold">{tekst}</div>
