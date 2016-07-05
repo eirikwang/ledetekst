@@ -8,13 +8,6 @@ function Tekster({ tekster }) {
     );
 }
 
-Tekster.propTypes = {
-    tekster: PT.object.isRequired,
-    actions: PT.shape({
-        fetchTekster: PT.func.isRequired
-    })
-};
-
 function mapStateToProps({ tekster }) {
     return { tekster };
 }
