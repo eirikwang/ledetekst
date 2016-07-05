@@ -1,5 +1,3 @@
-import { hentNavnFraEpost } from './../felles/utils';
-
 export const LOGG_INN = 'LOGG_INN';
 export const EPOST_UGYLDIG = 'EPOST_UGYLDIG';
 
