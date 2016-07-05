@@ -50,7 +50,7 @@ export function sendRedigertTekst(nokkel, spraak, tekst, kommentar) {
     const body = {
         nokkel,
         spraak: { [spraak]: tekst },
-        'kommentar': kommentar
+        kommentar
     };
 
     return (dispatch, getState) => {

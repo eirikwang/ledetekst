@@ -38,7 +38,7 @@ class RedigerTekstboks extends Component {
                             className="input-fullbredde textarea-redigertekst"
                             name="kommentar"
                             ref="kommentar"
-                            placeholder='Endret via ledeteksteditor'
+                            placeholder="Endret via ledeteksteditor"
                         />
                     </div>
                     <div className="knapperad knapperad-adskilt knapperad-hoyrestilt">
