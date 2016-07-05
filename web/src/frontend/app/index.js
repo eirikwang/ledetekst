@@ -14,10 +14,6 @@ const history = useRouterHistory(createHistory)({
 });
 const store = createStore(history);
 
-function Root({ children }) {
-    return children;
-}
-
 render((
     <Provider store={store}>
         <Router history={history}>

@@ -1,5 +1,5 @@
-import React, {Component, PropTypes as PT} from 'react';
-import {connect} from 'react-redux';
+import React, { PropTypes as PT } from 'react';
+import { connect } from 'react-redux';
 import TeksterListe from './tekster-liste';
 
 function Tekster({ tekster }) {
