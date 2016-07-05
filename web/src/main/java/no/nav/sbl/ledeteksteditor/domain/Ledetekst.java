@@ -2,11 +2,10 @@ package no.nav.sbl.ledeteksteditor.domain;
 
 import java.util.Map;
 
-public class Ledetekst {
+public class Ledetekst extends Commitable{
 
     public String nokkel;
     public Map<String, String> spraak;
-    public String kommentar = "";
 
     public Ledetekst() {
     }
