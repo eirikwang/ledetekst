@@ -48,9 +48,9 @@ export function fetchLedetekst(nokkel, spraak, tekst) {
 export function sendRedigertTekst(nokkel, spraak, tekst, kommentar) {
     const url = `api/tekster/ledertekst-temp/${nokkel}`;
     const body = {
-        payload : {
+        payload: {
             nokkel,
-            spraak: {[spraak]: tekst}
+            spraak: { [spraak]: tekst }
         },
         kommentar
     };
