@@ -1,6 +1,6 @@
 import React, { PropTypes as PT, Component } from 'react';
 import { connect } from 'react-redux';
-import { goBack } from 'react-router-redux';
+import { goBack, push } from 'react-router-redux';
 import { autobind, finnTekst } from './../felles/utils';
 import { sendRedigertTekst } from './rediger-actions';
 
@@ -54,7 +54,7 @@ function mapDispatchToProps(dispatch) {
     return {
         handleSubmit: (nokkel, spraak, tekst) => {
             dispatch(sendRedigertTekst(nokkel, spraak, tekst));
-            dispatch(goBack());
+            dispatch(push('/'));
         },
         onClickHandler: () => {
             dispatch(goBack());

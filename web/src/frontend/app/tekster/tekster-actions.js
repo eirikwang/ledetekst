@@ -3,6 +3,7 @@ import { fetchToJson } from './../felles/utils';
 export const REQUEST_TEKSTER = 'REQUEST_TEKSTER';
 export const RECEIVE_TEKSTER = 'RECEIVE_TEKSTER';
 export const RECEIVE_FEIL = 'RECEIVE_FEIL';
+export const OPPDATER_TEKST = 'OPPDATER_TEKST';
 
 export function sendRequest(data) {
     return {
@@ -22,6 +23,13 @@ export function receiveFeil(error) {
     return {
         type: RECEIVE_FEIL,
         data: error
+    };
+}
+
+export function oppdaterTekst(data) {
+    return {
+        type: OPPDATER_TEKST,
+        data
     };
 }
 

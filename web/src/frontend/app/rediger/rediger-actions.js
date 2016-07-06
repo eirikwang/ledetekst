@@ -1,5 +1,5 @@
-import {receiveTekster} from './../tekster/tekster-actions';
-import {oppdaterLedetekstListe} from './../felles/utils';
+import { oppdaterTekst } from './../tekster/tekster-actions';
+import { hentLedetekstIndex } from './../felles/utils';
 
 export const GET_TEKSTER = 'GET_TEKSTER';
 export const PUT_TEKSTER = 'PUT_TEKSTER';
@@ -29,6 +29,7 @@ export function putLedetekst(nokkel, spraak, innhold) {
 }
 
 export function putfeilLedetekst(error) {
+    console.error(error, error.stack);
     return {
         type: PUTFAIL_TEKSTER,
         data: error
@@ -66,20 +67,14 @@ export function sendRedigertTekst(nokkel, spraak, tekst) {
             }),
             body: JSON.stringify(body)
         }).then((response) => {
-            const ledetekst = {
-                nokkel,
-                spraak,
-                tekst
-            };
-            const teksterKopi = JSON.parse(JSON.stringify(getState().tekster.data));
-            oppdaterLedetekstListe(teksterKopi, ledetekst);
-            
-            dispatch(putsuccLedetekst(response));
-            dispatch(receiveTekster(teksterKopi));
-        }).catch((error) => {
-            console.log(error);
-            dispatch(putfeilLedetekst(error))
+            const ledetekst = { nokkel, spraak, tekst };
+            ledetekst.index = hentLedetekstIndex(getState().tekster.data, ledetekst);
 
+            dispatch(putsuccLedetekst(response));
+            dispatch(oppdaterTekst(ledetekst));
+        }).catch((error) => {
+            console.error(error, error.stack);
+            dispatch(putfeilLedetekst(error));
         });
     };
 }
