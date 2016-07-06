@@ -41,6 +41,7 @@ public class TeksterRessurs {
         if( navn == null || epost == null){
             throw new UautentisertException("Navn eller epost mangler fra request header");
         }
+
         Ident ident = new Ident(navn, epost);
         Ledetekst ledetekst = ledetekstService.oppdaterLedeteksteFor(
                 LedetekstServiceImpl.REPOSITORIES.get(remoteUrl),

@@ -3,7 +3,7 @@ package no.nav.sbl.ledeteksteditor.domain;
 import java.util.Optional;
 
 public class Commitable<T> {
-    public Optional<String> kommentar;
+    public Optional<String> kommentar = Optional.empty();
     public T payload;
 
     public Commitable() {
