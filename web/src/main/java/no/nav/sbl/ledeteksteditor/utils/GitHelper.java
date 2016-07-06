@@ -7,6 +7,7 @@ import org.eclipse.jgit.lib.Repository;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Optional;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -43,7 +44,7 @@ public class GitHelper {
             throw new ApplikasjonsException("Kunne ikke lage mappastruktur i testrepo");
         }
         Repository repo = GitWrapper.getRepo(new File(fileDir));
-        GitWrapper.commitChanges(repo, new Ident("Test", "test@test.test"), "init");
+        GitWrapper.commitChanges(repo, new Ident("Test", "test@test.test"), Optional.of("init"));
         repo.close();
         return fileDir;
     }
@@ -56,7 +57,7 @@ public class GitHelper {
             throw new ApplikasjonsException(e);
         }
         Repository repo = GitWrapper.getRepo(new File(fileDir));
-        GitWrapper.commitChanges(repo, new Ident("Test", "test@test.test"), "init");
+        GitWrapper.commitChanges(repo, new Ident("Test", "test@test.test"), Optional.of("init"));
         repo.close();
         return fileDir;
     }

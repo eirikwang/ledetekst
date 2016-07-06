@@ -21,8 +21,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.System.getProperty;
+import static no.nav.sbl.ledeteksteditor.utils.FunctionalUtils.not;
 
 public class GitWrapper {
 
@@ -109,9 +111,10 @@ public class GitWrapper {
         return RepositoryCache.FileKey.isGitRepository(path.resolve(".git").toFile(), FS.DETECTED);
     }
 
-    public static void commitChanges(Repository repo, Ident ident, String kommentar) {
+    public static void commitChanges(Repository repo, Ident ident, Optional<String> kommentarMaybe) {
         Git git = new Git(repo);
         try {
+            String kommentar = kommentarMaybe.filter(not(String::isEmpty)).orElse("Endret via ledeteksteditor");
             git.add().addFilepattern(".").call();
             git.commit().setMessage(kommentar).setAuthor(ident.navn, ident.epost).call();
         } catch (TransportException e){
