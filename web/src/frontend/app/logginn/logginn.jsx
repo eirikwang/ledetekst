@@ -11,13 +11,12 @@ class LoggInn extends Component {
 
     hentInput(event) {
         event.preventDefault();
-        this.props.handleSubmit(this.refs.navn.value, this.refs.epost.value);
+        this.props.handleSubmit(this.refs.epost.value);
     }
     render() {
         return (
             <form onSubmit={this.hentInput}>
-                <p><input type="text" ref="navn" name="navn" placeholder="Navn" /></p>
-                <p><input type="text" ref="epost" name="epost" placeholder="epost" /></p>
+                <p><input type="text" ref="epost" name="epost" placeholder="Epost" /></p>
                 <button type="submit">Logg Inn</button>
             </form>
         );
@@ -26,8 +25,8 @@ class LoggInn extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        handleSubmit: (navn, epost) => {
-            dispatch(loggInn(navn, epost));
+        handleSubmit: (epost) => {
+            dispatch(loggInn(epost));
         }
     };
 }

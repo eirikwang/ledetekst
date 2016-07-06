@@ -66,3 +66,7 @@ export function finnTekst(queryNokkel, querySpraak, tekster) {
     }
     return teksterForSpraak[querySpraak];
 }
+
+export function hentNavnFraEpost(epost) {
+    return epost.substring(0, epost.indexOf('@')).replace('.', ' ');
+}
