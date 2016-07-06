@@ -26,20 +26,24 @@ class RedigerTekstboks extends Component {
                 Orginal tekst: {tekst}
                 <form onSubmit={this.hentRedigert}>
                     <div className="nav-input">
-                        <label htmlFor="endretTekst">Ny tekst:</label>
-                        <textarea
-                            className="input-fullbredde textarea-redigertekst"
-                            name="endretTekst"
-                            ref="endretTekst"
-                            defaultValue={tekst}
-                        />
-                        <label htmlFor="kommentar">Kommentar:</label>
-                        <textarea
-                            className="input-fullbredde textarea-redigertekst"
-                            name="kommentar"
-                            ref="kommentar"
-                            placeholder="Endret via ledeteksteditor"
-                        />
+                        <div>
+                            <label htmlFor="endretTekst">Ny tekst:</label>
+                            <textarea
+                                className="input-fullbredde textarea-redigertekst"
+                                name="endretTekst"
+                                ref="endretTekst"
+                                defaultValue={tekst}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="kommentar">Kommentar:</label>
+                            <textarea
+                                className="input-fullbredde textarea-redigertekst"
+                                name="kommentar"
+                                ref="kommentar"
+                                placeholder="Endret via ledeteksteditor"
+                            />
+                        </div>
                     </div>
                     <div className="knapperad knapperad-adskilt knapperad-hoyrestilt">
                         <button type="submit" className="knapp knapp-hoved knapp-liten">Lagre</button>
