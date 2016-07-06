@@ -1,6 +1,6 @@
 import React, { PropTypes as PT, Component } from 'react';
 import { connect } from 'react-redux';
-import { goBack, push } from 'react-router-redux';
+import { goBack } from 'react-router-redux';
 import { autobind, finnTekst } from './../felles/utils';
 import { sendRedigertTekst } from './rediger-actions';
 
@@ -35,7 +35,14 @@ class RedigerTekstboks extends Component {
                         />
                     </div>
                     <div className="knapperad knapperad-adskilt knapperad-hoyrestilt">
-                        <button type="submit" className="knapp knapp-hoved knapp-liten">Lagre</button>
+                        <button
+                            type="submit"
+                            className={`knapp knapp-hoved knapp-liten
+                            ${this.props.status === 'laster' ? ' knapp-spinner er-aktiv' : ''}`}
+                            disabled={this.props.status === 'laster'}
+                        >
+                            Lagre<span className={this.props.status === 'laster' ? 'spinner-knapp' : ''} />
+                        </button>
                         <a
                             href="javascript:void(0)" // eslint-disable-line no-script-url
                             onClick={this.props.onClickHandler}
@@ -54,7 +61,6 @@ function mapDispatchToProps(dispatch) {
     return {
         handleSubmit: (nokkel, spraak, tekst) => {
             dispatch(sendRedigertTekst(nokkel, spraak, tekst));
-            dispatch(push('/'));
         },
         onClickHandler: () => {
             dispatch(goBack());
@@ -64,12 +70,14 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        tekster: state.tekster
+        tekster: state.tekster,
+        status: state.rediger.status
     };
 }
 
 RedigerTekstboks.propTypes = {
     tekster: PT.object.isRequired,
+    status: PT.string.isRequired,
     location: PT.object.isRequired,
     handleSubmit: PT.func.isRequired,
     onClickHandler: PT.func.isRequired
