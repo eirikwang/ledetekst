@@ -7,7 +7,6 @@ function Forside() {
     return (
         <div>
             <LoggInn />
-            <Rediger />
             <Tekster />
         </div>
     );
