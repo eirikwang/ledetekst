@@ -1,6 +1,5 @@
 package no.nav.sbl.ledeteksteditor.rest;
 
-import no.nav.sbl.ledeteksteditor.domain.Commitable;
 import no.nav.sbl.ledeteksteditor.domain.Ident;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
@@ -14,7 +13,6 @@ import org.junit.Test;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -89,10 +87,10 @@ public class LedetekstServiceImplTest {
         assertEquals(ledetekst.spraak.get("en"), "value");
     }
 
-    private static Commitable<Ledetekst> lagDummyCommit() {
-        return new Commitable<Ledetekst>(Optional.of("Kommentar"), new Ledetekst("prop1", new HashMap<String, String>(){{
+    private static Ledetekst lagDummyCommit() {
+        return new Ledetekst("prop1", new HashMap<String, String>(){{
             put("no", "verdi");
             put("en", "value");
-        }}));
+        }});
     }
 }

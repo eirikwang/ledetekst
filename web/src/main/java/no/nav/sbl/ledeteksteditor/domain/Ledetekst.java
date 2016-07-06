@@ -1,11 +1,13 @@
 package no.nav.sbl.ledeteksteditor.domain;
 
 import java.util.Map;
+import java.util.Optional;
 
-public class Ledetekst extends Commitable{
+public class Ledetekst{
 
     public String nokkel;
     public Map<String, String> spraak;
+    public Optional<String> kommentar = Optional.empty();
 
     public Ledetekst() {
     }

@@ -1,6 +1,5 @@
 package no.nav.sbl.ledeteksteditor.services;
 
-import no.nav.sbl.ledeteksteditor.domain.Commitable;
 import no.nav.sbl.ledeteksteditor.domain.Ident;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.utils.FileUtils;
@@ -70,16 +69,15 @@ public class LedetekstServiceImpl implements LedetekstService {
     }
 
     @Override
-    public Ledetekst oppdaterLedeteksteFor(String remoteUrl, File fileDir, Commitable<Ledetekst> commitable, Ident ident) {
+    public Ledetekst oppdaterLedeteksteFor(String remoteUrl, File fileDir, Ledetekst ledetekst, Ident ident) {
         List<File> filer = hentAlleLedetekstFilerFor(remoteUrl, fileDir);
-        Ledetekst ledetekst = commitable.payload;
         boolean nyeEndringer = false;
         for( Map.Entry<String, String> spraak : ledetekst.spraak.entrySet()){
             nyeEndringer |= oppdaterLedetekstForHjelper(filer, ledetekst.nokkel, spraak);
         }
         Repository repo = GitWrapper.getRepo(remoteUrl, fileDir);
         if (nyeEndringer){
-            GitWrapper.commitChanges(repo, ident, commitable.kommentar);
+            GitWrapper.commitChanges(repo, ident, ledetekst.kommentar);
             GitWrapper.push(repo);
         }
         repo.close();
