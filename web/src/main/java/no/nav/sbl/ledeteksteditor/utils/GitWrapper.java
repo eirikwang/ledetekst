@@ -22,7 +22,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import static java.lang.System.getProperty;
 import static no.nav.sbl.ledeteksteditor.utils.FunctionalUtils.not;
