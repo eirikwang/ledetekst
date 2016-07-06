@@ -54,6 +54,11 @@ export function autobind(ctx) {
 }
 
 export function finnTekst(queryNokkel, querySpraak, tekster) {
+    const teksterForSpraak = finnTekstObject(queryNokkel, querySpraak, tekster);
+    return teksterForSpraak[querySpraak];
+}
+
+export function finnTekstObject(queryNokkel, querySpraak, tekster) {
     const teksterForNokkel = tekster.find(t => t.nokkel === queryNokkel);
     if (teksterForNokkel.length < 1) {
         console.log('Fant ikke tekster for denne nøkkelen');
@@ -64,9 +69,15 @@ export function finnTekst(queryNokkel, querySpraak, tekster) {
         console.log('Fant ikke tekst for språket og nøkkelen');
         return '';
     }
-    return teksterForSpraak[querySpraak];
+    return teksterForNokkel.spraak;
 }
 
 export function hentNavnFraEpost(epost) {
     return epost.substring(0, epost.indexOf('@')).replace('.', ' ');
+}
+
+export function oppdaterLedetekstListe(tekster, endretTekst) {
+    const tekst = finnTekstObject(endretTekst.nokkel, endretTekst.spraak, tekster);
+    tekst[endretTekst.spraak] = endretTekst.tekst;
+    
 }

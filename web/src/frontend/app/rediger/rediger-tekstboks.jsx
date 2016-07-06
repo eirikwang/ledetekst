@@ -54,6 +54,7 @@ function mapDispatchToProps(dispatch) {
     return {
         handleSubmit: (nokkel, spraak, tekst) => {
             dispatch(sendRedigertTekst(nokkel, spraak, tekst));
+            dispatch(goBack());
         },
         onClickHandler: () => {
             dispatch(goBack());

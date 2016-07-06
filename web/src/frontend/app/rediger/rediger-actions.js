@@ -1,3 +1,6 @@
+import {receiveTekster} from './../tekster/tekster-actions';
+import {oppdaterLedetekstListe} from './../felles/utils';
+
 export const GET_TEKSTER = 'GET_TEKSTER';
 export const PUT_TEKSTER = 'PUT_TEKSTER';
 export const PUTSUCC_TEKSTER = 'PUTSUCC_TEKSTER';
@@ -62,10 +65,21 @@ export function sendRedigertTekst(nokkel, spraak, tekst) {
                 'Content-Type': 'application/json'
             }),
             body: JSON.stringify(body)
-        })
-            .then((response) =>
-                dispatch(putsuccLedetekst(response)))
-            .catch((error) =>
-                dispatch(putfeilLedetekst(error)));
+        }).then((response) => {
+            const ledetekst = {
+                nokkel,
+                spraak,
+                tekst
+            };
+            const teksterKopi = JSON.parse(JSON.stringify(getState().tekster.data));
+            oppdaterLedetekstListe(teksterKopi, ledetekst);
+            
+            dispatch(putsuccLedetekst(response));
+            dispatch(receiveTekster(teksterKopi));
+        }).catch((error) => {
+            console.log(error);
+            dispatch(putfeilLedetekst(error))
+
+        });
     };
 }
