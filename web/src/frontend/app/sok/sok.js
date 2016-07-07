@@ -19,7 +19,7 @@ class Sok extends Component {
             <form onSubmit={this.sendQuery}>
                 <div className="sokefelt">
                     <label htmlFor="sok" className="visuallyhidden">Søk</label>
-                    <input type="text" ref="queryTekst" label="sok" placeholder="SØK PÅ NØKKEL" />
+                    <input type="text" ref="queryTekst" name="sok" placeholder="SØK PÅ NØKKEL" />
                     <button type="submit" className="knapp-sok">
                         <span className="visuallyhidden">Søk</span>
                     </button>
