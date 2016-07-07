@@ -37,15 +37,8 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-function mapStateToProps(state) {
-    return {
-        tekster: state.tekster
-    };
-}
-
 Sok.propTypes = {
-    tekster: PropTypes.object.isRequired,
     queryTekster: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sok);
+export default connect(() => ({}), mapDispatchToProps)(Sok);
