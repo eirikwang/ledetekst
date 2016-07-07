@@ -1,5 +1,6 @@
 import { STATUS } from './../felles/konstanter';
-import { REQUEST_TEKSTER, RECEIVE_TEKSTER, RECEIVE_FEIL } from './tekster-actions';
+import { REQUEST_TEKSTER, RECEIVE_TEKSTER, RECEIVE_FEIL, OPPDATER_TEKST } from './tekster-actions';
+import deepFreeze from 'deep-freeze';
 
 const DEFAULT_STATE = {
     status: STATUS.ikkelastet,
@@ -11,12 +12,20 @@ const DEFAULT_STATE = {
 export default function tekster(state = DEFAULT_STATE, action) {
     switch (action.type) {
         case REQUEST_TEKSTER:
-            return { ...state, status: STATUS.laster };
+            return deepFreeze({ ...state, status: STATUS.laster });
         case RECEIVE_TEKSTER:
-            return { ...state, status: STATUS.lastet, data: action.data };
+            return deepFreeze({ ...state, status: STATUS.lastet, data: action.data });
         case RECEIVE_FEIL:
-            return { ...state, status: STATUS.feilet, data: action.data };
+            return deepFreeze({ ...state, status: STATUS.feilet, data: action.data });
+        case OPPDATER_TEKST: {
+            const data = JSON.parse(JSON.stringify((state.data)));
+            const tekst = data[action.data.index];
+
+            tekst.spraak[action.data.spraak] = action.data.tekst;
+
+            return deepFreeze({ ...state, data });
+        }
         default:
-            return state;
+            return deepFreeze(state);
     }
 }

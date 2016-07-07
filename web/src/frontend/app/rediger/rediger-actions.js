@@ -1,3 +1,7 @@
+import { oppdaterTekst } from './../tekster/tekster-actions';
+import { hentLedetekstIndex } from './../felles/utils';
+import { push } from 'react-router-redux';
+
 export const GET_TEKSTER = 'GET_TEKSTER';
 export const PUT_TEKSTER = 'PUT_TEKSTER';
 export const PUTSUCC_TEKSTER = 'PUTSUCC_TEKSTER';
@@ -26,6 +30,7 @@ export function putLedetekst(nokkel, spraak, innhold) {
 }
 
 export function putfeilLedetekst(error) {
+    console.error(error, error.stack);
     return {
         type: PUTFAIL_TEKSTER,
         data: error
@@ -63,10 +68,15 @@ export function sendRedigertTekst(nokkel, spraak, tekst, kommentar) {
                 'Content-Type': 'application/json'
             }),
             body: JSON.stringify(body)
-        })
-            .then((response) =>
-                dispatch(putsuccLedetekst(response)))
-            .catch((error) =>
-                dispatch(putfeilLedetekst(error)));
+        }).then((response) => {
+            const ledetekst = { nokkel, spraak, tekst };
+            ledetekst.index = hentLedetekstIndex(getState().tekster.data, ledetekst);
+            dispatch(push('/'));
+            dispatch(putsuccLedetekst(response));
+            dispatch(oppdaterTekst(ledetekst));
+        }).catch((error) => {
+            console.error(error, error.stack);
+            dispatch(putfeilLedetekst(error));
+        });
     };
 }
