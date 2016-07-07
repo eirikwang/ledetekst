@@ -6,7 +6,8 @@ export const EPOST_UGYLDIG = 'EPOST_UGYLDIG';
 
 export const InnloggingsStatus = {
     LOGGET_INN: 'LOGGET_INN',
-    LOGGET_UT: 'LOGGET_UT'
+    LOGGET_UT: 'LOGGET_UT',
+    EPOST_UGYLDIG: 'EPOST_UGYLDIG'
 };
 
 function erGyldigEpost(epost) {

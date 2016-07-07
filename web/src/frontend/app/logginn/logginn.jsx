@@ -15,13 +15,29 @@ class LoggInn extends Component {
     }
 
     render() {
+        let warning = this.props.ugyldigEpost ? 'Ugyldig epost' : '';
+        let klasser = 'nav-input text-left blokk-l ' + (this.props.ugyldigEpost ? ' har-valideringsfeil' : '');
         return (
             <div className="logginn-beholder">
                 <h1 className="hode-undertittel  hode-dekorert blokk-m">Logg inn</h1>
                 <form onSubmit={this.hentInput}>
-                    <div className="nav-input text-left blokk-l">
-                        <label clasName="typo-infotekst" htmlFor="epost">E-post:</label>
-                        <input className="input-fullbredde" type="text" ref="epost" name="epost" placeholder="E-post" />
+                    <div className={klasser}>
+                        <label clasName="typo-infotekst" htmlFor="input-epost">
+                            Nav E-post:
+                        </label>
+                        <input
+                            className="input-fullbredde"
+                            type="text"
+                            ref="epost"
+                            name="epost"
+                            id="input-epost"
+                            placeholder="brukernavn@nav.no"
+                            aria-describedby="error-epost"
+                            required="required"
+                            aria-required="true" />
+                        <span className="skjema-feilmelding" id="error-epost">
+                            {warning}
+                        </span>
                     </div>
                     <div className="blokk-xl">
                         <button type="submit" className="knapp knapp-hoved knapp-liten">Logg Inn</button>
@@ -40,8 +56,14 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
+function mapStateToProps(state) {
+    return {
+        ugyldigEpost: state.autentisert.status === 'EPOST_UGYLDIG'
+    }
+}
+
 LoggInn.propTypes = {
     handleSubmit: PropTypes.func.isRequired
 };
 
-export default connect(() => ({}), mapDispatchToProps)(LoggInn);
+export default connect(mapStateToProps, mapDispatchToProps)(LoggInn);

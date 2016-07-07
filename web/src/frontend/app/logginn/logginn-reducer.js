@@ -21,7 +21,7 @@ export default function loggInn(state = DEFAULT_STATE, action) {
         case EPOST_UGYLDIG:
             return {
                 ...state,
-                status: InnloggingsStatus.LOGGET_UT
+                status: InnloggingsStatus.EPOST_UGYLDIG
             };
         default:
             return state;
