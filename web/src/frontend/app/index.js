@@ -16,26 +16,26 @@ const history = useRouterHistory(createHistory)({
 });
 const store = createStore(history);
 
-render((
-    <Provider store={store}>
-        <Router history={history}>
-            <Route path="/" component={Application}>
-                <IndexRoute component={Forside} />
-                <Route path="/rediger" onEnter={kreverInnlogging}  component={Rediger} />
-                <Route path="/login" component={Login} />
-            </Route>
-        </Router>
-    </Provider>
-), document.getElementById('mainapp'));
-
 function kreverInnlogging(nextState, replace) {
-    if(store.getState().autentisert.status !== InnloggingsStatus.LOGGET_INN){
+    if (store.getState().autentisert.status !== InnloggingsStatus.LOGGET_INN) {
         replace({
             pathname: '/login',
             state: {
-                nextPathName: nextState.location.pathname,
+                pathname: nextState.location.pathname,
                 query: nextState.location.query
             }
         });
     }
 }
+
+render((
+    <Provider store={store}>
+        <Router history={history}>
+            <Route path="/" component={Application}>
+                <IndexRoute component={Forside} />
+                <Route path="/rediger" onEnter={kreverInnlogging} component={Rediger} />
+                <Route path="/login" component={Login} />
+            </Route>
+        </Router>
+    </Provider>
+), document.getElementById('mainapp'));

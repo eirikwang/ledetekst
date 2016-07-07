@@ -15,14 +15,17 @@ function erGyldigEpost(epost) {
     return navEpostRegex.test(epost);
 }
 
-export function loggInn(epost, nesteSide = { nextPathName: '/', query: {} }) {
+export function loggInn(epost, nesteSide) {
+    let neste;
+    if (!nesteSide) {
+        neste = { pathname: '/', query: {} };
+    } else {
+        neste = nesteSide;
+    }
     if (erGyldigEpost(epost)) {
         const navn = storForbokstavPaaHvertOrd(hentNavnFraEpost(epost));
         return (dispatch) => {
-            dispatch(push({
-                pathname: nesteSide.nextPathName,
-                query: nesteSide.query
-            }));
+            dispatch(push(neste));
             dispatch({
                 type: LOGG_INN,
                 data: { navn, epost }

@@ -65,10 +65,10 @@ function mapStateToProps(state) {
 
 LoggInn.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-    location: {
-        state: PropTypes.object.isRequired
-    },
-    ugyldigEpost: PropTypes.object.isRequired
+    location: PropTypes.shape({
+        state: PropTypes.object
+    }),
+    ugyldigEpost: PropTypes.bool.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoggInn);
