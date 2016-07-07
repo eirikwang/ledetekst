@@ -19,14 +19,14 @@ export function loggInn(epost, nesteSide = {nextPathName: '/', query: {}}) {
     if (erGyldigEpost(epost)) {
         const navn = storForbokstavPaaHvertOrd(hentNavnFraEpost(epost));
         return (dispatch) => {
-            dispatch({
-                type: LOGG_INN,
-                data: { navn, epost }
-            });
             dispatch(push({
                 pathname: nesteSide.nextPathName,
                 query: nesteSide.query
             }));
+            dispatch({
+                type: LOGG_INN,
+                data: { navn, epost }
+            });
         };
     }
     return {

@@ -18,7 +18,12 @@ class Rediger extends Component {
     }
 
     render() {
-        const tekst = finnTekst(this.props.location.query.nokkel, this.props.location.query.spraak, this.props.tekster.data);
+        const laster = this.props.status === 'laster';
+        const knappSpinner = `knapp knapp-hoved knapp-liten ${laster ? ' knapp-spinner er-aktiv' : ''}`;
+        const knappLaster = laster ? 'spinner-knapp' : '';
+
+        const tekst = finnTekst(this.props.location.query.nokkel, this.props.location.query.spraak,
+            this.props.tekster.data);
 
         return (
             <div className="rediger-ledetekst-element">
@@ -43,7 +48,9 @@ class Rediger extends Component {
                         />
                     </div>
                     <div className="knapperad knapperad-adskilt knapperad-hoyrestilt">
-                        <button type="submit" className="knapp knapp-hoved knapp-liten">Lagre</button>
+                        <button type="submit" className={knappSpinner} disabled={laster}>
+                            Lagre<span className={knappLaster} />
+                        </button>
                         <a
                             href="javascript:void(0)" // eslint-disable-line no-script-url
                             onClick={this.props.onClickHandler}
@@ -72,12 +79,13 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         tekster: state.tekster,
-        loggetInn: state.autentisert.status === 'LOGGET_INN'
+        status: state.rediger.status
     };
 }
 
 Rediger.propTypes = {
     tekster: PT.object.isRequired,
+    status: PT.string.isRequired,
     location: PT.object.isRequired,
     handleSubmit: PT.func.isRequired,
     onClickHandler: PT.func.isRequired

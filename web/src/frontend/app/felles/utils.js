@@ -68,7 +68,11 @@ export function finnTekst(queryNokkel, querySpraak, tekster) {
 }
 
 export function hentNavnFraEpost(epost) {
-    return epost.substring(0, epost.indexOf('@')).replace('.', ' ');
+    return epost.substring(0, epost.indexOf('@')).replace(/\./g, ' ');
+}
+
+export function hentLedetekstIndex(tekster, endretTekst) {
+    return tekster.findIndex(t => t.nokkel === endretTekst.nokkel);
 }
 
 export function storForbokstavPaaHvertOrd(str) {
