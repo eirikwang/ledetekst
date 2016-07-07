@@ -70,3 +70,9 @@ export function finnTekst(queryNokkel, querySpraak, tekster) {
 export function hentNavnFraEpost(epost) {
     return epost.substring(0, epost.indexOf('@')).replace('.', ' ');
 }
+
+export function storForbokstavPaaHvertOrd(str) {
+    return str.replace(/\w\S*/g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}

@@ -8,7 +8,7 @@ describe('Innlogging Action', () => {
         const action = loggInn(epostTest);
         expect(action.type).to.be.equal(LOGG_INN);
         expect(action.data.epost).to.be.equal(epostTest);
-        expect(action.data.navn).to.be.equal('bruker');
+        expect(action.data.navn).to.be.equal('Bruker');
     });
 
     it('Skal ikke godta bruker@nav.no.no', () => {
