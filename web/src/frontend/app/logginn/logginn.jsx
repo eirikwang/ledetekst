@@ -19,7 +19,7 @@ class LoggInn extends Component {
             <div className="logginn-beholder">
                 <h1 className="hode-undertittel  hode-dekorert blokk-m">Logg inn</h1>
                 <form onSubmit={this.hentInput}>
-                    <div className="nav-input text-align-left blokk-l">
+                    <div className="nav-input text-left blokk-l">
                         <label clasName="typo-infotekst" htmlFor="epost">E-post:</label>
                         <input className="input-fullbredde" type="text" ref="epost" name="epost" placeholder="E-post" />
                     </div>
