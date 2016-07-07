@@ -8,6 +8,11 @@ describe('Sjekker hentNavnFraEpost', () => {
         expect(navn).to.be.equal('ola nordmann');
     });
 
+    it('Hente ut navn for folk med mellomnavn', () => {
+        const navn = hentNavnFraEpost('ola.nord.mann@nav.no');
+        expect(navn).to.be.equal('ola nord mann');
+    });
+
     it('Skal hente ut navn fra epost, bruker@nav.no.no', () => {
         const navn = hentNavnFraEpost('bruker@nav.no');
         expect(navn).to.be.equals('bruker');
