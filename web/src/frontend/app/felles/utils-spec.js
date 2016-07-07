@@ -2,7 +2,7 @@
 import { expect } from './../../test-helper';
 import { hentNavnFraEpost, hentLedetekstIndex } from './utils';
 
-describe.only('Sjekker hentNavnFraEpost', () => {
+describe('Sjekker hentNavnFraEpost', () => {
     it('Hente ut riktig navn fra epost, ola.nordmann@nav.no', () => {
         const navn = hentNavnFraEpost('ola.nordmann@nav.no');
         expect(navn).to.be.equal('ola nordmann');
