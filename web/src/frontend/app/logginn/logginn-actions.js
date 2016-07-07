@@ -15,7 +15,7 @@ function erGyldigEpost(epost) {
     return navEpostRegex.test(epost);
 }
 
-export function loggInn(epost, nesteSide = {nextPathName: '/', query: {}}) {
+export function loggInn(epost, nesteSide = { nextPathName: '/', query: {} }) {
     if (erGyldigEpost(epost)) {
         const navn = storForbokstavPaaHvertOrd(hentNavnFraEpost(epost));
         return (dispatch) => {

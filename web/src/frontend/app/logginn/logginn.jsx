@@ -16,7 +16,7 @@ class LoggInn extends Component {
 
     render() {
         let warning = this.props.ugyldigEpost ? 'Ugyldig epost' : '';
-        let klasser = 'nav-input text-left blokk-l ' + (this.props.ugyldigEpost ? ' har-valideringsfeil' : '');
+        let klasser = `nav-input text-left blokk-l ${this.props.ugyldigEpost ? ' har-valideringsfeil' : ''}`;
         return (
             <div className="logginn-beholder">
                 <h1 className="hode-undertittel  hode-dekorert blokk-m">Logg inn</h1>
@@ -34,7 +34,8 @@ class LoggInn extends Component {
                             placeholder="brukernavn@nav.no"
                             aria-describedby="error-epost"
                             required="required"
-                            aria-required="true" />
+                            aria-required="true"
+                        />
                         <span className="skjema-feilmelding" id="error-epost">
                             {warning}
                         </span>
@@ -59,11 +60,15 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         ugyldigEpost: state.autentisert.status === 'EPOST_UGYLDIG'
-    }
+    };
 }
 
 LoggInn.propTypes = {
-    handleSubmit: PropTypes.func.isRequired
+    handleSubmit: PropTypes.func.isRequired,
+    location: {
+        state: PropTypes.object.isRequired
+    },
+    ugyldigEpost: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoggInn);
