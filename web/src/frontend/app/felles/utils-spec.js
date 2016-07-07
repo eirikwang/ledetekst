@@ -2,10 +2,15 @@
 import { expect } from './../../test-helper';
 import { hentNavnFraEpost, hentLedetekstIndex } from './utils';
 
-describe('Sjekker hentNavnFraEpost', () => {
+describe.only('Sjekker hentNavnFraEpost', () => {
     it('Hente ut riktig navn fra epost, ola.nordmann@nav.no', () => {
         const navn = hentNavnFraEpost('ola.nordmann@nav.no');
         expect(navn).to.be.equal('ola nordmann');
+    });
+
+    it('Hente ut navn for folk med mellomnavn', () => {
+        const navn = hentNavnFraEpost('ola.nord.mann@nav.no');
+        expect(navn).to.be.equal('ola nord mann')
     });
 
     it('Skal hente ut navn fra epost, bruker@nav.no.no', () => {
