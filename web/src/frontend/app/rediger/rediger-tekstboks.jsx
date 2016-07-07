@@ -18,6 +18,7 @@ class RedigerTekstboks extends Component {
     }
 
     render() {
+        const spinnerKnappLaster = this.props.status === 'laster' ? ' knapp-spinner er-aktiv' : '';
         const tekst = finnTekst(this.props.location.query.nokkel, this.props.location.query.spraak,
             this.props.tekster.data);
 
@@ -38,7 +39,7 @@ class RedigerTekstboks extends Component {
                         <button
                             type="submit"
                             className={`knapp knapp-hoved knapp-liten
-                            ${this.props.status === 'laster' ? ' knapp-spinner er-aktiv' : ''}`}
+                            ${spinnerKnappLaster}`}
                             disabled={this.props.status === 'laster'}
                         >
                             Lagre<span className={this.props.status === 'laster' ? 'spinner-knapp' : ''} />
