@@ -1,12 +1,13 @@
 package no.nav.sbl.ledeteksteditor.domain;
 
 import java.util.Map;
+import java.util.Optional;
 
-public class Ledetekst {
+public class Ledetekst{
 
     public String nokkel;
     public Map<String, String> spraak;
-    public String kommentar = "default git commit message";
+    public Optional<String> kommentar = Optional.empty();
 
     public Ledetekst() {
     }
@@ -14,12 +15,6 @@ public class Ledetekst {
     public Ledetekst(String nokkel, Map<String, String> spraak) {
         this.nokkel = nokkel;
         this.spraak = spraak;
-    }
-
-    public Ledetekst(String nokkel, Map<String, String> spraak, String kommentar) {
-        this.nokkel = nokkel;
-        this.spraak = spraak;
-        this.kommentar = kommentar;
     }
 
     @Override

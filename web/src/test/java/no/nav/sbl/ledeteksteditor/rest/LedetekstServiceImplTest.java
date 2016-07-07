@@ -72,24 +72,25 @@ public class LedetekstServiceImplTest {
     @Test( expected = IkkeFunnetException.class )
     public void testOppdaterLedeteksteForReturnererIkkeFunnet(){
         LedetekstService ledetekstService = new LedetekstServiceImpl();
-        ledetekstService.oppdaterLedeteksteFor(localUrlTomtTestRepo, fileDirTomtTestRepo,new Ledetekst("prop1", new HashMap<String, String>(){{
-            put("no", "verdi");
-            put("en", "value");
-        }}), null);
+        ledetekstService.oppdaterLedeteksteFor(localUrlTomtTestRepo, fileDirTomtTestRepo, lagDummyCommit(), null);
     }
 
     @Test
     public void testOppdaterLedeteksteForReturnererOppdatertLedetekst(){
         LedetekstService ledetekstService = new LedetekstServiceImpl();
-        Ledetekst ledetekst = ledetekstService.oppdaterLedeteksteFor(localUrlTestRepo, fileDirTestRepo,new Ledetekst("prop1", new HashMap<String, String>(){{
-            put("no", "verdi");
-            put("en", "value");
-        }}, "Kommentar"), new Ident("navn", "epost"));
+        Ledetekst ledetekst = ledetekstService.oppdaterLedeteksteFor(localUrlTestRepo, fileDirTestRepo, lagDummyCommit(), new Ident("navn", "epost"));
 
 
         assertNotEquals(ledetekst, null);
         assertEquals(ledetekst.nokkel, "prop1");
         assertEquals(ledetekst.spraak.get("no"), "verdi");
         assertEquals(ledetekst.spraak.get("en"), "value");
+    }
+
+    private static Ledetekst lagDummyCommit() {
+        return new Ledetekst("prop1", new HashMap<String, String>(){{
+            put("no", "verdi");
+            put("en", "value");
+        }});
     }
 }

@@ -36,15 +36,16 @@ public class TeksterRessurs {
 
     @PUT
     @Path("/{remoteUrl}/{ledetekstnokkel}")
-    public Response oppdaterLedetekst(Ledetekst payload, @HeaderParam("navn") String navn, @HeaderParam("epost") String epost, @PathParam("remoteUrl") String remoteUrl) {
+    public Response oppdaterLedetekst(Ledetekst ledetekst, @HeaderParam("navn") String navn, @HeaderParam("epost") String epost, @PathParam("remoteUrl") String remoteUrl) {
         if( navn == null || epost == null){
             throw new UautentisertException("Navn eller epost mangler fra request header");
         }
+
         Ident ident = new Ident(navn, epost);
-        Ledetekst ledetekst = ledetekstService.oppdaterLedeteksteFor(
+        Ledetekst oppdatertLedetekst = ledetekstService.oppdaterLedeteksteFor(
                 LedetekstServiceImpl.REPOSITORIES.get(remoteUrl),
-                getRepoDir(remoteUrl), payload, ident);
-        return Response.ok(ledetekst).build();
+                getRepoDir(remoteUrl), ledetekst, ident);
+        return Response.ok(oppdatertLedetekst).build();
     }
 
     @GET
