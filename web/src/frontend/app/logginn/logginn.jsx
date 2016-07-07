@@ -23,7 +23,7 @@ class LoggInn extends Component {
                 <form onSubmit={this.hentInput}>
                     <div className={klasser}>
                         <label clasName="typo-infotekst" htmlFor="input-epost">
-                            Nav E-post:
+                            NAV E-post:
                         </label>
                         <input
                             className="input-fullbredde"
