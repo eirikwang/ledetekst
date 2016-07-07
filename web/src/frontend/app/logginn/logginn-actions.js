@@ -1,5 +1,5 @@
 import { hentNavnFraEpost, storForbokstavPaaHvertOrd } from './../felles/utils';
-import { goBack } from 'react-router-redux';
+import { push } from 'react-router-redux';
 
 export const LOGG_INN = 'LOGG_INN';
 export const EPOST_UGYLDIG = 'EPOST_UGYLDIG';
@@ -15,7 +15,7 @@ function erGyldigEpost(epost) {
     return navEpostRegex.test(epost);
 }
 
-export function loggInn(epost) {
+export function loggInn(epost, nesteSide = {nextPathName: '/', query: {}}) {
     if (erGyldigEpost(epost)) {
         const navn = storForbokstavPaaHvertOrd(hentNavnFraEpost(epost));
         return (dispatch) => {
@@ -23,7 +23,10 @@ export function loggInn(epost) {
                 type: LOGG_INN,
                 data: { navn, epost }
             });
-            dispatch(goBack());
+            dispatch(push({
+                pathname: nesteSide.nextPathName,
+                query: nesteSide.query
+            }));
         };
     }
     return {

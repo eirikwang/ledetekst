@@ -11,7 +11,7 @@ class LoggInn extends Component {
 
     hentInput(event) {
         event.preventDefault();
-        this.props.handleSubmit(this.refs.epost.value);
+        this.props.handleSubmit(this.refs.epost.value, this.props.location.state);
     }
 
     render() {
@@ -50,8 +50,8 @@ class LoggInn extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        handleSubmit: (epost) => {
-            dispatch(loggInn(epost));
+        handleSubmit: (epost, nesteSide) => {
+            dispatch(loggInn(epost, nesteSide));
         }
     };
 }
