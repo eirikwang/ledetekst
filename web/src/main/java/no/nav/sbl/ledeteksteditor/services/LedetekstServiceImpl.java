@@ -92,7 +92,7 @@ public class LedetekstServiceImpl implements LedetekstService {
     private boolean oppdaterLedetekstForHjelper(List<File> filer, String ledetekstnokkel, Map.Entry<String, String> spraak) {
         File ledetekstfil = null;
         for (File fil : filer) {
-            if (fil.getName().contains(ledetekstnokkel + "_" + spraak.getKey())) {
+            if (fil.getName().startsWith(ledetekstnokkel + "_" + spraak.getKey())) {
                 ledetekstfil = fil;
                 break;
             }
