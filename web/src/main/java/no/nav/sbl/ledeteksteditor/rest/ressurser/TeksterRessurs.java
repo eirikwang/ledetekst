@@ -6,6 +6,8 @@ import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
 import no.nav.sbl.ledeteksteditor.services.LedetekstServiceImpl;
 import no.nav.sbl.ledeteksteditor.utils.exception.UautentisertException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -20,6 +22,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Produces(APPLICATION_JSON + ";charset=utf-8")
 @Api(value = "ledetekster", description = "Endpoint for ledetekster")
 public class TeksterRessurs {
+    private static Logger log = LoggerFactory.getLogger(TeksterRessurs.class);
 
     @Inject
     private LedetekstService ledetekstService;
@@ -41,7 +44,10 @@ public class TeksterRessurs {
             throw new UautentisertException("Navn eller epost mangler fra request header");
         }
 
+
         Ident ident = new Ident(navn, epost);
+        log.info("Endring av ledetekst.\n Gjort av: {} \n Endring: {}", ident, ledetekst);
+
         Ledetekst oppdatertLedetekst = ledetekstService.oppdaterLedeteksteFor(
                 LedetekstServiceImpl.REPOSITORIES.get(remoteUrl),
                 getRepoDir(remoteUrl), ledetekst, ident);
