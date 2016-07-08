@@ -11,7 +11,7 @@ class LoggInn extends Component {
 
     hentInput(event) {
         event.preventDefault();
-        const nesteSide = this.props.location.state ? this.props.location.state : { pathname: '/', query: {} };
+        const nesteSide = this.props.location.state ? this.props.location.state : undefined;
         this.props.handleSubmit(this.refs.epost.value, nesteSide);
     }
 
@@ -36,6 +36,7 @@ class LoggInn extends Component {
                             aria-describedby="error-epost"
                             required="required"
                             aria-required="true"
+                            autoFocus="true"
                         />
                         <span className="skjema-feilmelding" id="error-epost">
                             {warning}
