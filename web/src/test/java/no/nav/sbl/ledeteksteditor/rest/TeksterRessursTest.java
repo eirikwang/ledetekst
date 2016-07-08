@@ -102,7 +102,7 @@ public class TeksterRessursTest {
         Ledetekst ledetekst = (Ledetekst) teksterRessurs.oppdaterLedetekst(new Ledetekst("prop1", new HashMap<String, String>(){{
                 put("en", "en");
                 put("no", "no");
-        }}), "Test Bruker", "test@bruker.no", "test-repo").getEntity();
+        }}), "Test Bruker", "test.bruker@nav.no", "test-repo").getEntity();
 
         assertFalse(ledetekst == null);
         assertEquals(ledetekst.nokkel, "prop1");
