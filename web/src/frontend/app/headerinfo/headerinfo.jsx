@@ -1,27 +1,32 @@
 import React, { PropTypes as PT } from 'react';
+import { connect } from 'react-redux';
+import { loggUt } from './../logginn/logginn-actions';
 
-function hentLoggInnInfo(loggInnData) {
-    if (!loggInnData.navn) {
+export function HeaderInfo({ loggInnData, handleClick }) {
+    function hentLoggInnInfo() {
+        if (!loggInnData.navn) {
+            return (
+                <noscript>Du er ikke logget inn</noscript>
+            );
+        }
         return (
-            <noscript>Du er ikke logget inn</noscript>
+            <div className="logginn-info">
+                <span className="typo-undertekst">Du er logget inn som {loggInnData.navn} </span>
+                <button className="knapp knapp-hoved knapp-liten" onClick={handleClick}>Logg ut</button>
+            </div>
         );
     }
-    return (
-        <div className="logginn-info">
-            <span className="typo-undertekst">Du er logget inn som {loggInnData.navn} </span>
-            <button className="knapp knapp-hoved knapp-liten">Logg ut</button>
-        </div>
-    );
-}
 
-export function HeaderInfo({ loggInnData }) {
-    console.log('Inne i HeaderInfo-komponent');
     return (
         <header className="siteheader" role="banner">
             <div className="site-coltrols-toolbar site-controls-toolbar">
                 <div className="container">
                     <div className="row navbar">
                         <div className="col-md-12">
+                            <div className="til-appoversikt">
+                                <img className="pil-tilbake" src="/ledeteksteditor/img/pil-tilbake.svg" alt="Tilbake-knapp" />
+                                <span className="typo-undertekst"> Til applikasjonsoversikt</span>
+                            </div>
                             <div className="app-tittel">
                                 <img className="logo-header" src="/ledeteksteditor/img/hvit-logo.svg" alt="NAV logo" />
                                 <span className="typo-element">Ledeteksteditor</span>
@@ -36,7 +41,22 @@ export function HeaderInfo({ loggInnData }) {
 }
 
 HeaderInfo.propTypes = {
+    handleClick: PT.func.isRequired,
     loggInnData: PT.object.isRequired
 };
 
-export default HeaderInfo;
+function mapDispatchToProps(dispatch) {
+    return {
+        handleClick: () => {
+            dispatch(loggUt());
+        }
+    };
+}
+
+function mapStateToProps(state) {
+    return {
+        loggInnData: state.autentisert.data
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderInfo);

@@ -14,7 +14,7 @@ class Application extends Component {
         const { tekster } = this.props;
         return (
             <div>
-                <HeaderInfo loggInnData={this.props.loggInnData} />
+                <HeaderInfo />
                 <div className="container">
                     <Innholdslaster avhengigheter={[tekster]}>
                         {this.props.children}
