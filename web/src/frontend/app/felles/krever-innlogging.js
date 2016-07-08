@@ -4,25 +4,6 @@ import { autobind } from './utils';
 import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
 
-
-function getDisplayName(WrappedComponent) {
-    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
-}
-
-function mapStateToProps(state) {
-    return {
-        loggetInn: state.autentisert.status === InnloggingsStatus.LOGGET_INN
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        redirectTilLogin: (next) => {
-            dispatch(replace(next));
-        }
-    };
-}
-
 export default function kreverInnlogging(ComposedComponent) {
     class KreverInnlogging extends Component {
         constructor(props) {
@@ -46,6 +27,9 @@ export default function kreverInnlogging(ComposedComponent) {
             return this.props.loggetInn ? <ComposedComponent {...this.props} {...this.state} /> : null;
         }
     }
+    function getDisplayName(WrappedComponent) {
+        return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+    }
 
     KreverInnlogging.displayName = `KreverInnlogging(${getDisplayName(ComposedComponent)})`;
     KreverInnlogging.ComposedComponent = ComposedComponent;
@@ -58,6 +42,20 @@ export default function kreverInnlogging(ComposedComponent) {
         }),
         loggetInn: PropTypes.bool.isRequired
     };
+
+    function mapStateToProps(state) {
+        return {
+            loggetInn: state.autentisert.status === InnloggingsStatus.LOGGET_INN
+        };
+    }
+
+    function mapDispatchToProps(dispatch) {
+        return {
+            redirectTilLogin: (next) => {
+                dispatch(replace(next));
+            }
+        };
+    }
 
     return connect(mapStateToProps, mapDispatchToProps)(KreverInnlogging);
 }
