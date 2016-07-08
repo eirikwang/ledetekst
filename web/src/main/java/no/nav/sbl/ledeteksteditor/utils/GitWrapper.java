@@ -69,7 +69,9 @@ public class GitWrapper {
 
     private static void sjekkUtRiktigBranch(Applikasjon applikasjon, Git testResult) throws GitAPIException {
         if (!testResult.branchList().call().stream().filter(ref -> ref.getName().equals("refs/heads/" + applikasjon.defaultBranch)).findFirst().isPresent()) {
-            testResult.checkout().setName(applikasjon.defaultBranch).setCreateBranch(true).setUpstreamMode(CreateBranchCommand.SetupUpstreamMode.TRACK).setStartPoint("origin/" + applikasjon.defaultBranch).call();
+            testResult.checkout().setName(applikasjon.defaultBranch)
+                    .setCreateBranch(true).setUpstreamMode(CreateBranchCommand.SetupUpstreamMode.TRACK)
+                    .setStartPoint("origin/" + applikasjon.defaultBranch).call();
         } else {
             testResult.checkout().setName(applikasjon.defaultBranch).call();
         }
