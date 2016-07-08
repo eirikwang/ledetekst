@@ -1,5 +1,6 @@
 package no.nav.sbl.ledeteksteditor.utils;
 
+import no.nav.sbl.ledeteksteditor.domain.Applikasjon;
 import no.nav.sbl.ledeteksteditor.domain.Ident;
 import no.nav.sbl.ledeteksteditor.utils.exception.ApplikasjonsException;
 import org.eclipse.jgit.lib.Repository;
@@ -13,12 +14,13 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 public class GitHelper {
 
-    public static String createRepo(){
+    public static String createRepo() {
         File fileDir = createDirectory();
         GitWrapper.initAndCommitRepo(fileDir);
         return fileDir.getPath();
     }
-    private static File createDirectory(){
+
+    private static File createDirectory() {
 
         File fileDir;
         try {
@@ -29,9 +31,9 @@ public class GitHelper {
         return fileDir;
     }
 
-    public static String createTestRepo(){
+    public static Applikasjon createTestRepo() {
         String fileDir = createRepo();
-        if(new File(fileDir + File.separator + FileUtils.FILE_PATH).mkdirs()){
+        if (new File(fileDir + File.separator + FileUtils.FILE_PATH).mkdirs()) {
             try {
                 Files.write(new File(fileDir + File.separator + FileUtils.FILE_PATH + File.separator + "prop1_no.txt").toPath(), "test data prop1 no".getBytes(), CREATE_NEW);
                 Files.write(new File(fileDir + File.separator + FileUtils.FILE_PATH + File.separator + "prop1_en.txt").toPath(), "test data prop1 en".getBytes(), CREATE_NEW);
@@ -43,23 +45,26 @@ public class GitHelper {
         } else {
             throw new ApplikasjonsException("Kunne ikke lage mappastruktur i testrepo");
         }
-        Repository repo = GitWrapper.getRepo(new File(fileDir));
+        Applikasjon applikasjon = new Applikasjon("", "mock-repo", fileDir);
+        Repository repo = GitWrapper.getRepo(applikasjon, new File(fileDir), false);
         GitWrapper.commitChanges(repo, new Ident("Test", "test@test.test"), Optional.of("init"));
         repo.close();
-        return fileDir;
+        return applikasjon;
+
     }
 
-    public static String createTomtTestRepo(){
+    public static Applikasjon createTomtTestRepo() {
         String fileDir = createRepo();
         try {
             Files.write(new File(fileDir + File.separator + "prop3_no.txt").toPath(), "test data".getBytes(), CREATE_NEW);
         } catch (IOException e) {
             throw new ApplikasjonsException(e);
         }
-        Repository repo = GitWrapper.getRepo(new File(fileDir));
+        Applikasjon applikasjon = new Applikasjon("", "tomt-repo", fileDir);
+        Repository repo = GitWrapper.getRepo(applikasjon, new File(fileDir), false);
         GitWrapper.commitChanges(repo, new Ident("Test", "test@test.test"), Optional.of("init"));
         repo.close();
-        return fileDir;
+        return applikasjon;
     }
 
     public static void removeTestRepo(String localUrl) {

@@ -1,4 +1,4 @@
-package no.nav.sbl.ledeteksteditor.rest;
+package no.nav.sbl.ledeteksteditor.rest.ressurser;
 
 import io.swagger.annotations.Api;
 import no.nav.sbl.ledeteksteditor.domain.Ident;
