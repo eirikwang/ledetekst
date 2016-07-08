@@ -12,6 +12,7 @@ import TeksterListe from './tekster/tekster-liste';
 import RedigerTekstboks from './rediger/rediger';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { InnloggingsStatus } from './logginn/logginn-actions';
+import Login from './logginn/logginn';
 
 
 const realHistory = useRouterHistory(createHistory)({
