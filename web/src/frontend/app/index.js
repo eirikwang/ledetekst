@@ -2,6 +2,7 @@ import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, useRouterHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 import { createHistory } from 'history';
 import createStore from './store.js';
 import Application from './application';
@@ -11,10 +12,12 @@ import Forside from './forside/forside';
 import Login from './logginn/logginn';
 import { InnloggingsStatus } from './logginn/logginn-actions';
 
-const history = useRouterHistory(createHistory)({
+const realHistory = useRouterHistory(createHistory)({
     basename: '/ledeteksteditor'
 });
-const store = createStore(history);
+
+const store = createStore(realHistory);
+const history = syncHistoryWithStore(realHistory, store);
 
 function kreverInnlogging(nextState, replace) {
     if (store.getState().autentisert.status !== InnloggingsStatus.LOGGET_INN) {
