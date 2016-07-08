@@ -36,6 +36,7 @@ class LoggInn extends Component {
                             aria-describedby="error-epost"
                             required="required"
                             aria-required="true"
+                            autoFocus="true"
                         />
                         <span className="skjema-feilmelding" id="error-epost">
                             {warning}
