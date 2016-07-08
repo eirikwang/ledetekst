@@ -4,7 +4,7 @@ import TeksterListe from './tekster-liste';
 
 export function filtrerListe(tekster, search) {
     if (search) {
-        const sokeResultat = tekster.data.filter(t => t.nokkel === search)
+        const sokeResultat = tekster.data.filter(t => t.nokkel.includes(search));
         return { ...tekster, data: sokeResultat };
     } else {
         return tekster;
@@ -24,7 +24,6 @@ Tekster.propTypes = {
 };
 
 function mapStateToProps({ tekster }, ownProps) {
-    console.log(ownProps, ownProps.get)
     return { tekster, search: ownProps.location.query.data };
 }
 

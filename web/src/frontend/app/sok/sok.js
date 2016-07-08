@@ -10,7 +10,6 @@ class Sok extends Component {
     }
 
     sendQuery(event) {
-        console.log('sendQuery');
         event.preventDefault();
         this.props.queryTekster(this.refs.queryTekst.value);
     }
@@ -25,7 +24,7 @@ class Sok extends Component {
                         ref="queryTekst"
                         name="sok"
                         placeholder="SØK PÅ NØKKEL"
-                        className="sokefelt-input"
+                        className="sokefelt"
                     />
                     <button type="submit" className="sokefelt-knapp-sok">
                         <span className="visuallyhidden">Søk</span>
