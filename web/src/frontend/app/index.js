@@ -10,7 +10,7 @@ import Rediger from './rediger/rediger';
 import Provider from './provider';
 import Forside from './forside/forside';
 import Login from './logginn/logginn';
-import { InnloggingsStatus } from './logginn/logginn-actions';
+import kreverInnlogging from './felles/krever-innlogging';
 
 const realHistory = useRouterHistory(createHistory)({
     basename: '/ledeteksteditor'
@@ -18,25 +18,12 @@ const realHistory = useRouterHistory(createHistory)({
 
 const store = createStore(realHistory);
 const history = syncHistoryWithStore(realHistory, store);
-
-function kreverInnlogging(nextState, replace) {
-    if (store.getState().autentisert.status !== InnloggingsStatus.LOGGET_INN) {
-        replace({
-            pathname: '/login',
-            state: {
-                pathname: nextState.location.pathname,
-                query: nextState.location.query
-            }
-        });
-    }
-}
-
 render((
     <Provider store={store}>
         <Router history={history}>
             <Route path="/" component={Application}>
                 <IndexRoute component={Forside} />
-                <Route path="/rediger" onEnter={kreverInnlogging} component={Rediger} />
+                <Route path="/rediger" component={kreverInnlogging(Rediger)} />
                 <Route path="/login" component={Login} />
             </Route>
         </Router>
