@@ -22,6 +22,7 @@ public class Ledetekst{
         return "Ledetekst{" +
                 "nokkel='" + nokkel + '\'' +
                 ", spraak=" + spraak +
+                ", kommentar=" + kommentar +
                 '}';
     }
 }
