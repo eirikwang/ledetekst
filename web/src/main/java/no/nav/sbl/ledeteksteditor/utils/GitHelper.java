@@ -45,11 +45,12 @@ public class GitHelper {
         } else {
             throw new ApplikasjonsException("Kunne ikke lage mappastruktur i testrepo");
         }
-        Repository repo = GitWrapper.getRepo(new File(fileDir));
+        Applikasjon applikasjon = new Applikasjon("", "mock-repo", fileDir);
+        Repository repo = GitWrapper.getRepo(applikasjon, new File(fileDir), false);
         GitWrapper.commitChanges(repo, new Ident("Test", "test@test.test"), Optional.of("init"));
         repo.close();
+        return applikasjon;
 
-        return new Applikasjon("", "mock-repo", fileDir);
     }
 
     public static Applikasjon createTomtTestRepo() {
@@ -59,10 +60,11 @@ public class GitHelper {
         } catch (IOException e) {
             throw new ApplikasjonsException(e);
         }
-        Repository repo = GitWrapper.getRepo(new File(fileDir));
+        Applikasjon applikasjon = new Applikasjon("", "tomt-repo", fileDir);
+        Repository repo = GitWrapper.getRepo(applikasjon, new File(fileDir), false);
         GitWrapper.commitChanges(repo, new Ident("Test", "test@test.test"), Optional.of("init"));
         repo.close();
-        return new Applikasjon("", "tomt-repo", fileDir);
+        return applikasjon;
     }
 
     public static void removeTestRepo(String localUrl) {

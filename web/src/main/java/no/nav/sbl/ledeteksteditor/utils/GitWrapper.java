@@ -41,10 +41,6 @@ public class GitWrapper {
         return getRepo(applikasjon, fileDir, true);
     }
 
-    public static Repository getRepo(File fileDir) {
-        return getRepo(null, fileDir, false);
-    }
-
     public static Repository getRepo(Applikasjon applikasjon, File fileDir, boolean pullEtterAapnet) {
         Git testResult;
         try {
@@ -159,7 +155,7 @@ public class GitWrapper {
         try {
             Git.init().setDirectory(fileDir).call();
             Git repo = Git.open(fileDir);
-            repo.commit().setMessage("init").setAuthor("GitWrapper", "Git@Wrapper.no");
+            repo.commit().setMessage("init").setAuthor("GitWrapper", "Git@Wrapper.no").call();
         } catch (GitAPIException e) {
             throw new ApplikasjonsException(e);
         } catch (IOException e) {
