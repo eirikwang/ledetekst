@@ -1,5 +1,5 @@
 import { hentNavnFraEpost, storForbokstavPaaHvertOrd } from './../felles/utils';
-import { push } from 'react-router-redux';
+import { replace } from 'react-router-redux';
 
 export const LOGG_INN = 'LOGG_INN';
 export const EPOST_UGYLDIG = 'EPOST_UGYLDIG';
@@ -19,11 +19,11 @@ export function loggInn(epost, nesteSide = { pathname: '/', query: {} }) {
     if (erGyldigEpost(epost)) {
         const navn = storForbokstavPaaHvertOrd(hentNavnFraEpost(epost));
         return (dispatch) => {
-            dispatch(push(nesteSide));
             dispatch({
                 type: LOGG_INN,
                 data: { navn, epost }
             });
+            dispatch(replace(nesteSide));
         };
     }
     return {
