@@ -7,7 +7,7 @@ export const EPOST_UGYLDIG = 'EPOST_UGYLDIG';
 export const InnloggingsStatus = {
     LOGGET_INN: 'LOGGET_INN',
     LOGGET_UT: 'LOGGET_UT',
-    EPOST_UGYLDIG: 'EPOST_UGYLDIG'
+    LOGGINN_FEILET: 'LOGGINN_FEILET'
 };
 
 function erGyldigEpost(epost) {
@@ -16,16 +16,10 @@ function erGyldigEpost(epost) {
 }
 
 export function loggInn(epost, nesteSide) {
-    let neste;
-    if (!nesteSide) {
-        neste = { pathname: '/', query: {} };
-    } else {
-        neste = nesteSide;
-    }
     if (erGyldigEpost(epost)) {
         const navn = storForbokstavPaaHvertOrd(hentNavnFraEpost(epost));
         return (dispatch) => {
-            dispatch(push(neste));
+            dispatch(push(nesteSide));
             dispatch({
                 type: LOGG_INN,
                 data: { navn, epost }

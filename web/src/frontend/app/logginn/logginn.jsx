@@ -11,7 +11,8 @@ class LoggInn extends Component {
 
     hentInput(event) {
         event.preventDefault();
-        this.props.handleSubmit(this.refs.epost.value, this.props.location.state);
+        const nesteSide = this.props.location.state ? this.props.location.state : { pathname: '/', query: {} };
+        this.props.handleSubmit(this.refs.epost.value, nesteSide);
     }
 
     render() {
@@ -59,7 +60,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        ugyldigEpost: state.autentisert.status === 'EPOST_UGYLDIG'
+        ugyldigEpost: state.autentisert.status === 'LOGGINN_FEILET'
     };
 }
 
