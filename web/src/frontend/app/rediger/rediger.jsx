@@ -1,42 +1,77 @@
 import React, { PropTypes as PT, Component } from 'react';
-import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
-import { fetchLedetekst } from './rediger-actions';
+import { goBack } from 'react-router-redux';
 import { autobind, finnTekst } from './../felles/utils';
+import { sendRedigertTekst } from './rediger-actions';
 
 class Rediger extends Component {
+
     constructor(props) {
         super(props);
         autobind(this);
     }
 
-    hentInput(event) {
+    hentRedigert(event) {
         event.preventDefault();
-        if (!this.props.loggetInn) {
-            console.log('Du må logge inn før du kan redigere tekster');
-            return;
-        }
-        const queryTekst = finnTekst(this.refs.nokkel.value, this.refs.spraak.value, this.props.tekster.data);
-        if (queryTekst === '') return;
-        this.props.handleSubmit(this.refs.nokkel.value, this.refs.spraak.value, queryTekst);
+        this.props.handleSubmit(this.props.location.query.nokkel, this.props.location.query.spraak,
+            this.refs.endretTekst.value, this.refs.kommentar.value);
     }
 
     render() {
+        const laster = this.props.status === 'laster';
+        const knappSpinner = `knapp knapp-hoved knapp-liten ${laster ? ' knapp-spinner er-aktiv' : ''}`;
+        const knappLaster = laster ? 'spinner-knapp' : '';
+
+        const tekst = finnTekst(this.props.location.query.nokkel, this.props.location.query.spraak,
+            this.props.tekster.data);
+
         return (
-            <form onSubmit={this.hentInput}>
-                <p><input type="text" ref="nokkel" name="nokkel" placeholder="Nøkkel" label="ledetekstnøkkel" /></p>
-                <p><input type="text" ref="spraak" name="spraak" placeholder="Språk" label="språk" /></p>
-                <button type="submit">Hent tekst</button>
-            </form>
+            <div className="rediger-ledetekst-element">
+                Orginal tekst: {tekst}
+                <form onSubmit={this.hentRedigert}>
+                    <div className="nav-input">
+                        <label htmlFor="endretTekst">Ny tekst:</label>
+                        <textarea
+                            className="input-fullbredde textarea-redigertekst"
+                            name="endretTekst"
+                            ref="endretTekst"
+                            defaultValue={tekst}
+                        />
+                    </div>
+                    <div className="nav-input">
+                        <label htmlFor="kommentar">Kommentar:</label>
+                        <textarea
+                            className="input-fullbredde textarea-redigertekst"
+                            name="kommentar"
+                            ref="kommentar"
+                            placeholder="Endret via ledeteksteditor"
+                        />
+                    </div>
+                    <div className="knapperad knapperad-adskilt knapperad-hoyrestilt">
+                        <button type="submit" className={knappSpinner} disabled={laster}>
+                            Lagre<span className={knappLaster} />
+                        </button>
+                        <a
+                            href="javascript:void(0)" // eslint-disable-line no-script-url
+                            onClick={this.props.onClickHandler}
+                            className="lenke-fremhevet lenke-avstand"
+                        >
+                            Avbryt
+                        </a>
+                    </div>
+                </form>
+            </div>
         );
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        handleSubmit: (nokkel, spraak, tekst) => {
-            dispatch(fetchLedetekst(nokkel, spraak, tekst));
-            dispatch(push({ pathname: '/rediger', query: { nokkel, spraak } }));
+        handleSubmit: (nokkel, spraak, tekst, kommentar) => {
+            dispatch(sendRedigertTekst(nokkel, spraak, tekst, kommentar));
+        },
+        onClickHandler: () => {
+            dispatch(goBack());
         }
     };
 }
@@ -44,14 +79,16 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         tekster: state.tekster,
-        loggetInn: state.autentisert.status === 'LOGGET_INN'
+        status: state.rediger.status
     };
 }
 
 Rediger.propTypes = {
     tekster: PT.object.isRequired,
-    loggetInn: PT.bool.isRequired,
-    handleSubmit: PT.func.isRequired
+    status: PT.string.isRequired,
+    location: PT.object.isRequired,
+    handleSubmit: PT.func.isRequired,
+    onClickHandler: PT.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rediger);

@@ -9,8 +9,10 @@ import Provider from './provider';
 import Applikasjoner from './applikasjoner/applikasjoner';
 import Tekster from './tekster/tekster';
 import TeksterListe from './tekster/tekster-liste';
-import RedigerTekstboks from './rediger/rediger-tekstboks';
+import RedigerTekstboks from './rediger/rediger';
 import { syncHistoryWithStore } from 'react-router-redux';
+import { InnloggingsStatus } from './logginn/logginn-actions';
+
 
 const realHistory = useRouterHistory(createHistory)({
     basename: '/ledeteksteditor'
@@ -18,6 +20,17 @@ const realHistory = useRouterHistory(createHistory)({
 const store = createStore(realHistory);
 const history = syncHistoryWithStore(realHistory, store);
 
+function kreverInnlogging(nextState, replace) {
+    if (store.getState().autentisert.status !== InnloggingsStatus.LOGGET_INN) {
+        replace({
+            pathname: '/login',
+            state: {
+                pathname: nextState.location.pathname,
+                query: nextState.location.query
+            }
+        });
+    }
+}
 render((
     <Provider store={store}>
         <Router history={history}>
@@ -25,8 +38,9 @@ render((
                 <IndexRoute component={Applikasjoner} />
                 <Route path="/tekster/:applikasjon" component={Tekster}>
                     <IndexRoute component={TeksterListe} />
-                    <Route path="rediger" component={RedigerTekstboks} />
+                    <Route path="rediger" onEnter={kreverInnlogging} component={RedigerTekstboks} />
                 </Route>
+                <Route path="/login" component={Login} />
             </Route>
         </Router>
     </Provider>

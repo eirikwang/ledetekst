@@ -1,11 +1,11 @@
 import React from 'react';
 import Tekster from './../tekster/tekster';
-import LoggInn from './../logginn/logginn';
+import Sok from './../sok/sok';
 
 function Forside() {
     return (
         <div>
-            <LoggInn />
+            <Sok />
             <Tekster />
         </div>
     );
