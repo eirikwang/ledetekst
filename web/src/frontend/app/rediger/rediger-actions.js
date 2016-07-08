@@ -71,7 +71,7 @@ export function sendRedigertTekst(applikasjon, nokkel, spraak, tekst, kommentar)
         }).then((response) => {
             const ledetekst = { nokkel, spraak, tekst };
             ledetekst.index = hentLedetekstIndex(getState().tekster.data, ledetekst);
-            dispatch(push('/'));
+            dispatch(push(`/tekster/${applikasjon}`));
             dispatch(putsuccLedetekst(response));
             dispatch(oppdaterTekst(ledetekst));
         }).catch((error) => {
