@@ -52,6 +52,7 @@ public class GitWrapper {
                 if (pullEtterAapnet) {
                     pull(testResult.getRepository());
                 }
+                testResult.checkout().setName(applikasjon.defaultBranch).call();
             } else {
                 testResult = Git.cloneRepository()
                         .setURI(applikasjon.url)
