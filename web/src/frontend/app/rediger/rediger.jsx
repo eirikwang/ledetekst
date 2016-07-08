@@ -13,7 +13,10 @@ class Rediger extends Component {
 
     hentRedigert(event) {
         event.preventDefault();
-        this.props.handleSubmit(this.props.location.query.nokkel, this.props.location.query.spraak,
+        debugger;
+        const { applikasjon } = this.props.params;
+        const { nokkel, spraak } = this.props.location.query;
+        this.props.handleSubmit(applikasjon, nokkel, spraak,
             this.refs.endretTekst.value, this.refs.kommentar.value);
     }
 
@@ -67,8 +70,8 @@ class Rediger extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        handleSubmit: (nokkel, spraak, tekst, kommentar) => {
-            dispatch(sendRedigertTekst(nokkel, spraak, tekst, kommentar));
+        handleSubmit: (prosjekt, nokkel, spraak, tekst, kommentar) => {
+            dispatch(sendRedigertTekst(prosjekt, nokkel, spraak, tekst, kommentar));
         },
         onClickHandler: () => {
             dispatch(goBack());

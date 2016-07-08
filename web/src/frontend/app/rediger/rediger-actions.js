@@ -50,8 +50,8 @@ export function fetchLedetekst(nokkel, spraak, tekst) {
     };
 }
 
-export function sendRedigertTekst(nokkel, spraak, tekst, kommentar) {
-    const url = `api/tekster/ledertekst-temp/${nokkel}`;
+export function sendRedigertTekst(applikasjon, nokkel, spraak, tekst, kommentar) {
+    const url = `/ledeteksteditor/api/tekster/${applikasjon}/${nokkel}`;
     const body = {
         nokkel,
         spraak: { [spraak]: tekst },
