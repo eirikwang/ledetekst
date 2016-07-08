@@ -1,6 +1,8 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import { loggUt } from './../logginn/logginn-actions';
+import { Link } from 'react-router';
 
 export function HeaderInfo({ loggInnData, handleClick }) {
     function hentLoggInnInfo() {
@@ -17,19 +19,25 @@ export function HeaderInfo({ loggInnData, handleClick }) {
         );
     }
 
+    function visAppOversiktLink() {
+        return (
+            <div className="til-appoversikt">
+                <img className="pil-tilbake" src="/ledeteksteditor/img/pil-tilbake.svg" alt="Tilbake-ikon" />
+                <Link to="/" className="typo-undertekst hvit-link"> Til applikasjonsoversikt</Link>
+            </div>
+        );
+    }
+
     return (
         <header className="siteheader" role="banner">
             <div className="site-coltrols-toolbar site-controls-toolbar">
                 <div className="container">
                     <div className="row navbar">
                         <div className="col-md-12">
-                            <div className="til-appoversikt">
-                                <img className="pil-tilbake" src="/ledeteksteditor/img/pil-tilbake.svg" alt="Tilbake-knapp" />
-                                <span className="typo-undertekst"> Til applikasjonsoversikt</span>
-                            </div>
+                            {visAppOversiktLink()}
                             <div className="app-tittel">
                                 <img className="logo-header" src="/ledeteksteditor/img/hvit-logo.svg" alt="NAV logo" />
-                                <span className="typo-element">Ledeteksteditor</span>
+                                <Link to="/" className="typo-element hvit-link">Ledeteksteditor</Link>
                             </div>
                             {hentLoggInnInfo(loggInnData)}
                         </div>
@@ -49,6 +57,7 @@ function mapDispatchToProps(dispatch) {
     return {
         handleClick: () => {
             dispatch(loggUt());
+            window.location.reload();
         }
     };
 }
