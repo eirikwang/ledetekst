@@ -53,7 +53,7 @@ export default function kreverInnlogging(ComposedComponent) {
     KreverInnlogging.propTypes = {
         redirectTilLogin: PropTypes.func.isRequired,
         location: PropTypes.shape({
-            pathname: PropTypes.object,
+            pathname: PropTypes.string,
             query: PropTypes.object
         }),
         loggetInn: PropTypes.bool.isRequired

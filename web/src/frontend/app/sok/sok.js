@@ -27,7 +27,7 @@ class Sok extends Component {
                         placeholder="SØK PÅ NØKKEL"
                         className="sokefelt-input"
                     />
-                    <button type="submit" className="søkefelt-knapp-sok">
+                    <button type="submit" className="sokefelt-knapp-sok">
                         <span className="visuallyhidden">Søk</span>
                     </button>
                 </div>
