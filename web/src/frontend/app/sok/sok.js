@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
+import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { autobind } from './../felles/utils';
-import { queryTekster } from './sok-actions';
 
 class Sok extends Component {
     constructor(props) {
@@ -10,6 +10,7 @@ class Sok extends Component {
     }
 
     sendQuery(event) {
+        console.log('sendQuery');
         event.preventDefault();
         this.props.queryTekster(this.refs.queryTekst.value);
     }
@@ -19,8 +20,8 @@ class Sok extends Component {
             <form onSubmit={this.sendQuery}>
                 <div className="sokefelt">
                     <label htmlFor="sok" className="visuallyhidden">Søk</label>
-                    <input type="text" ref="queryTekst" name="sok" placeholder="SØK PÅ NØKKEL" />
-                    <button type="submit" className="knapp-sok">
+                    <input type="text" ref="queryTekst" name="sok" placeholder="SØK PÅ NØKKEL" className="sokefelt-input" />
+                    <button type="submit" className="søkefelt-knapp-sok">
                         <span className="visuallyhidden">Søk</span>
                     </button>
                 </div>
@@ -32,7 +33,7 @@ class Sok extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         queryTekster: (data) => {
-            dispatch(queryTekster(data));
+            dispatch(push({ pathname: '/', query: { data } }));
         }
     };
 }
