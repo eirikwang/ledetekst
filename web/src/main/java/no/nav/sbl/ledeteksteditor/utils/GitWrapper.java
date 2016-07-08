@@ -3,6 +3,7 @@ package no.nav.sbl.ledeteksteditor.utils;
 import no.nav.sbl.ledeteksteditor.domain.Applikasjon;
 import no.nav.sbl.ledeteksteditor.domain.Ident;
 import no.nav.sbl.ledeteksteditor.utils.exception.*;
+import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
@@ -52,7 +53,7 @@ public class GitWrapper {
                 if (pullEtterAapnet) {
                     pull(testResult.getRepository());
                 }
-                testResult.checkout().setName(applikasjon.defaultBranch).call();
+                sjekkUtRiktigBranch(applikasjon, testResult);
             } else {
                 testResult = Git.cloneRepository()
                         .setURI(applikasjon.url)
@@ -68,6 +69,14 @@ public class GitWrapper {
             throw new AapneRepoException(e);
         }
         return testResult.getRepository();
+    }
+
+    private static void sjekkUtRiktigBranch(Applikasjon applikasjon, Git testResult) throws GitAPIException {
+        if (!testResult.branchList().call().stream().filter(ref -> ref.getName().equals("refs/heads/" + applikasjon.defaultBranch)).findFirst().isPresent()) {
+            testResult.checkout().setName(applikasjon.defaultBranch).setCreateBranch(true).setUpstreamMode(CreateBranchCommand.SetupUpstreamMode.TRACK).setStartPoint("origin/" + applikasjon.defaultBranch).call();
+        } else {
+            testResult.checkout().setName(applikasjon.defaultBranch).call();
+        }
     }
 
     public static List<File> listFiles(Repository repo) {

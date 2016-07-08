@@ -13,8 +13,7 @@ class Rediger extends Component {
 
     hentRedigert(event) {
         event.preventDefault();
-        debugger;
-        const { applikasjon } = this.props.params;
+        const { applikasjon } = this.props;
         const { nokkel, spraak } = this.props.location.query;
         this.props.handleSubmit(applikasjon, nokkel, spraak,
             this.refs.endretTekst.value, this.refs.kommentar.value);
@@ -79,10 +78,11 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
     return {
         tekster: state.tekster,
-        status: state.rediger.status
+        status: state.rediger.status,
+        applikasjon: ownProps.params.applikasjon
     };
 }
 
@@ -91,7 +91,8 @@ Rediger.propTypes = {
     status: PT.string.isRequired,
     location: PT.object.isRequired,
     handleSubmit: PT.func.isRequired,
-    onClickHandler: PT.func.isRequired
+    onClickHandler: PT.func.isRequired,
+    applikasjon: PT.string.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rediger);
