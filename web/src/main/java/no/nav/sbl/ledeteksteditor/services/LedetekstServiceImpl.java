@@ -3,7 +3,6 @@ package no.nav.sbl.ledeteksteditor.services;
 import no.nav.sbl.ledeteksteditor.domain.Applikasjon;
 import no.nav.sbl.ledeteksteditor.domain.Ident;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
-import no.nav.sbl.ledeteksteditor.rest.Application;
 import no.nav.sbl.ledeteksteditor.utils.FileUtils;
 import no.nav.sbl.ledeteksteditor.utils.GitWrapper;
 import no.nav.sbl.ledeteksteditor.utils.exception.IkkeFunnetException;
