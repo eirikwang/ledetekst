@@ -1,4 +1,4 @@
-package no.nav.sbl.ledeteksteditor.rest;
+package no.nav.sbl.ledeteksteditor.rest.ressurser;
 
 import io.swagger.annotations.Api;
 import no.nav.sbl.ledeteksteditor.domain.Ident;
@@ -28,7 +28,7 @@ public class TeksterRessurs {
     @Path("/{remoteUrl}")
     public Response hentTeksterForUrl(@PathParam("remoteUrl") String remoteUrl) {
         List<Ledetekst> applikasjonsTekster = ledetekstService.hentAlleLedeteksterFor(
-                LedetekstServiceImpl.REPOSITORIES.get(remoteUrl),
+                LedetekstServiceImpl.REPOSITORIES.get(remoteUrl).url,
                 getRepoDir(remoteUrl));
 
         return Response.ok(applikasjonsTekster).build();
@@ -43,7 +43,7 @@ public class TeksterRessurs {
 
         Ident ident = new Ident(navn, epost);
         Ledetekst oppdatertLedetekst = ledetekstService.oppdaterLedeteksteFor(
-                LedetekstServiceImpl.REPOSITORIES.get(remoteUrl),
+                LedetekstServiceImpl.REPOSITORIES.get(remoteUrl).url,
                 getRepoDir(remoteUrl), ledetekst, ident);
         return Response.ok(oppdatertLedetekst).build();
     }
@@ -52,7 +52,7 @@ public class TeksterRessurs {
     @Path("/{remoteUrl}/{ledetekstnokkel}")
     public Response hentLedetekst(@PathParam("remoteUrl") String remoteUrl, @PathParam("ledetekstnokkel") String ledetekstnokkel) {
         Ledetekst ledetekst = ledetekstService.hentLedeteksteFor(
-                LedetekstServiceImpl.REPOSITORIES.get(remoteUrl),
+                LedetekstServiceImpl.REPOSITORIES.get(remoteUrl).url,
                 getRepoDir(remoteUrl), ledetekstnokkel);
         return Response.ok(ledetekst).build();
     }

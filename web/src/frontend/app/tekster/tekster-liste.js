@@ -1,13 +1,14 @@
 import React, { PropTypes as PT } from 'react';
+import { connect } from 'react-redux';
 import { storeShape } from './../felles/proptype-shapes';
 import RedigerLink from './../redigerlink/redigerlink';
 
-function Tekster({ tekster }) {
+function Tekster({ tekster, base }) {
     const hentInnholdFor = (ledetekst) =>
         <ul type="disc">
             {Object.keys(ledetekst.spraak).map((spraak) =>
                 <li key={spraak}>
-                    <RedigerLink nokkel={ledetekst.nokkel} spraak={spraak} />: {ledetekst.spraak[spraak]}
+                    <RedigerLink base={base} nokkel={ledetekst.nokkel} spraak={spraak} />: {ledetekst.spraak[spraak]}
                 </li>)}
         </ul>;
 
@@ -31,7 +32,10 @@ function Tekster({ tekster }) {
 }
 
 Tekster.propTypes = {
-    tekster: storeShape(PT.object).isRequired
+    tekster: storeShape(PT.object).isRequired,
+    base: PT.string.isRequired
 };
-
-export default Tekster;
+function mapStateToProps({ tekster }, ownProps) {
+    return { tekster, base: ownProps.location.pathname };
+}
+export default connect(mapStateToProps)(Tekster);

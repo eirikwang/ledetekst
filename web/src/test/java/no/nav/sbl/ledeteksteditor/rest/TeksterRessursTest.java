@@ -2,6 +2,7 @@ package no.nav.sbl.ledeteksteditor.rest;
 
 import no.nav.sbl.ledeteksteditor.domain.Ident;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
+import no.nav.sbl.ledeteksteditor.rest.ressurser.TeksterRessurs;
 import no.nav.sbl.ledeteksteditor.services.LedetekstService;
 import no.nav.sbl.ledeteksteditor.utils.exception.IkkeFunnetException;
 import org.junit.Test;
@@ -14,7 +15,6 @@ import org.mockito.stubbing.Answer;
 
 import javax.ws.rs.core.Response;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
