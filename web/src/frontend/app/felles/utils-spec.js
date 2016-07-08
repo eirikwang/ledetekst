@@ -22,7 +22,7 @@ describe('Sjekker hentNavnFraEpost', () => {
 describe('Sjeker storForbokstavPaaHvertOrd', () => {
     it('Stor forbokstav på hvert ord. Enkel settning. Kun små bokstaver', () => {
         const settning = storForbokstavPaaHvertOrd('stor bokstav på hvert ord');
-        expect(settning).to.be.equals('Stor Bokstav På Hvert Ord')
+        expect(settning).to.be.equals('Stor Bokstav På Hvert Ord');
     });
 });
 
