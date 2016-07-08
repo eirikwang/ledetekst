@@ -21,14 +21,11 @@ import static no.nav.sbl.ledeteksteditor.services.LedetekstServiceImpl.REPOSITOR
 @Path("/applikasjoner")
 @Consumes(APPLICATION_JSON + ";charset=utf-8")
 @Produces(APPLICATION_JSON + ";charset=utf-8")
-@Api(value = "ledetekster", description = "Endpoint for ledetekster")
+@Api(value = "applikasjoner", description = "Operasjoner for å hente ut applikasjoner det er mulig å redigere")
 public class ApplikasjonerRessurs {
 
-    @Inject
-    private LedetekstService ledetekstService;
-
     @GET
-    public Response hentTeksterForUrl() {
+    public Response hentApplikasjoner() {
         return Response.ok(REPOSITORIES.values()).build();
     }
 }
