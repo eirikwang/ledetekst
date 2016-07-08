@@ -24,6 +24,7 @@ export default function loggInn(state = DEFAULT_STATE, action) {
                 status: InnloggingsStatus.LOGGET_UT
             };
         case LOGG_UT:
+            localStorage.clear();
             return {
                 ...state,
                 status: InnloggingsStatus.LOGGET_UT,
