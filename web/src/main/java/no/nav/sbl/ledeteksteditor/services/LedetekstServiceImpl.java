@@ -3,6 +3,7 @@ package no.nav.sbl.ledeteksteditor.services;
 import no.nav.sbl.ledeteksteditor.domain.Applikasjon;
 import no.nav.sbl.ledeteksteditor.domain.Ident;
 import no.nav.sbl.ledeteksteditor.domain.Ledetekst;
+import no.nav.sbl.ledeteksteditor.rest.Application;
 import no.nav.sbl.ledeteksteditor.utils.FileUtils;
 import no.nav.sbl.ledeteksteditor.utils.GitWrapper;
 import no.nav.sbl.ledeteksteditor.utils.exception.IkkeFunnetException;
@@ -23,18 +24,18 @@ public class LedetekstServiceImpl implements LedetekstService {
     public static final Map<String, Applikasjon> REPOSITORIES =
             Arrays.asList(
                     new Applikasjon("ledetekst-temp", "Temp applikasjon for å teste ledetekst-editor", stashBaseUrl + "/scm/hack/ledertekst-temp.git"),
-                    new Applikasjon("veiledningarbeidssoker", "Veiledning arbeidssoker", stashBaseUrl + "/scm/sbl/veiledningarbeidssoker.git")
+                    new Applikasjon("veiledningarbeidssoker", "Veiledning arbeidssoker", stashBaseUrl + "/scm/sbl/veiledningarbeidssoker.git", "tekster")
             ).stream().collect(Collectors.toMap(Applikasjon::getId, Function.identity()));
 
     @Override
-    public List<Ledetekst> hentAlleLedeteksterFor(String remoteUrl, File fileDir) {
-        List<File> filer = hentAlleLedetekstFilerFor(remoteUrl, fileDir);
+    public List<Ledetekst> hentAlleLedeteksterFor(Applikasjon applikasjon, File fileDir) {
+        List<File> filer = hentAlleLedetekstFilerFor(applikasjon, fileDir);
         return mapTilLedetekst(filer);
     }
 
     @Override
-    public List<File> hentAlleLedetekstFilerFor(String remoteUrl, File fileDir) {
-        Repository repo = GitWrapper.getRepo(remoteUrl, fileDir);
+    public List<File> hentAlleLedetekstFilerFor(Applikasjon applikasjon, File fileDir) {
+        Repository repo = GitWrapper.getRepo(applikasjon, fileDir);
         List<File> filer = GitWrapper.listFiles(repo);
         repo.close();
         return filer.stream().filter(FileUtils.erLedetekstFil()).collect(Collectors.toList());
@@ -58,8 +59,8 @@ public class LedetekstServiceImpl implements LedetekstService {
     }
 
     @Override
-    public Ledetekst hentLedeteksteFor(String remoteUrl, File fileDir, String ledetekstnokkel) {
-        List<Ledetekst> ledetekster = hentAlleLedeteksterFor(remoteUrl, fileDir);
+    public Ledetekst hentLedeteksteFor(Applikasjon applikasjon, File fileDir, String ledetekstnokkel) {
+        List<Ledetekst> ledetekster = hentAlleLedeteksterFor(applikasjon, fileDir);
         Ledetekst ledetekst = null;
         for (Ledetekst l : ledetekster) {
             if (l.nokkel.equals(ledetekstnokkel)) {
@@ -74,19 +75,19 @@ public class LedetekstServiceImpl implements LedetekstService {
     }
 
     @Override
-    public Ledetekst oppdaterLedeteksteFor(String remoteUrl, File fileDir, Ledetekst ledetekst, Ident ident) {
-        List<File> filer = hentAlleLedetekstFilerFor(remoteUrl, fileDir);
+    public Ledetekst oppdaterLedeteksteFor(Applikasjon applikasjon, File fileDir, Ledetekst ledetekst, Ident ident) {
+        List<File> filer = hentAlleLedetekstFilerFor(applikasjon, fileDir);
         boolean nyeEndringer = false;
         for (Map.Entry<String, String> spraak : ledetekst.spraak.entrySet()) {
             nyeEndringer |= oppdaterLedetekstForHjelper(filer, ledetekst.nokkel, spraak);
         }
-        Repository repo = GitWrapper.getRepo(remoteUrl, fileDir);
+        Repository repo = GitWrapper.getRepo(applikasjon, fileDir);
         if (nyeEndringer) {
             GitWrapper.commitChanges(repo, ident, ledetekst.kommentar);
             GitWrapper.push(repo);
         }
         repo.close();
-        return hentLedeteksteFor(remoteUrl, fileDir, ledetekst.nokkel);
+        return hentLedeteksteFor(applikasjon, fileDir, ledetekst.nokkel);
     }
 
     private boolean oppdaterLedetekstForHjelper(List<File> filer, String ledetekstnokkel, Map.Entry<String, String> spraak) {

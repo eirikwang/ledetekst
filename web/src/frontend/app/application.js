@@ -1,10 +1,10 @@
 import React, { PropTypes as PT } from 'react';
 import DevTools from './devtools';
 
-function Application() {
+function Application({ children }) {
     return (
         <div className="container">
-            {this.props.children}
+            {children}
             <DevTools />
         </div>
     );

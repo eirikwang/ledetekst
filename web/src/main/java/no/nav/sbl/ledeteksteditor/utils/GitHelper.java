@@ -1,5 +1,6 @@
 package no.nav.sbl.ledeteksteditor.utils;
 
+import no.nav.sbl.ledeteksteditor.domain.Applikasjon;
 import no.nav.sbl.ledeteksteditor.domain.Ident;
 import no.nav.sbl.ledeteksteditor.utils.exception.ApplikasjonsException;
 import org.eclipse.jgit.lib.Repository;
@@ -13,12 +14,13 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 public class GitHelper {
 
-    public static String createRepo(){
+    public static String createRepo() {
         File fileDir = createDirectory();
         GitWrapper.initAndCommitRepo(fileDir);
         return fileDir.getPath();
     }
-    private static File createDirectory(){
+
+    private static File createDirectory() {
 
         File fileDir;
         try {
@@ -29,9 +31,9 @@ public class GitHelper {
         return fileDir;
     }
 
-    public static String createTestRepo(){
+    public static Applikasjon createTestRepo() {
         String fileDir = createRepo();
-        if(new File(fileDir + File.separator + FileUtils.FILE_PATH).mkdirs()){
+        if (new File(fileDir + File.separator + FileUtils.FILE_PATH).mkdirs()) {
             try {
                 Files.write(new File(fileDir + File.separator + FileUtils.FILE_PATH + File.separator + "prop1_no.txt").toPath(), "test data prop1 no".getBytes(), CREATE_NEW);
                 Files.write(new File(fileDir + File.separator + FileUtils.FILE_PATH + File.separator + "prop1_en.txt").toPath(), "test data prop1 en".getBytes(), CREATE_NEW);
@@ -46,10 +48,11 @@ public class GitHelper {
         Repository repo = GitWrapper.getRepo(new File(fileDir));
         GitWrapper.commitChanges(repo, new Ident("Test", "test@test.test"), Optional.of("init"));
         repo.close();
-        return fileDir;
+
+        return new Applikasjon("", "mock-repo", fileDir);
     }
 
-    public static String createTomtTestRepo(){
+    public static Applikasjon createTomtTestRepo() {
         String fileDir = createRepo();
         try {
             Files.write(new File(fileDir + File.separator + "prop3_no.txt").toPath(), "test data".getBytes(), CREATE_NEW);
@@ -59,7 +62,7 @@ public class GitHelper {
         Repository repo = GitWrapper.getRepo(new File(fileDir));
         GitWrapper.commitChanges(repo, new Ident("Test", "test@test.test"), Optional.of("init"));
         repo.close();
-        return fileDir;
+        return new Applikasjon("", "tomt-repo", fileDir);
     }
 
     public static void removeTestRepo(String localUrl) {
