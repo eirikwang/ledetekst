@@ -1,20 +1,67 @@
 .app-tittel {
+  height:64px;
   display: block;
   text-align: center;
 }
 
 .logginn-info {
   position: absolute;
-  top: 14px;
+  width: 40%;
+  top: 20px;
   right: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.logginn-tekst {
+  padding-right: 8px;
 }
 
 .til-appoversikt {
   position: absolute;
-  top: 15px;
+  top: 20px;
   left: 0;
 }
 
 .hvit-link {
   color: white;
+}
+
+.tekst-tilappoversikt:hover {
+  text-decoration: underline;
+}
+
+.siteheader {
+  padding: 0;
+}
+
+.logo-header {
+  margin-top: -2px;
+  padding-bottom: 0 !important;
+}
+
+.tittel-header {
+  padding-top: 22px;
+}
+
+.tekst-tilappoversikt {
+  padding-left: 5px;
+}
+
+.pil-tilbake {
+  height: 10px;
+}
+
+@media (max-width: 48em) {
+  .logginn-tekst {
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 30em) {
+  .tittel-header {
+    visibility: hidden;
+  }
 }
