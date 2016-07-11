@@ -1,10 +1,9 @@
 import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import { loggUt } from './../logginn/logginn-actions';
 import { Link } from 'react-router';
 
-export function HeaderInfo({ loggInnData, handleClick }) {
+export function Header({ loggInnData, handleClick, pathname }) {
     function hentLoggInnInfo() {
         if (!loggInnData.navn) {
             return (
@@ -20,6 +19,11 @@ export function HeaderInfo({ loggInnData, handleClick }) {
     }
 
     function visAppOversiktLink() {
+        if (pathname === '/') {
+            return (
+                <noscript>Du er allerede på startsiden</noscript>
+            );
+        }
         return (
             <div className="til-appoversikt">
                 <img className="pil-tilbake" src="/ledeteksteditor/img/pil-tilbake.svg" alt="Tilbake-ikon" />
@@ -37,7 +41,7 @@ export function HeaderInfo({ loggInnData, handleClick }) {
                             {visAppOversiktLink()}
                             <div className="app-tittel">
                                 <img className="logo-header" src="/ledeteksteditor/img/hvit-logo.svg" alt="NAV logo" />
-                                <Link to="/" className="typo-element hvit-link">Ledeteksteditor</Link>
+                                <span className="typo-element">Ledeteksteditor</span>
                             </div>
                             {hentLoggInnInfo(loggInnData)}
                         </div>
@@ -48,9 +52,10 @@ export function HeaderInfo({ loggInnData, handleClick }) {
     );
 }
 
-HeaderInfo.propTypes = {
+Header.propTypes = {
     handleClick: PT.func.isRequired,
-    loggInnData: PT.object.isRequired
+    loggInnData: PT.object.isRequired,
+    pathname: PT.string.isRequired
 };
 
 function mapDispatchToProps(dispatch) {
@@ -64,8 +69,9 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        loggInnData: state.autentisert.data
+        loggInnData: state.autentisert.data,
+        pathname: state.header.pathname
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

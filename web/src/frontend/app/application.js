@@ -1,11 +1,11 @@
 import React, { PropTypes as PT } from 'react';
 import DevTools from './devtools';
-import HeaderInfo from './headerinfo/headerinfo';
+import Header from './header/header';
 
 function Application({ children }) {
     return (
         <div>
-            <HeaderInfo />
+            <Header />
             <div className="container">
                 {children}
                 <DevTools />

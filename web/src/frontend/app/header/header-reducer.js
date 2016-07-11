@@ -1,14 +1,13 @@
 import { LOCATION_CHANGE } from 'react-router-redux';
 
 const DEFAULT_STATE = {
-    data: {}
+    pathname: ''
 };
 
-export default function headerinfo(state = DEFAULT_STATE, action) {
+export default function header(state = DEFAULT_STATE, action) {
     switch (action.type) {
         case LOCATION_CHANGE:
-            console.log(action);
-            return state;
+            return { ...state, pathname: action.payload.pathname };
         default:
             return state;
     }
