@@ -33,8 +33,8 @@ export function oppdaterTekst(data) {
     };
 }
 
-export function fetchTekster() {
-    const url = `/tekster/${encodeURIComponent('ledertekst-temp')}`;
+export function fetchTekster(applikasjon) {
+    const url = `/tekster/${applikasjon}`;
     return dispatch => {
         dispatch(sendRequest(url));
         return fetchToJson(url)

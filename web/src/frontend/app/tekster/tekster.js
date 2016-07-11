@@ -1,34 +1,40 @@
-import React, { PropTypes as PT } from 'react';
+import React, { Component, PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
-import TeksterListe from './tekster-liste';
-import Sok from './../sok/sok';
+import { bindActionCreators } from 'redux';
+import { fetchTekster } from './tekster-actions';
+import Innholdslaster from '../felles/innholdslaster/innholdslaster';
 
-export function filtrerListe(tekster, search) {
-    if (search) {
-        const sokeResultat = tekster.data.filter(t => t.nokkel.includes(search));
-        return { ...tekster, data: sokeResultat };
+class Tekster extends Component {
+    componentWillMount() {
+        this.props.actions.fetchTekster(this.props.params.applikasjon);
     }
-    return tekster;
-}
 
-function Tekster({ tekster, search }) {
-    const filtrertListe = filtrerListe(tekster, search);
-    console.log(filtrertListe);
-    return (
-        <div>
-            <Sok search={search} />
-            <TeksterListe tekster={filtrertListe} />
-        </div>
-    );
+    render() {
+        const { tekster, children } = this.props;
+
+        return (
+            <Innholdslaster avhengigheter={[tekster]}>
+                {children}
+            </Innholdslaster>
+        );
+    }
 }
 
 Tekster.propTypes = {
+    params: PT.object.isRequired,
     tekster: PT.object.isRequired,
-    search: PT.string.isRequired
+    children: PT.object.isRequired,
+    actions: PT.shape({
+        fetchTekster: PT.func.isRequired
+    })
 };
+
 
 function mapStateToProps({ tekster }, ownProps) {
     return { tekster, search: ownProps.location.query.sok };
 }
+function mapDispatchToProps(dispatch) {
+    return { actions: bindActionCreators({ fetchTekster }, dispatch) };
+}
 
-export default connect(mapStateToProps)(Tekster);
+export default connect(mapStateToProps, mapDispatchToProps)(Tekster);

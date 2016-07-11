@@ -2,41 +2,33 @@ import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, useRouterHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
 import { createHistory } from 'history';
 import createStore from './store.js';
 import Application from './application';
-import Rediger from './rediger/rediger';
 import Provider from './provider';
-import Forside from './forside/forside';
+import Applikasjoner from './applikasjoner/applikasjoner';
+import Tekster from './tekster/tekster';
+import TeksterListe from './tekster/tekster-liste';
+import RedigerTekstboks from './rediger/rediger';
+import { syncHistoryWithStore } from 'react-router-redux';
+import kreverInnlogging from './felles/krever-innlogging';
 import Login from './logginn/logginn';
-import { InnloggingsStatus } from './logginn/logginn-actions';
 
 const realHistory = useRouterHistory(createHistory)({
     basename: '/ledeteksteditor'
 });
-
 const store = createStore(realHistory);
 const history = syncHistoryWithStore(realHistory, store);
-
-function kreverInnlogging(nextState, replace) {
-    if (store.getState().autentisert.status !== InnloggingsStatus.LOGGET_INN) {
-        replace({
-            pathname: '/login',
-            state: {
-                pathname: nextState.location.pathname,
-                query: nextState.location.query
-            }
-        });
-    }
-}
 
 render((
     <Provider store={store}>
         <Router history={history}>
             <Route path="/" component={Application}>
-                <IndexRoute component={Forside} />
-                <Route path="/rediger" onEnter={kreverInnlogging} component={Rediger} />
+                <IndexRoute component={Applikasjoner} />
+                <Route path="/tekster/:applikasjon" component={Tekster}>
+                    <IndexRoute component={TeksterListe} />
+                    <Route path="rediger" onEnter={kreverInnlogging} component={kreverInnlogging(RedigerTekstboks)} />
+                </Route>
                 <Route path="/login" component={Login} />
             </Route>
         </Router>

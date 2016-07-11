@@ -50,8 +50,8 @@ export function fetchLedetekst(nokkel, spraak, tekst) {
     };
 }
 
-export function sendRedigertTekst(nokkel, spraak, tekst, kommentar) {
-    const url = `api/tekster/ledertekst-temp/${nokkel}`;
+export function sendRedigertTekst(applikasjon, nokkel, spraak, tekst, kommentar) {
+    const url = `/ledeteksteditor/api/tekster/${applikasjon}/${nokkel}`;
     const body = {
         nokkel,
         spraak: { [spraak]: tekst },
@@ -71,7 +71,7 @@ export function sendRedigertTekst(nokkel, spraak, tekst, kommentar) {
         }).then((response) => {
             const ledetekst = { nokkel, spraak, tekst };
             ledetekst.index = hentLedetekstIndex(getState().tekster.data, ledetekst);
-            dispatch(push('/'));
+            dispatch(push(`/tekster/${applikasjon}`));
             dispatch(putsuccLedetekst(response));
             dispatch(oppdaterTekst(ledetekst));
         }).catch((error) => {

@@ -15,8 +15,8 @@ describe('Link til rediger-vindu', () => { // eslint-disable-line no-undef
     it('URL skal bli sammensatt av nøkkel og språk', () => { // eslint-disable-line no-undef
         const nokkel = 'situasjoner-page.ung-og-uten-erfaring-lenketekst';
         const spraak = 'nb';
-        const testUrl = `rediger?nokkel=${nokkel}&spraak=${spraak}`;
-        const wrapper = shallow(<RedigerLink nokkel={nokkel} spraak={spraak} />);
+        const testUrl = `tekster/testapp/rediger?nokkel=${nokkel}&spraak=${spraak}`;
+        const wrapper = shallow(<RedigerLink nokkel={nokkel} spraak={spraak} base="tekster/testapp" />);
         const linker = wrapper.find('Link');
 
         expect(linker.prop('to')).to.be.equal(testUrl);
