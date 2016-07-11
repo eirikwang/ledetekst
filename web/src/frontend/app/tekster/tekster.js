@@ -30,8 +30,8 @@ Tekster.propTypes = {
 };
 
 
-function mapStateToProps({ tekster }, ownProps) {
-    return { tekster, search: ownProps.location.query.sok };
+function mapStateToProps({ tekster }) {
+    return { tekster };
 }
 function mapDispatchToProps(dispatch) {
     return { actions: bindActionCreators({ fetchTekster }, dispatch) };

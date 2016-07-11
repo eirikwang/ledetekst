@@ -79,3 +79,10 @@ export function storForbokstavPaaHvertOrd(str) {
     return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 }
 
+export function filtrerListe(tekster, search) {
+    if (search) {
+        const sokeResultat = tekster.data.filter(t => t.nokkel.includes(search));
+        return { ...tekster, data: sokeResultat };
+    }
+    return tekster;
+}
