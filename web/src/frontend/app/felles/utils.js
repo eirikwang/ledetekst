@@ -80,6 +80,7 @@ export function storForbokstavPaaHvertOrd(str) {
 }
 
 export function filtrerListe(tekster, search) {
+    search = search.toLowerCase();
     if (search) {
         const sokeResultat = tekster.data.filter(t => t.nokkel.includes(search));
         return { ...tekster, data: sokeResultat };
