@@ -17,7 +17,7 @@ module.exports = ((settings) => {
 
     var args = process.argv;
     if(args[2] === '--config' || JSON.parse(args[2])["phantomjs"] === true) {
-        settings['test_settings'].default.desiredCapabilities.browserName = 'chrome';
+        settings['test_settings'].default.desiredCapabilities.browserName = 'phantomjs';
     }
 
     return settings;
