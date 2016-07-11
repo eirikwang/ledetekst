@@ -8,10 +8,15 @@ class Sok extends Component {
     constructor(props) {
         super(props);
         autobind(this);
+        this.timeout = undefined
     }
 
     settSoketekst(soketekst) {
-        this.props.settSoketekst(soketekst.target.value, this.props.base);
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(function (tekst, func, base) {
+            console.log('tekst', tekst);
+            func(tekst, base);
+        }, 200, soketekst.target.value, this.props.settSoketekst, this.props.base);
     }
 
     sendQuery(event) {
@@ -27,9 +32,10 @@ class Sok extends Component {
                     <input
                         type="text"
                         name="sok"
+                        ref="sok"
                         placeholder="SØK PÅ NØKKEL"
                         className="sokefelt"
-                        value={this.props.soketekst ? this.props.soketekst : ''}
+                        // value={this.props.soketekst ? this.props.soketekst : ''}
                         onChange={this.settSoketekst}
                         onBlur={this.settSoketekst}
                     />
