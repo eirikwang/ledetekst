@@ -2,6 +2,7 @@ import { hentNavnFraEpost, storForbokstavPaaHvertOrd } from './../felles/utils';
 import { replace } from 'react-router-redux';
 
 export const LOGG_INN = 'LOGG_INN';
+export const LOGG_UT = 'LOGG_UT';
 export const EPOST_UGYLDIG = 'EPOST_UGYLDIG';
 
 export const InnloggingsStatus = {
@@ -28,5 +29,12 @@ export function loggInn(epost, nesteSide = { pathname: '/', query: {} }) {
     }
     return {
         type: EPOST_UGYLDIG
+    };
+}
+
+export function loggUt() {
+    return {
+        type: LOGG_UT,
+        data: {}
     };
 }

@@ -5,6 +5,7 @@ import meldingerReducer from './felles/meldinger-reducer';
 import logginnReducer from './logginn/logginn-reducer';
 import redigerReducer from './rediger/rediger-reducer';
 import applikasjonReducer from './applikasjoner/applikasjoner-reducer';
+import headerReducer from './header/header-reducer';
 
 const reducers = combineReducers({
     routing: routerReducer,
@@ -12,7 +13,8 @@ const reducers = combineReducers({
     intl: meldingerReducer,
     autentisert: logginnReducer,
     rediger: redigerReducer,
-    applikasjoner: applikasjonReducer
+    applikasjoner: applikasjonReducer,
+    header: headerReducer
 });
 
 export default reducers;
