@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { autobind } from './../felles/utils';
+import { settSoketekst } from './sok-actions';
 
 class Sok extends Component {
     constructor(props) {
@@ -11,20 +12,23 @@ class Sok extends Component {
 
     sendQuery(event) {
         event.preventDefault();
-        this.props.queryTekster(this.refs.queryTekst.value);
+        console.log('dette er nokkelen: ');
+        this.props.queryTekster(this.props.soketekst);
     }
 
     render() {
+        console.log(this.props.soketekst);
         return (
             <form onSubmit={this.sendQuery}>
                 <div className="sokefelt">
                     <label htmlFor="sok" className="visuallyhidden">Søk</label>
                     <input
                         type="text"
-                        ref="queryTekst"
                         name="sok"
                         placeholder="SØK PÅ NØKKEL"
                         className="sokefelt"
+                        sokeTekst={this.props.soketekst}
+                        onChange={this.props.settSoketekst}
                     />
                     <button type="submit" className="sokefelt-knapp-sok">
                         <span className="visuallyhidden">Søk</span>
@@ -37,14 +41,25 @@ class Sok extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        queryTekster: (data) => {
-            dispatch(push({ pathname: '/', query: { data } }));
+        queryTekster: (sok) => {
+            dispatch(push({ pathname: '/', query: { sok } }));
+        },
+        settSoketekst: (soketekst) => {
+            dispatch(settSoketekst(soketekst));
         }
     };
 }
 
+function mapStateToProps(state) {
+    return {
+        soketekst: state.sok.soketekst
+    };
+}
+
 Sok.propTypes = {
-    queryTekster: PropTypes.func.isRequired
+    queryTekster: PropTypes.func.isRequired,
+    soketekst: PropTypes.string.isRequired,
+    settSoketekst: PropTypes.func.isRequired
 };
 
-export default connect(() => ({}), mapDispatchToProps)(Sok);
+export default connect(mapStateToProps, mapDispatchToProps)(Sok);
