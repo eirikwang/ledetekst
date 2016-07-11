@@ -29,7 +29,7 @@ class Rediger extends Component {
 
         return (
             <div className="rediger-ledetekst-element">
-                Orginal tekst: {tekst}
+                Original tekst: {tekst}
                 <form onSubmit={this.hentRedigert}>
                     <div className="nav-input">
                         <label htmlFor="endretTekst">Ny tekst:</label>

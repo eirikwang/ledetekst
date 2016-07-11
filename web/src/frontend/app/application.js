@@ -1,11 +1,15 @@
 import React, { PropTypes as PT } from 'react';
 import DevTools from './devtools';
+import Header from './header/header';
 
 function Application({ children }) {
     return (
-        <div className="container">
-            {children}
-            <DevTools />
+        <div>
+            <Header />
+            <div className="container">
+                {children}
+                <DevTools />
+            </div>
         </div>
     );
 }
@@ -15,3 +19,4 @@ Application.propTypes = {
 };
 
 export default Application;
+

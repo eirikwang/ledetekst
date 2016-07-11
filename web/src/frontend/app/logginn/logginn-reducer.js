@@ -1,4 +1,4 @@
-import { InnloggingsStatus, LOGG_INN, EPOST_UGYLDIG } from './logginn-actions';
+import { InnloggingsStatus, LOGG_INN, LOGG_UT, EPOST_UGYLDIG } from './logginn-actions';
 
 const DEFAULT_STATE = {
     status: localStorage.getItem('epost') ? InnloggingsStatus.LOGGET_INN : InnloggingsStatus.LOGGET_UT,
@@ -22,6 +22,13 @@ export default function loggInn(state = DEFAULT_STATE, action) {
             return {
                 ...state,
                 status: InnloggingsStatus.LOGGINN_FEILET
+            };
+        case LOGG_UT:
+            localStorage.clear();
+            return {
+                ...state,
+                status: InnloggingsStatus.LOGGET_UT,
+                data: action.data
             };
         default:
             return state;
