@@ -21,7 +21,9 @@ TeksterListeContainer.propTypes = {
     base: PT.string.isRequired,
     soketekst: PT.string.isRequired
 };
+
 function mapStateToProps(state, ownProps) {
     return { tekster: state.tekster, base: ownProps.location.pathname, soketekst: state.sok.soketekst };
 }
+
 export default connect(mapStateToProps)(TeksterListeContainer);
