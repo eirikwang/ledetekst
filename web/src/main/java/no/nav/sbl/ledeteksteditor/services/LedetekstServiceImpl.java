@@ -23,7 +23,7 @@ public class LedetekstServiceImpl implements LedetekstService {
     public static final Map<String, Applikasjon> REPOSITORIES =
             Arrays.asList(
                     new Applikasjon("ledetekst-temp", "Temp applikasjon for å teste ledetekst-editor", stashBaseUrl + "/scm/hack/ledertekst-temp.git"),
-                    new Applikasjon("veiledningarbeidssoker", "Veiledning arbeidssoker", stashBaseUrl + "/scm/sbl/veiledningarbeidssoker.git", "tekster")
+                    new Applikasjon("veiledningarbeidssoker", "Veiledning arbeidssoker", stashBaseUrl + "/scm/sbl/veiledningarbeidssoker.git", "ledetekster")
             ).stream().collect(Collectors.toMap(Applikasjon::getId, Function.identity()));
 
     @Override
