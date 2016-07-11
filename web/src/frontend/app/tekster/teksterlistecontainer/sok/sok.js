@@ -1,7 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
-import { autobind } from './../felles/utils';
+import { autobind } from '../../../felles/utils';
+import { settSoketekst } from './sok-actions';
 
 class Sok extends Component {
     constructor(props) {
@@ -9,10 +10,13 @@ class Sok extends Component {
         autobind(this);
     }
 
+    settSoketekst(soketekst) {
+        this.props.settSoketekst(soketekst.target.value, this.props.base);
+    }
+
     sendQuery(event) {
-        console.log('sendQuery');
         event.preventDefault();
-        this.props.queryTekster(this.refs.queryTekst.value);
+        this.props.queryTekster(this.props.soketekst, this.props.base);
     }
 
     render() {
@@ -22,10 +26,12 @@ class Sok extends Component {
                     <label htmlFor="sok" className="visuallyhidden">Søk</label>
                     <input
                         type="text"
-                        ref="queryTekst"
                         name="sok"
                         placeholder="SØK PÅ NØKKEL"
-                        className="sokefelt-input"
+                        className="sokefelt"
+                        value={this.props.soketekst ? this.props.soketekst : ''}
+                        onChange={this.settSoketekst}
+                        onBlur={this.settSoketekst}
                     />
                     <button type="submit" className="sokefelt-knapp-sok">
                         <span className="visuallyhidden">Søk</span>
@@ -38,14 +44,21 @@ class Sok extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        queryTekster: (data) => {
-            dispatch(push({ pathname: '/', query: { data } }));
+        queryTekster: (soketekst, pathname) => {
+            dispatch(push({ pathname, query: { soketekst } }));
+        },
+        settSoketekst: (soketekst, pathname) => {
+            dispatch(push({ pathname, query: { soketekst } }));
+            dispatch(settSoketekst(soketekst));
         }
     };
 }
 
 Sok.propTypes = {
-    queryTekster: PropTypes.func.isRequired
+    settSoketekst: PropTypes.func.isRequired,
+    queryTekster: PropTypes.func.isRequired,
+    base: PropTypes.string.isRequired,
+    soketekst: PropTypes.string.isRequired
 };
 
 export default connect(() => ({}), mapDispatchToProps)(Sok);

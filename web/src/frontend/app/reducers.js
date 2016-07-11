@@ -6,6 +6,7 @@ import logginnReducer from './logginn/logginn-reducer';
 import redigerReducer from './rediger/rediger-reducer';
 import applikasjonReducer from './applikasjoner/applikasjoner-reducer';
 import headerReducer from './header/header-reducer';
+import sokreducer from './tekster/teksterlistecontainer/sok/sok-reducer';
 
 const reducers = combineReducers({
     routing: routerReducer,
@@ -14,7 +15,8 @@ const reducers = combineReducers({
     autentisert: logginnReducer,
     rediger: redigerReducer,
     applikasjoner: applikasjonReducer,
-    header: headerReducer
+    header: headerReducer,
+    sok: sokreducer
 });
 
 export default reducers;

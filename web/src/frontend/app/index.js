@@ -8,7 +8,7 @@ import Application from './application';
 import Provider from './provider';
 import Applikasjoner from './applikasjoner/applikasjoner';
 import Tekster from './tekster/tekster';
-import TeksterListe from './tekster/tekster-liste';
+import TeksterListeContainer from './tekster/teksterlistecontainer/teksterliste-container';
 import RedigerTekstboks from './rediger/rediger';
 import { syncHistoryWithStore } from 'react-router-redux';
 import kreverInnlogging from './felles/krever-innlogging';
@@ -26,7 +26,7 @@ render((
             <Route path="/" component={Application}>
                 <IndexRoute component={Applikasjoner} />
                 <Route path="/tekster/:applikasjon" component={Tekster}>
-                    <IndexRoute component={TeksterListe} />
+                    <IndexRoute component={TeksterListeContainer} />
                     <Route path="rediger" onEnter={kreverInnlogging} component={kreverInnlogging(RedigerTekstboks)} />
                 </Route>
                 <Route path="/login" component={Login} />
