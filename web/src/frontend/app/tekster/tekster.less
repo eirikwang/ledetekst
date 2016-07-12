@@ -1,36 +1,88 @@
+// TEKST-ELEMENTER
+
 .tekst-element {
   display: flex;
-  flex-pack: justify;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  height: 58px;
+  height: 3.625rem;
+  padding: 0.625rem;
+  margin: -1px;
   border: solid 1px #b7b1a9;
   background-color: #ffffff;
 }
 
+.tekst-element:hover {
+  position: relative;
+  z-index: 2;
+  border: solid 1px #0067c5;
+}
+
 .tekst-link {
   color: #000000;
-  hover: #0067c5;
 }
 
 .tekst-ikon {
-  width: 5%;
+  width: 3%;
+  //margin: 0.4375rem 0.625rem 0.4375rem 0.625rem;
 }
 
 .tekst-innhold {
-  width: 40%;
+  width: 43%;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: bold;
   white-space: nowrap;
+  //margin: 0.4375rem 0.625rem 0.4375rem 0.625rem;
 }
 
 .tekst-nokkel {
-  width: 35%;
+  width: 33%;
+  //margin: 0.4375rem 0.625rem 0.4375rem 0.625rem;
 }
 
 .tekst-spraak {
-  width: 10%;
+  width: 5%;
+  //margin: 0.4375rem 0.625rem 0.4375rem 0.625rem;
 }
 
 .tekst-sistendret {
-  width: 10%;
+  width: 9%;
+  //margin: 0.4375rem 0.625rem 0.4375rem 0.625rem;
+}
+
+//TITTEL-LINJE
+
+.tittel-element {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 2.625rem;
+  padding: 0.625rem;
+}
+
+.tekst-tittel-innhold {
+  width: 43%;
+  margin-left: 40px;
+  //margin: 0.4375rem 0.625rem 0.4375rem 4.3125rem;
+  font-weight: bold;
+}
+
+.tekst-tittel-nokkel {
+  width: 33%;
+  //margin: 0.4375rem 0.625rem 0.4375rem 0.625rem;
+  font-weight: bold;
+}
+.tekst-tittel-spraak {
+  width: 5%;
+  //margin: 0.4375rem 0.625rem 0.4375rem 0.625rem;
+  font-weight: bold;
+}
+.tekst-tittel-sistendret {
+  width: 9%;
+  //margin: 0.4375rem 0.625rem 0.4375rem 0.625rem;
+  font-weight: bold;
 }
