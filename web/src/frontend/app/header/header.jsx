@@ -6,17 +6,21 @@ import { push } from 'react-router-redux';
 
 export function Header({ loggInnData, pathname, handleLoggUtClick, handleLoggInnClick }) {
     function hentLoggInnInfo() {
-        if (!loggInnData.navn) {
+        if (pathname.indexOf('login') > -1) {
+            return (
+                <noscript>Du er på loggInn-siden, loggInn/loggUt-info skal ikke vises</noscript>
+            );
+        } else if (!loggInnData.navn) {
             return (
                 <div className="logginn-info">
-                    <button className="knapp knapp-hoved knapp-mini" onClick={handleLoggInnClick}>Logg inn</button>
+                    <button className="knapp knapp-hoved knapp-mini logginn-knapp" onClick={handleLoggInnClick}>Logg inn</button>
                 </div>
             );
         }
         return (
             <div className="logginn-info">
                 <span className="typo-undertekst logginn-tekst">{loggInnData.navn}</span>
-                <button className="knapp knapp-hoved knapp-mini" onClick={handleLoggUtClick}>Logg ut</button>
+                <button className="knapp knapp-hoved knapp-mini loggut-knapp" onClick={handleLoggUtClick}>Logg ut</button>
             </div>
         );
     }

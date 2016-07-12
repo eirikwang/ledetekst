@@ -14,7 +14,10 @@ describe('Header', () => {
     it('Skal rendre header-komponent', () => {
         const wrapper = shallow(<Header {...defaultData} />);
         const noscripts = wrapper.find('noscript');
-        expect(noscripts.length).to.be.equal(2);
+        const loggInnKnapp = wrapper.find('.logginn-info .logginn-knapp');
+
+        expect(noscripts.length).to.be.equal(1);
+        expect(loggInnKnapp.length).to.be.equal(1);
     });
 
     it('Skal rendre navn ved loggInn', () => {
@@ -28,13 +31,11 @@ describe('Header', () => {
         expect(span.html()).to.have.string('Test Testesen');
     });
 
-    it('Skal rendre app-link hvis man er et annet sted enn startsida', () => {
+    it('Skal rendre app-link hvis man er på oversiktssiden', () => {
         const data = { ...defaultData, pathname: '/tekster/veiledningarbeidssoker' };
         const wrapper = shallow(<Header {...data} />);
-        const noscripts = wrapper.find('noscript');
         const link = wrapper.find('Link');
 
-        expect(noscripts.length).to.be.equal(1);
         expect(link.length).to.be.equal(1);
     });
 });
