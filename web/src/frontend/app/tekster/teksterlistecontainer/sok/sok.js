@@ -12,13 +12,13 @@ class Sok extends Component {
         this.timeout = undefined;
     }
 
-    settSoketekst(soketekst) {
-        this.props.oppdaterTempSoketekst(soketekst.target.value);
+    settSoketekst(eventSok) {
+        this.props.oppdaterTempSoketekst(eventSok.target.value);
 
         clearTimeout(this.timeout);
         this.timeout = setTimeout((tekst, settsoketekst, base) => {
             settsoketekst(tekst, base);
-        }, 500, soketekst.target.value, this.props.settSoketekst, this.props.base);
+        }, 500, eventSok.target.value, this.props.settSoketekst, this.props.base);
     }
 
     sendQuery(event) {
