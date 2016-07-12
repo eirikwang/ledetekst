@@ -9,7 +9,7 @@ export default function sok(state = { soketekst: '', tempSoketekst: '' }, action
         case LOCATION_CHANGE:
             return deepFreeze({
                 ...state,
-                soketekst: action.payload.query.soketekst,
+                soketekst: action.payload.query.soketekst ? action.payload.query.soketekst : '',
                 tempSoketekst: action.payload.query.soketekst ? action.payload.query.soketekst : '' });
         default:
             return deepFreeze(state);
