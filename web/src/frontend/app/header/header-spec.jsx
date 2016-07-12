@@ -1,5 +1,7 @@
 /* eslint-env mocha */
-import { expect, React } from './../../test-helper';
+/* eslint-disable no-unused-expressions */
+
+import { expect, sinon, React } from './../../test-helper';
 import { shallow } from 'enzyme';
 import { Header } from './header';
 
@@ -7,13 +9,37 @@ describe('Header', () => {
     const defaultData = {
         pathname: '/',
         loggInnData: {},
-        handleClick: () => {}
+        handleLoggUtClick: () => {},
+        handleLoggInnClick: () => { console.log('kalt loggInn-funksjon'); }
     };
 
     it('Skal rendre header-komponent', () => {
         const wrapper = shallow(<Header {...defaultData} />);
         const noscripts = wrapper.find('noscript');
-        expect(noscripts.length).to.be.equal(2);
+        const loggInnKnapp = wrapper.find('.logginn-info .logginn-knapp');
+
+        expect(noscripts.length).to.be.equal(1);
+        expect(loggInnKnapp.length).to.be.equal(1);
+    });
+
+    it('Skal kalle klikk-funksjon ved loggInn', () => {
+        const mockOnClick = sinon.spy();
+        const data = { ...defaultData, handleLoggInnClick: mockOnClick };
+        const wrapper = shallow(<Header {...data} />);
+        const loggInnKnapp = wrapper.find('.logginn-info .logginn-knapp');
+        loggInnKnapp.simulate('click');
+
+        expect(mockOnClick.calledOnce).to.be.true;
+    });
+
+    it('Skal kalle klikk-funksjon ved loggUt', () => {
+        const mockOnClick = sinon.spy();
+        const data = { ...defaultData, loggInnData: { navn: 'Test Testesen' }, handleLoggUtClick: mockOnClick };
+        const wrapper = shallow(<Header {...data} />);
+        const loggUtKnapp = wrapper.find('.logginn-info .loggut-knapp');
+        loggUtKnapp.simulate('click');
+
+        expect(mockOnClick.calledOnce).to.be.true;
     });
 
     it('Skal rendre navn ved loggInn', () => {
@@ -27,13 +53,19 @@ describe('Header', () => {
         expect(span.html()).to.have.string('Test Testesen');
     });
 
-    it('Skal rendre app-link hvis man er et annet sted enn startsida', () => {
+    it('Skal rendre app-link hvis man er på oversiktssiden', () => {
         const data = { ...defaultData, pathname: '/tekster/veiledningarbeidssoker' };
         const wrapper = shallow(<Header {...data} />);
-        const noscripts = wrapper.find('noscript');
         const link = wrapper.find('Link');
 
-        expect(noscripts.length).to.be.equal(1);
         expect(link.length).to.be.equal(1);
+    });
+
+    it('Skal ikke rendre app-link eller logginn-info på login-siden', () => {
+        const data = { ...defaultData, pathname: '/login' };
+        const wrapper = shallow(<Header {...data} />);
+        const noscripts = wrapper.find('noscript');
+
+        expect(noscripts.length).to.be.equal(2);
     });
 });

@@ -1,0 +1,20 @@
+.panel-tilpasset{
+  box-shadow: none;
+  border-width: 2px;
+  background-image: url('/ledeteksteditor/img/ikoner-svg/ikon-pil-klikkbart.svg') !important;
+  background-size:20px 20px;
+  background-repeat: no-repeat;
+  background-position: 97% 50%;
+  &:hover{
+    box-shadow: none;
+    border-width: 2px;
+    background-image: url('/ledeteksteditor/img/ikoner-svg/ikon-pil-klikkbart_hover.svg') !important;
+  }
+  &:focus{
+    .mixin-focus-outline(3px);
+  }
+}
+
+a.panel-tilpasset{
+  .panel-tilpasset;
+}
