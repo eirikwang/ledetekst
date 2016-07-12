@@ -19,7 +19,7 @@ class LoggInn extends Component {
         let warning = this.props.ugyldigEpost ? 'Ugyldig e-post' : '';
         let klasser = `nav-input text-left blokk-l ${this.props.ugyldigEpost ? ' har-valideringsfeil' : ''}`;
         return (
-            <div className="logginn-beholder">
+            <div className="logginn-beholder" noValidate>
                 <h1 className="hode-undertittel  hode-dekorert blokk-m">Logg inn</h1>
                 <form onSubmit={this.hentInput}>
                     <div className={klasser}>
@@ -34,6 +34,8 @@ class LoggInn extends Component {
                             id="input-epost"
                             placeholder="brukernavn@nav.no"
                             aria-describedby="error-epost"
+                            required="required"
+                            aria-required="true"
                             autoFocus="true"
                         />
                         <span className="skjema-feilmelding" role="alert" id="error-epost">
