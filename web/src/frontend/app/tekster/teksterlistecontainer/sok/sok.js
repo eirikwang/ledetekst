@@ -3,7 +3,7 @@ import React, { PropTypes, Component } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { autobind } from '../../../felles/utils';
-import { oppdaterTempSoketekst } from './sok-actions';
+import { oppdaterSokeboksVerdi } from './sok-actions';
 
 class Sok extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class Sok extends Component {
     }
 
     settSoketekst(eventSok) {
-        this.props.oppdaterTempSoketekst(eventSok.target.value);
+        this.props.oppdaterSokeboksVerdi(eventSok.target.value);
 
         clearTimeout(this.timeout);
         this.timeout = setTimeout((tekst, settsoketekst, base) => {
@@ -23,7 +23,7 @@ class Sok extends Component {
 
     sendQuery(event) {
         event.preventDefault();
-        this.props.queryTekster(this.props.tempSoketekst, this.props.base);
+        this.props.queryTekster(this.props.sokeboksVerdi, this.props.base);
     }
 
     render() {
@@ -34,10 +34,9 @@ class Sok extends Component {
                     <input
                         type="text"
                         name="sok"
-                        ref="sok"
                         placeholder="SØK PÅ NØKKEL"
                         className="sokefelt"
-                        value={this.props.tempSoketekst}
+                        value={this.props.sokeboksVerdi}
                         onChange={this.settSoketekst}
                     />
                     <button type="submit" className="sokefelt-knapp-sok">
@@ -51,20 +50,20 @@ class Sok extends Component {
 
 function mapStateToProps(state) {
     return {
-        tempSoketekst: state.sok.tempSoketekst
+        sokeboksVerdi: state.sok.sokeboksVerdi
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        queryTekster: (soketekst, pathname) => {
-            dispatch(push({ pathname, query: { soketekst } }));
+        queryTekster: (sokeQuery, pathname) => {
+            dispatch(push({ pathname, query: { sokeQuery } }));
         },
-        settSoketekst: (soketekst, pathname) => {
-            dispatch(push({ pathname, query: { soketekst } }));
+        settSoketekst: (sokeQuery, pathname) => {
+            dispatch(push({ pathname, query: { sokeQuery } }));
         },
-        oppdaterTempSoketekst: (soketekst) => {
-            dispatch(oppdaterTempSoketekst(soketekst));
+        oppdaterSokeboksVerdi: (sokeQuery) => {
+            dispatch(oppdaterSokeboksVerdi(sokeQuery));
         }
     };
 }
@@ -73,9 +72,9 @@ Sok.propTypes = {
     settSoketekst: PropTypes.func.isRequired,
     queryTekster: PropTypes.func.isRequired,
     base: PropTypes.string.isRequired,
-    soketekst: PropTypes.string.isRequired,
-    tempSoketekst: PropTypes.string.isRequired,
-    oppdaterTempSoketekst: PropTypes.func.isRequired
+    sokeQuery: PropTypes.string.isRequired,
+    sokeboksVerdi: PropTypes.string.isRequired,
+    oppdaterSokeboksVerdi: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sok);
