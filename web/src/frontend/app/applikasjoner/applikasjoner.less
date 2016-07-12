@@ -1,7 +1,3 @@
-@modig-frontend-root-url: "../node_modules/modig-frontend/modig-frontend-ressurser/src/main/resources";
-
-@import "@{modig-frontend-root-url}/less/includes/mixins";
-
 .panel-tilpasset{
   box-shadow: none;
   border-width: 2px;
@@ -14,7 +10,9 @@
     border-width: 2px;
     background-image: url('/ledeteksteditor/img/ikoner-svg/ikon-pil-klikkbart_hover.svg') !important;
   }
-  .mixin-focus-outline(3px);
+  &:focus{
+    .mixin-focus-outline(3px);
+  }
 }
 
 a.panel-tilpasset{
