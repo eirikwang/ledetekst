@@ -10,10 +10,12 @@ function TeksterListeContainer({ tekster, base, sokeQuery }) {
 
     function antallTreff() {
         if (sokeQuery.length !== 0) {
-            return <div className="soketreff"><span>{`${filtrertListe.data.length} treff på `}</span><span
-                className="typo-avsnitt">{`${sokeQuery}`}</span></div>
+            return (<div className="soketreff">
+                <span>{`${filtrertListe.data.length} treff på `}</span>
+                <span className="typo-avsnitt">{`${sokeQuery}`}</span>
+            </div>);
         }
-
+        return '';
     }
 
     return (
