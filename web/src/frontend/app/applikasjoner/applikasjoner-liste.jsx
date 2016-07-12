@@ -4,8 +4,8 @@ import { Link } from 'react-router';
 function ApplikasjonerListe({ applikasjoner }) {
     const apps = applikasjoner.data.map((app) =>
         <li key={app.id} className="">
-            <Link to={`/tekster/${app.id}`} className="panel panel-klikkbart">
-                <h2 className="typo-innholdstittel">{app.navn}</h2>
+            <Link to={`/tekster/${app.id}`} className="panel panel-klikkbart-ramme-komprimert-tilpasset">
+                <h2 className="typo-etikett-stor">{app.navn}</h2>
                 <p className="typo-normal">{app.url}</p>
             </Link>
         </li>
