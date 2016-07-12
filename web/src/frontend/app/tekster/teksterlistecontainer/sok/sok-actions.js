@@ -1,5 +1,5 @@
-export const SETT_SOKETEKST = 'SETT_SOKETEKST';
+export const OPPDATER_TEMPSOKETEKST = 'OPPDATER_TEMPSOKETEKST';
 
-export function settSoketekst(soketekst) {
-    return { type: SETT_SOKETEKST, soketekst };
+export function oppdaterTempSoketekst(tempSoketekst) {
+    return { type: OPPDATER_TEMPSOKETEKST, tempSoketekst };
 }

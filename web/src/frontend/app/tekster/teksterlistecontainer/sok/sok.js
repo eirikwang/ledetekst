@@ -1,22 +1,24 @@
+/* eslint-disable jsx-a11y/no-onchange*/
 import React, { PropTypes, Component } from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { autobind } from '../../../felles/utils';
-import { settSoketekst } from './sok-actions';
+import { oppdaterTempSoketekst } from './sok-actions';
 
 class Sok extends Component {
     constructor(props) {
         super(props);
         autobind(this);
-        this.timeout = undefined
+        this.timeout = undefined;
     }
 
     settSoketekst(soketekst) {
+        this.props.oppdaterTempSoketekst(soketekst.target.value);
+
         clearTimeout(this.timeout);
-        this.timeout = setTimeout(function (tekst, func, base) {
-            console.log('tekst', tekst);
+        this.timeout = setTimeout((tekst, func, base) => {
             func(tekst, base);
-        }, 200, soketekst.target.value, this.props.settSoketekst, this.props.base);
+        }, 500, soketekst.target.value, this.props.settSoketekst, this.props.base);
     }
 
     sendQuery(event) {
@@ -35,9 +37,8 @@ class Sok extends Component {
                         ref="sok"
                         placeholder="SØK PÅ NØKKEL"
                         className="sokefelt"
-                        // value={this.props.soketekst ? this.props.soketekst : ''}
+                        value={this.props.tempSoketekst}
                         onChange={this.settSoketekst}
-                        onBlur={this.settSoketekst}
                     />
                     <button type="submit" className="sokefelt-knapp-sok">
                         <span className="visuallyhidden">Søk</span>
@@ -48,6 +49,12 @@ class Sok extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        tempSoketekst: state.sok.tempSoketekst
+    };
+}
+
 function mapDispatchToProps(dispatch) {
     return {
         queryTekster: (soketekst, pathname) => {
@@ -55,7 +62,9 @@ function mapDispatchToProps(dispatch) {
         },
         settSoketekst: (soketekst, pathname) => {
             dispatch(push({ pathname, query: { soketekst } }));
-            dispatch(settSoketekst(soketekst));
+        },
+        oppdaterTempSoketekst: (soketekst) => {
+            dispatch(oppdaterTempSoketekst(soketekst));
         }
     };
 }
@@ -64,7 +73,9 @@ Sok.propTypes = {
     settSoketekst: PropTypes.func.isRequired,
     queryTekster: PropTypes.func.isRequired,
     base: PropTypes.string.isRequired,
-    soketekst: PropTypes.string.isRequired
+    soketekst: PropTypes.string.isRequired,
+    tempSoketekst: PropTypes.string.isRequired,
+    oppdaterTempSoketekst: PropTypes.func.isRequired
 };
 
-export default connect(() => ({}), mapDispatchToProps)(Sok);
+export default connect(mapStateToProps, mapDispatchToProps)(Sok);
