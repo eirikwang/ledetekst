@@ -16,7 +16,7 @@ class LoggInn extends Component {
     }
 
     render() {
-        let warning = this.props.ugyldigEpost ? 'Ugyldig epost' : '';
+        let warning = this.props.ugyldigEpost ? 'Ugyldig e-post' : '';
         let klasser = `nav-input text-left blokk-l ${this.props.ugyldigEpost ? ' har-valideringsfeil' : ''}`;
         return (
             <div className="logginn-beholder">
@@ -24,7 +24,7 @@ class LoggInn extends Component {
                 <form onSubmit={this.hentInput}>
                     <div className={klasser}>
                         <label clasName="typo-infotekst" htmlFor="input-epost">
-                            NAV E-post:
+                            NAV e-post:
                         </label>
                         <input
                             className="input-fullbredde"
@@ -42,7 +42,7 @@ class LoggInn extends Component {
                             {warning}
                         </span>
                     </div>
-                    <div className="blokk-xl">
+                    <div className="blokk-l">
                         <button type="submit" className="knapp knapp-hoved knapp-liten">Logg Inn</button>
                     </div>
                 </form>
