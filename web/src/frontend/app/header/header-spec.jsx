@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-import { expect, React } from './../../test-helper';
+import { expect, sinon, sinonChai, React } from './../../test-helper';
 import { shallow } from 'enzyme';
 import { Header } from './header';
 
@@ -8,7 +8,7 @@ describe('Header', () => {
         pathname: '/',
         loggInnData: {},
         handleLoggUtClick: () => {},
-        handleLoggInnClick: () => {}
+        handleLoggInnClick: () => { console.log('kalt loggInn-funksjon'); }
     };
 
     it('Skal rendre header-komponent', () => {
@@ -18,6 +18,26 @@ describe('Header', () => {
 
         expect(noscripts.length).to.be.equal(1);
         expect(loggInnKnapp.length).to.be.equal(1);
+    });
+
+    it('Skal kalle klikk-funksjon ved loggInn', () => {
+        const mockOnClick = sinon.spy();
+        const data = { ...defaultData, handleLoggInnClick: mockOnClick };
+        const wrapper = shallow(<Header {...data} />);
+        const loggInnKnapp = wrapper.find('.logginn-info .logginn-knapp');
+        loggInnKnapp.simulate('click');
+
+        expect(mockOnClick.calledOnce).to.be.true;
+    });
+
+    it('Skal kalle klikk-funksjon ved loggUt', () => {
+        const mockOnClick = sinon.spy();
+        const data = { ...defaultData, loggInnData: { navn: 'Test Testesen' }, handleLoggUtClick: mockOnClick };
+        const wrapper = shallow(<Header {...data} />);
+        const loggUtKnapp = wrapper.find('.logginn-info .loggut-knapp');
+        loggUtKnapp.simulate('click');
+
+        expect(mockOnClick.calledOnce).to.be.true;
     });
 
     it('Skal rendre navn ved loggInn', () => {
@@ -37,5 +57,13 @@ describe('Header', () => {
         const link = wrapper.find('Link');
 
         expect(link.length).to.be.equal(1);
+    });
+
+    it('Skal ikke rendre app-link eller logginn-info på login-siden', () => {
+        const data = { ...defaultData, pathname: '/login' };
+        const wrapper = shallow(<Header {...data} />);
+        const noscripts = wrapper.find('noscript');
+
+        expect(noscripts.length).to.be.equal(2);
     });
 });

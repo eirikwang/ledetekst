@@ -4,59 +4,63 @@ import { loggUt } from './../logginn/logginn-actions';
 import { Link } from 'react-router';
 import { push } from 'react-router-redux';
 
-export function Header({ loggInnData, pathname, handleLoggUtClick, handleLoggInnClick }) {
-    function hentLoggInnInfo() {
-        if (pathname.indexOf('login') > -1) {
-            return (
-                <noscript>Du er på loggInn-siden, loggInn/loggUt-info skal ikke vises</noscript>
-            );
-        } else if (!loggInnData.navn) {
-            return (
-                <div className="logginn-info">
-                    <button className="knapp knapp-hoved knapp-mini logginn-knapp" onClick={handleLoggInnClick}>
-                        Logg inn
-                    </button>
-                </div>
-            );
-        }
+function erIkkePaaTekstListeSide(pathname) {
+    return pathname === '/' || pathname.indexOf('rediger') > -1 || pathname === '/login';
+}
+
+function hentLoggInnInfo(pathname, loggInnData, handleLoggInnClick, handleLoggUtClick) {
+    if (pathname === '/login') {
+        return (
+            <noscript>Du er på loggInn-siden, loggInn/loggUt-info skal ikke vises</noscript>
+        );
+    } else if (!loggInnData.navn) {
         return (
             <div className="logginn-info">
-                <span className="typo-undertekst logginn-tekst">{loggInnData.navn}</span>
-                <button className="knapp knapp-hoved knapp-mini loggut-knapp" onClick={handleLoggUtClick}>
-                    Logg ut
+                <button className="knapp knapp-hoved knapp-mini logginn-knapp" onClick={handleLoggInnClick}>
+                    Logg inn
                 </button>
             </div>
         );
     }
+    return (
+        <div className="logginn-info">
+            <span className="typo-undertekst logginn-tekst">{loggInnData.navn}</span>
+            <button className="knapp knapp-hoved knapp-mini loggut-knapp" onClick={handleLoggUtClick}>
+                Logg ut
+            </button>
+        </div>
+    );
+}
 
-    function visAppOversiktLink() {
-        if (pathname === '/' || pathname.indexOf('rediger') > -1 || pathname.indexOf('login') > -1) {
-            return (
-                <noscript>Du er allerede på startsiden/rediger-siden/logginn-siden</noscript>
-            );
-        }
+function visAppOversiktLink(pathname) {
+    if (erIkkePaaTekstListeSide(pathname)) {
         return (
-            <Link to="/" className="hvit-link">
-                <div className="til-appoversikt">
-                    <img className="pil-tilbake" src="/ledeteksteditor/img/pil-tilbake.svg" alt="Tilbake-ikon" />
-                    <span className="typo-undertekst tekst-tilappoversikt">Til applikasjonsoversikt</span>
-                </div>
-            </Link>
+            <noscript>Du er allerede på startsiden/rediger-siden/logginn-siden</noscript>
         );
     }
+    return (
+        <Link to="/" className="hvit-link">
+            <div className="til-appoversikt">
+                <img className="pil-tilbake" src="/ledeteksteditor/img/pil-tilbake.svg" alt="Tilbake-ikon" />
+                <span className="typo-undertekst tekst-tilappoversikt">Til applikasjonsoversikt</span>
+            </div>
+        </Link>
+    );
+}
 
+export function Header({ loggInnData, pathname, handleLoggUtClick, handleLoggInnClick }) {
     return (
         <header className="siteheader" role="banner">
             <div className="site-coltrols-toolbar site-controls-toolbar">
                 <div className="container">
                     <div className="row navbar">
                         <div className="col-md-12">
-                            {visAppOversiktLink()}
+                            {visAppOversiktLink(pathname)}
                             <div className="app-tittel">
                                 <img className="logo-header" src="/ledeteksteditor/img/logo-nav.svg" alt="NAV logo" />
                                 <span className="typo-element tittel-header">Ledeteksteditor</span>
                             </div>
-                            {hentLoggInnInfo(loggInnData)}
+                            {hentLoggInnInfo(pathname, loggInnData, handleLoggInnClick, handleLoggUtClick)}
                         </div>
                     </div>
                 </div>
