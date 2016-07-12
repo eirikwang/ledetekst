@@ -34,11 +34,9 @@ class LoggInn extends Component {
                             id="input-epost"
                             placeholder="brukernavn@nav.no"
                             aria-describedby="error-epost"
-                            required="required"
-                            aria-required="true"
                             autoFocus="true"
                         />
-                        <span className="skjema-feilmelding" id="error-epost">
+                        <span className="skjema-feilmelding" role="alert" id="error-epost">
                             {warning}
                         </span>
                     </div>
@@ -48,6 +46,7 @@ class LoggInn extends Component {
                 </form>
             </div>
         );
+
     }
 }
 
