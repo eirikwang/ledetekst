@@ -23,7 +23,7 @@ class Sok extends Component {
 
     sendQuery(event) {
         event.preventDefault();
-        this.props.queryTekster(this.props.soketekst, this.props.base);
+        this.props.queryTekster(this.props.tempSoketekst, this.props.base);
     }
 
     render() {
