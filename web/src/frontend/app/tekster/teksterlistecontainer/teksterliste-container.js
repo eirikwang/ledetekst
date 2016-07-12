@@ -9,14 +9,18 @@ function TeksterListeContainer({ tekster, base, sokeQuery }) {
     const filtrertListe = filtrerListe(tekster, sokeQuery);
 
     function antallTreff() {
-        return <span><span>{`${filtrertListe.data.length} treff på `}</span><span className="typo-avsnitt">{`${sokeQuery}`}</span></span>
+        if (sokeQuery.length !== 0) {
+            return <div className="soketreff"><span>{`${filtrertListe.data.length} treff på `}</span><span
+                className="typo-avsnitt">{`${sokeQuery}`}</span></div>
+        }
+
     }
 
     return (
         <div>
             <h1 className="typo-sidetittel text-center">Ledertekster</h1>
             <Sok base={base} sokeQuery={sokeQuery} />
-            <div className="soketreff">{antallTreff()}</div>
+            <span>{antallTreff()}</span>
             <TeksterListe tekster={filtrertListe} base={base} />
         </div>
     );

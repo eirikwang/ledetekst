@@ -6,7 +6,7 @@ export default function sok(state = { sokeQuery: '' }, action) {
         case LOCATION_CHANGE:
             return deepFreeze({
                 ...state,
-                sokeQuery: action.payload.query.sokeQuery
+                sokeQuery: action.payload.query.sokeQuery ? action.payload.query.sokeQuery : ''
             });
         default:
             return deepFreeze(state);
