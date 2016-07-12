@@ -4,7 +4,6 @@ import DebouncedInput from 'react-debounce-input';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { autobind } from '../../../felles/utils';
-import { oppdaterSokeboksVerdi } from './sok-actions';
 
 class Sok extends Component {
     constructor(props) {
@@ -13,6 +12,7 @@ class Sok extends Component {
     }
 
     settSoketekst(eventSok) {
+        eventSok.preventDefault();
         this.props.settSoketekst(eventSok.target.value, this.props.base);
     }
 
@@ -24,7 +24,7 @@ class Sok extends Component {
                     <DebouncedInput
                         debounceTimeout={500}
                         name="sok"
-                        value={this.props.soketekst}
+                        value={this.props.sokeQuery}
                         placeholder="SØK PÅ NØKKEL"
                         className="sokefelt"
                         onChange={this.settSoketekst}
@@ -40,14 +40,14 @@ class Sok extends Component {
 
 function mapStateToProps(state) {
     return {
-        soketekst: state.sok.soketekst
+        sokeQuery: state.sok.sokeQuery
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        settSoketekst: (soketekst, pathname) => {
-            dispatch(push({ pathname, query: { soketekst } }));
+        settSoketekst: (sokeQuery, pathname) => {
+            dispatch(push({ pathname, query: { sokeQuery } }));
         }
     };
 }
@@ -55,7 +55,7 @@ function mapDispatchToProps(dispatch) {
 Sok.propTypes = {
     settSoketekst: PropTypes.func.isRequired,
     base: PropTypes.string.isRequired,
-    soketekst: PropTypes.string.isRequired
+    sokeQuery: PropTypes.string.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sok);
