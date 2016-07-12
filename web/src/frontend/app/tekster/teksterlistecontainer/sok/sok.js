@@ -18,7 +18,7 @@ class Sok extends Component {
 
     render() {
         return (
-            <form onSubmit={this.settSoketekst}>
+            <form className="blokk-xxs" onSubmit={this.settSoketekst}>
                 <div className="sokefelt">
                     <label htmlFor="sok" className="visuallyhidden">Søk</label>
                     <DebouncedInput
