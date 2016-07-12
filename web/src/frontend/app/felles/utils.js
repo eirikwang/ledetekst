@@ -81,7 +81,8 @@ export function storForbokstavPaaHvertOrd(str) {
 
 export function filtrerListe(tekster, search) {
     if (search) {
-        const sokeResultat = tekster.data.filter(t => t.nokkel.includes(search));
+        const searchLowercase = search.toLowerCase();
+        const sokeResultat = tekster.data.filter(t => t.nokkel.toLowerCase().includes(searchLowercase));
         return { ...tekster, data: sokeResultat };
     }
     return tekster;
