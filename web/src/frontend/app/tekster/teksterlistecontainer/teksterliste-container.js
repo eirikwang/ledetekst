@@ -8,9 +8,15 @@ import { filtrerListe } from '../../felles/utils';
 function TeksterListeContainer({ tekster, base, sokeQuery }) {
     const filtrertListe = filtrerListe(tekster, sokeQuery);
 
+    function antallTreff() {
+        return <span><span>{`${filtrertListe.data.length} treff på `}</span><span className="typo-avsnitt">{`${sokeQuery}`}</span></span>
+    }
+
     return (
         <div>
+            <h1 className="typo-sidetittel text-center">Ledertekster</h1>
             <Sok base={base} sokeQuery={sokeQuery} />
+            <div className="soketreff">{antallTreff()}</div>
             <TeksterListe tekster={filtrertListe} base={base} />
         </div>
     );
