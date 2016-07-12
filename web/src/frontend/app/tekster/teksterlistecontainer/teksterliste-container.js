@@ -5,24 +5,24 @@ import Sok from './sok/sok';
 import TeksterListe from './teksterliste/tekster-liste';
 import { filtrerListe } from '../../felles/utils';
 
+function antallTreff(filtrertListe, sokeQuery) {
+    if (sokeQuery.length !== 0) {
+        return (<div className="soketreff">
+            <span>{`${filtrertListe.data.length} treff på `}</span>
+            <span className="typo-avsnitt">{`${sokeQuery}`}</span>
+        </div>);
+    }
+    return null;
+}
+
 function TeksterListeContainer({ tekster, base, sokeQuery }) {
     const filtrertListe = filtrerListe(tekster, sokeQuery);
-
-    function antallTreff() {
-        if (sokeQuery.length !== 0) {
-            return (<div className="soketreff">
-                <span>{`${filtrertListe.data.length} treff på `}</span>
-                <span className="typo-avsnitt">{`${sokeQuery}`}</span>
-            </div>);
-        }
-        return null;
-    }
 
     return (
         <div>
             <h1 className="typo-sidetittel text-center">Ledertekster</h1>
             <Sok base={base} sokeQuery={sokeQuery} />
-            <span>{antallTreff()}</span>
+            <span>{antallTreff(filtrertListe, sokeQuery)}</span>
             <TeksterListe tekster={filtrertListe} base={base} />
         </div>
     );
