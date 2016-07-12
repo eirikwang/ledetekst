@@ -1,5 +1,7 @@
 /* eslint-env mocha */
-import { expect, sinon, sinonChai, React } from './../../test-helper';
+/* eslint-disable no-unused-expressions */
+
+import { expect, sinon, React } from './../../test-helper';
 import { shallow } from 'enzyme';
 import { Header } from './header';
 
