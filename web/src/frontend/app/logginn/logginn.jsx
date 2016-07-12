@@ -16,7 +16,7 @@ class LoggInn extends Component {
     }
 
     render() {
-        let warning = this.props.ugyldigEpost ? 'Ugyldig e-post' : '';
+        let warning = this.props.ugyldigEpost ? `Ugyldig e-post: ${this.props.epost}` : '';
         let klasser = `nav-input text-left blokk-l ${this.props.ugyldigEpost ? ' har-valideringsfeil' : ''}`;
         return (
             <div className="logginn-beholder" >
@@ -59,7 +59,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        ugyldigEpost: state.autentisert.status === 'LOGGINN_FEILET'
+        ugyldigEpost: state.autentisert.status === 'LOGGINN_FEILET',
+        epost: state.autentisert.data.epost
     };
 }
 
@@ -68,7 +69,8 @@ LoggInn.propTypes = {
     location: PropTypes.shape({
         state: PropTypes.object
     }),
-    ugyldigEpost: PropTypes.bool.isRequired
+    ugyldigEpost: PropTypes.bool.isRequired,
+    epost: PropTypes.string.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoggInn);

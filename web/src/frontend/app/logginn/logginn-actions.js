@@ -28,7 +28,8 @@ export function loggInn(epost, nesteSide = { pathname: '/', query: {} }) {
         };
     }
     return {
-        type: EPOST_UGYLDIG
+        type: EPOST_UGYLDIG,
+        data: { epost }
     };
 }
 
