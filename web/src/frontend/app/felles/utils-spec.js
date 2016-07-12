@@ -69,4 +69,15 @@ describe('Sjekker filtrering av liste', () => {
         const filtrertListe = filtrerListe(tekster, search);
         expect(filtrertListe.data.length).to.be.equal(2);
     });
+
+    it('Teste nøkkel med uppercase', () => {
+        const tekster = { data: [
+            { nokkel: 'TEST1' },
+            { nokkel: 'test2' },
+            { nokkel: 'loremipsum' }
+        ] };
+        const search = 'test';
+        const filtrertListe = filtrerListe(tekster, search);
+        expect(filtrertListe.data.length).to.be.equal(2);
+    });
 });
