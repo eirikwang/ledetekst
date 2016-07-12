@@ -7,7 +7,8 @@ describe('Header', () => {
     const defaultData = {
         pathname: '/',
         loggInnData: {},
-        handleClick: () => {}
+        handleLoggUtClick: () => {},
+        handleLoggInnClick: () => {}
     };
 
     it('Skal rendre header-komponent', () => {

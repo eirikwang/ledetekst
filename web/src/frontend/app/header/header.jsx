@@ -2,13 +2,14 @@ import React, { PropTypes as PT } from 'react';
 import { connect } from 'react-redux';
 import { loggUt } from './../logginn/logginn-actions';
 import { Link } from 'react-router';
+import { push } from 'react-router-redux';
 
-export function Header({ loggInnData, handleLoggUtClick, pathname }) {
+export function Header({ loggInnData, pathname, handleLoggUtClick, handleLoggInnClick }) {
     function hentLoggInnInfo() {
         if (!loggInnData.navn) {
             return (
                 <div className="logginn-info">
-                    <button className="knapp knapp-hoved knapp-mini">Logg inn</button>
+                    <button className="knapp knapp-hoved knapp-mini" onClick={handleLoggInnClick}>Logg inn</button>
                 </div>
             );
         }
@@ -23,7 +24,7 @@ export function Header({ loggInnData, handleLoggUtClick, pathname }) {
     function visAppOversiktLink() {
         if (pathname === '/' || pathname.indexOf('rediger') > -1 || pathname.indexOf('login') > -1) {
             return (
-                <noscript>Du er allerede på startsiden eller på rediger-siden</noscript>
+                <noscript>Du er allerede på startsiden/rediger-siden/logginn-siden</noscript>
             );
         }
         return (
@@ -58,6 +59,7 @@ export function Header({ loggInnData, handleLoggUtClick, pathname }) {
 
 Header.propTypes = {
     handleLoggUtClick: PT.func.isRequired,
+    handleLoggInnClick: PT.func.isRequired,
     loggInnData: PT.object.isRequired,
     pathname: PT.string.isRequired
 };
@@ -67,6 +69,9 @@ function mapDispatchToProps(dispatch) {
         handleLoggUtClick: () => {
             dispatch(loggUt());
             window.location.reload();
+        },
+        handleLoggInnClick: () => {
+            dispatch(push('/login'));
         }
     };
 }
