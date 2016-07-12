@@ -46,7 +46,6 @@ class LoggInn extends Component {
                 </form>
             </div>
         );
-
     }
 }
 
