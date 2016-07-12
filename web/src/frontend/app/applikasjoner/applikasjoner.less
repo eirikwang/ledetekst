@@ -1,14 +1,25 @@
-.panel-ramme-tilpasset{
-  .panel-ramme();
-  border-width: 2px;
+
+
+.panel-tilpasset{
+
   box-shadow: none;
+
   :focus{
-    box-shadow: 0 0 0 3px #ffbd66;
+    box-shadow: 0 0 0 3px @orange-focus;
   }
 }
 
-.panel-klikkbart-komprimert-ramme-tilpasset{
-  .panel-klikkbart();
-  .panel-komprimert();
-  .panel-ramme-tilpasset();
+a.panel-tilpasset{
+  border-width: 2px;
+  background-image: url('/ledeteksteditor/img/ikoner-svg/ikon-pil-klikkbart.svg') !important;
+  background-size:20px 20px;
+  background-repeat: no-repeat;
+  background-position: 97% 50%;
 }
+
+a.panel-tilpasset:hover{
+  box-shadow: none;
+  border-width: 2px;
+  background-image: url('/ledeteksteditor/img/ikoner-svg/ikon-pil-klikkbart_hover.svg') !important;
+}
+

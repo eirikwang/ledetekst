@@ -33,7 +33,7 @@ export function Header({ loggInnData, handleClick, pathname }) {
     }
 
     return (
-        <header className="siteheader" role="banner">
+        <header className="siteheader blokk-xl" role="banner">
             <div className="site-coltrols-toolbar site-controls-toolbar">
                 <div className="container">
                     <div className="row navbar">
