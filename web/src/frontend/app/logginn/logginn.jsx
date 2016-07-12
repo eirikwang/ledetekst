@@ -1,12 +1,19 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import { loggInn } from './logginn-actions';
+import { loggInn, InnloggingsStatus } from './logginn-actions';
 import { autobind } from './../felles/utils';
+import { replace } from 'react-router-redux';
 
 class LoggInn extends Component {
     constructor(props) {
         super(props);
         autobind(this);
+    }
+
+    componentWillMount() {
+        if (this.props.loggetInn) {
+            this.props.vidresendTilForside();
+        }
     }
 
     hentInput(event) {
@@ -53,24 +60,30 @@ function mapDispatchToProps(dispatch) {
     return {
         handleSubmit: (epost, nesteSide) => {
             dispatch(loggInn(epost, nesteSide));
+        },
+        vidresendTilForside: () => {
+            dispatch(replace({ pathname: '/', query: {} }));
         }
     };
 }
 
 function mapStateToProps(state) {
     return {
-        ugyldigEpost: state.autentisert.status === 'LOGGINN_FEILET',
-        epost: state.autentisert.data.epost
+        ugyldigEpost: state.autentisert.status === InnloggingsStatus.LOGGINN_FEILET,
+        epost: state.autentisert.data.epost,
+        loggetInn: state.autentisert.status === InnloggingsStatus.LOGGET_INN
     };
 }
 
 LoggInn.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
+    vidresendTilForside: PropTypes.func.isRequired,
     location: PropTypes.shape({
         state: PropTypes.object
     }),
     ugyldigEpost: PropTypes.bool.isRequired,
-    epost: PropTypes.string.isRequired
+    loggetInn: PropTypes.bool.isRequired,
+    epost: PropTypes.string
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoggInn);
