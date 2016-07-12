@@ -1,11 +1,9 @@
 import React, { PropTypes as PT } from 'react';
-import { connect } from 'react-redux';
-import { storeShape } from './../felles/proptype-shapes';
-import RedigerLink from './../redigerlink/redigerlink';
+import { storeShape } from './../../../felles/proptype-shapes';
+// import RedigerLink from './../redigerlink/redigerlink';
 import { Link } from 'react-router';
 
-function Tekster({ tekster, base }) {
-    console.log(base);
+function TeksterListe({ tekster, base }) {
     const hentInnholdFor = (ledetekst) =>
         /*
         <ul type="disc">
@@ -49,11 +47,9 @@ function Tekster({ tekster, base }) {
     );
 }
 
-Tekster.propTypes = {
+TeksterListe.propTypes = {
     tekster: storeShape(PT.object).isRequired,
     base: PT.string.isRequired
 };
-function mapStateToProps({ tekster }, ownProps) {
-    return { tekster, base: ownProps.location.pathname };
-}
-export default connect(mapStateToProps)(Tekster);
+
+export default TeksterListe;
