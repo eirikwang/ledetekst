@@ -19,9 +19,9 @@ class LoggInn extends Component {
         let warning = this.props.ugyldigEpost ? 'Ugyldig e-post' : '';
         let klasser = `nav-input text-left blokk-l ${this.props.ugyldigEpost ? ' har-valideringsfeil' : ''}`;
         return (
-            <div className="logginn-beholder" noValidate>
+            <div className="logginn-beholder" >
                 <h1 className="hode-undertittel  hode-dekorert blokk-m">Logg inn</h1>
-                <form onSubmit={this.hentInput}>
+                <form onSubmit={this.hentInput} noValidate>
                     <div className={klasser}>
                         <label clasName="typo-infotekst" htmlFor="input-epost">
                             NAV e-post:
