@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import { expect } from './../../test-helper';
-import { hentNavnFraEpost, storForbokstavPaaHvertOrd, hentLedetekstIndex } from './utils';
+import { hentNavnFraEpost, storForbokstavPaaHvertOrd, hentLedetekstIndex, erGyldigEpost } from './utils';
 
 describe('Sjekker hentNavnFraEpost', () => {
     it('Hente ut riktig navn fra epost, ola.nordmann@nav.no', () => {
@@ -33,5 +33,48 @@ describe('Sjekker hentLedetekstIndex', () => {
         const index = hentLedetekstIndex(tekster, tekst);
         expect(index).to.be.equal(0);
         expect(index).not.to.be.equal(1);
+    });
+});
+
+describe('Sjekker erGyldigEpost', () => {
+    it('Skal ikke godta bruk3r@nav.no', () => {
+        const epostTest = 'bruk3r@nav.no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(false);
+    });
+    it('Skal ikke godta bru#ker@nav.no', () => {
+        const epostTest = 'bru#ker@nav.no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(false);
+    });
+    it('Skal ikke godta bruker@nav#no', () => {
+        const epostTest = 'bruker@nav#no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(false);
+    });
+    it('Skal ikke godta bruker@nav..no', () => {
+        const epostTest = 'bruker@nav..no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(false);
+    });
+    it('Skal ikke godta bru..ker@nav.no', () => {
+        const epostTest = 'bru..ker@nav.no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(false);
+    });
+    it('Skal godta bruker@nav.no', () => {
+        const epostTest = 'bruker@nav.no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(true);
+    });
+    it('Skal godta bruk.er@nav.no', () => {
+        const epostTest = 'bruk.er@nav.no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(true);
+    });
+    it('Skal godta br.uk.er@nav.no', () => {
+        const epostTest = 'br.uk.er@nav.no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(true);
     });
 });

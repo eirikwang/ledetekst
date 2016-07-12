@@ -1,4 +1,4 @@
-import { hentNavnFraEpost, storForbokstavPaaHvertOrd } from './../felles/utils';
+import { hentNavnFraEpost, storForbokstavPaaHvertOrd, erGyldigEpost } from './../felles/utils';
 import { replace } from 'react-router-redux';
 
 export const LOGG_INN = 'LOGG_INN';
@@ -11,10 +11,6 @@ export const InnloggingsStatus = {
     LOGGINN_FEILET: 'LOGGINN_FEILET'
 };
 
-function erGyldigEpost(epost) {
-    const navEpostRegex = /([a-zA-Z].+@nav.no)$/;
-    return navEpostRegex.test(epost);
-}
 
 export function loggInn(epost, nesteSide = { pathname: '/', query: {} }) {
     if (erGyldigEpost(epost)) {
