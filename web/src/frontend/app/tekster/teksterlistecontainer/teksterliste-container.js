@@ -15,7 +15,7 @@ function TeksterListeContainer({ tekster, base, sokeQuery }) {
                 <span className="typo-avsnitt">{`${sokeQuery}`}</span>
             </div>);
         }
-        return '';
+        return null;
     }
 
     return (
