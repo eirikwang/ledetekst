@@ -36,7 +36,7 @@ describe('Sjekker hentLedetekstIndex', () => {
     });
 });
 
-describe.only('Sjekker filtrering av liste', () => {
+describe('Sjekker filtrering av liste', () => {
     it('Filtrere liste med gyldig søkestreng', () => {
         const tekster = { data: [
             { nokkel: 'test1' },
@@ -57,7 +57,7 @@ describe.only('Sjekker filtrering av liste', () => {
         const search = undefined;
         const filtrertListe = filtrerListe(tekster, search);
         expect(filtrertListe.data.length).to.be.equal(tekster.data.length);
-    })
+    });
 
     it('Teste søkestreng med uppercase', () => {
         const tekster = { data: [
@@ -68,5 +68,5 @@ describe.only('Sjekker filtrering av liste', () => {
         const search = 'TEST';
         const filtrertListe = filtrerListe(tekster, search);
         expect(filtrertListe.data.length).to.be.equal(2);
-    })
+    });
 });
