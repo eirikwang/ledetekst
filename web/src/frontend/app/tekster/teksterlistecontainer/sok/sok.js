@@ -16,8 +16,8 @@ class Sok extends Component {
         this.props.oppdaterTempSoketekst(soketekst.target.value);
 
         clearTimeout(this.timeout);
-        this.timeout = setTimeout((tekst, func, base) => {
-            func(tekst, base);
+        this.timeout = setTimeout((tekst, settsoketekst, base) => {
+            settsoketekst(tekst, base);
         }, 500, soketekst.target.value, this.props.settSoketekst, this.props.base);
     }
 
