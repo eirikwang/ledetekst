@@ -19,7 +19,7 @@ function TeksterListe({ tekster, base }) {
     const teksterElement = tekster.data.map((ledetekst) => hentInnholdFor(ledetekst));
 
     return (
-        <ul className="tekster">
+        <div className="tekster">
             <div className="tittel-element blokk-xxxs">
                 <span className="typo-etikett-liten tekst-tittel-innhold">Ledetekst</span>
                 <span className="typo-etikett-liten tekst-tittel-nokkel">Id-nøkkel</span>
@@ -27,7 +27,7 @@ function TeksterListe({ tekster, base }) {
                 <span className="typo-etikett-liten tekst-tittel-sistendret">Redigert sist</span>
             </div>
             {teksterElement}
-        </ul>
+        </div>
     );
 }
 
