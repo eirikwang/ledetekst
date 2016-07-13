@@ -5,7 +5,7 @@ function SokAntall({ filtrertListe, sokeQuery }) {
         return (<div className="soketreff" aria-live="assertive" aria-atomic="true">
             <span>{`${filtrertListe.data.length} treff på `}</span>
             <span className="typo-avsnitt">
-                {{ sokeQuery }.length < 80 ? { sokeQuery } : `${sokeQuery.substring(0, 79)}...`}
+                {`${sokeQuery}`.length < 80 ? `${sokeQuery}` : `${sokeQuery.substring(0, 79)}...`}
             </span>
         </div>);
     }
