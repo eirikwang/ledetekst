@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import { expect } from './../../test-helper';
-import { hentNavnFraEpost, storForbokstavPaaHvertOrd, hentLedetekstIndex, erGyldigEpost } from './utils';
+import { hentNavnFraEpost, storForbokstavPaaHvertOrd, hentLedetekstIndex, erGyldigEpost, filtrerListe } from './utils';
 
 describe('Sjekker hentNavnFraEpost', () => {
     it('Hente ut riktig navn fra epost, ola.nordmann@nav.no', () => {
@@ -76,5 +76,51 @@ describe('Sjekker erGyldigEpost', () => {
         const epostTest = 'br.uk.er@nav.no';
         const erGyldig = erGyldigEpost(epostTest);
         expect(erGyldig).to.be.equal(true);
+    });
+});
+
+describe('Sjekker filtrering av liste', () => {
+    it('Filtrere liste med gyldig søkestreng', () => {
+        const tekster = { data: [
+            { nokkel: 'test1' },
+            { nokkel: 'test2' },
+            { nokkel: 'loremipsum' }
+        ] };
+        const search = 'test';
+        const filtrertListe = filtrerListe(tekster, search);
+        expect(filtrertListe.data.length).to.be.equal(2);
+    });
+
+    it('Teste filtrering med udefinert query', () => {
+        const tekster = { data: [
+            { nokkel: 'test1' },
+            { nokkel: 'test2' },
+            { nokkel: 'loremipsum' }
+        ] };
+        const search = undefined;
+        const filtrertListe = filtrerListe(tekster, search);
+        expect(filtrertListe.data.length).to.be.equal(tekster.data.length);
+    });
+
+    it('Teste søkestreng med uppercase', () => {
+        const tekster = { data: [
+            { nokkel: 'test1' },
+            { nokkel: 'test2' },
+            { nokkel: 'loremipsum' }
+        ] };
+        const search = 'TEST';
+        const filtrertListe = filtrerListe(tekster, search);
+        expect(filtrertListe.data.length).to.be.equal(2);
+    });
+
+    it('Teste nøkkel med uppercase', () => {
+        const tekster = { data: [
+            { nokkel: 'TEST1' },
+            { nokkel: 'test2' },
+            { nokkel: 'loremipsum' }
+        ] };
+        const search = 'test';
+        const filtrertListe = filtrerListe(tekster, search);
+        expect(filtrertListe.data.length).to.be.equal(2);
     });
 });
