@@ -1,12 +1,19 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import { loggInn } from './logginn-actions';
+import { loggInn, InnloggingsStatus } from './logginn-actions';
 import { autobind } from './../felles/utils';
+import { replace } from 'react-router-redux';
 
 class LoggInn extends Component {
     constructor(props) {
         super(props);
         autobind(this);
+    }
+
+    componentWillMount() {
+        if (this.props.loggetInn) {
+            this.props.vidresendTilForside();
+        }
     }
 
     hentInput(event) {
@@ -16,12 +23,12 @@ class LoggInn extends Component {
     }
 
     render() {
-        let warning = this.props.ugyldigEpost ? 'Ugyldig e-post' : '';
+        let warning = this.props.ugyldigEpost ? `Ugyldig e-post: ${this.props.epost}` : '';
         let klasser = `nav-input text-left blokk-l ${this.props.ugyldigEpost ? ' har-valideringsfeil' : ''}`;
         return (
-            <div className="logginn-beholder">
+            <div className="logginn-beholder" >
                 <h1 className="hode-undertittel  hode-dekorert blokk-m">Logg inn</h1>
-                <form onSubmit={this.hentInput}>
+                <form onSubmit={this.hentInput} noValidate>
                     <div className={klasser}>
                         <label clasName="typo-infotekst" htmlFor="input-epost">
                             NAV e-post:
@@ -34,11 +41,9 @@ class LoggInn extends Component {
                             id="input-epost"
                             placeholder="brukernavn@nav.no"
                             aria-describedby="error-epost"
-                            required="required"
-                            aria-required="true"
                             autoFocus="true"
                         />
-                        <span className="skjema-feilmelding" id="error-epost">
+                        <span className="skjema-feilmelding" role="alert" id="error-epost">
                             {warning}
                         </span>
                     </div>
@@ -55,22 +60,30 @@ function mapDispatchToProps(dispatch) {
     return {
         handleSubmit: (epost, nesteSide) => {
             dispatch(loggInn(epost, nesteSide));
+        },
+        vidresendTilForside: () => {
+            dispatch(replace({ pathname: '/', query: {} }));
         }
     };
 }
 
 function mapStateToProps(state) {
     return {
-        ugyldigEpost: state.autentisert.status === 'LOGGINN_FEILET'
+        ugyldigEpost: state.autentisert.status === InnloggingsStatus.LOGGINN_FEILET,
+        epost: state.autentisert.data.epost,
+        loggetInn: state.autentisert.status === InnloggingsStatus.LOGGET_INN
     };
 }
 
 LoggInn.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
+    vidresendTilForside: PropTypes.func.isRequired,
     location: PropTypes.shape({
         state: PropTypes.object
     }),
-    ugyldigEpost: PropTypes.bool.isRequired
+    ugyldigEpost: PropTypes.bool.isRequired,
+    loggetInn: PropTypes.bool.isRequired,
+    epost: PropTypes.string
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoggInn);

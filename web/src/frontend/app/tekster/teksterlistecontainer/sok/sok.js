@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/no-onchange*/
 import React, { PropTypes, Component } from 'react';
+import DebouncedInput from 'react-debounce-input';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { autobind } from '../../../felles/utils';
-import { settSoketekst } from './sok-actions';
 
 class Sok extends Component {
     constructor(props) {
@@ -10,28 +11,23 @@ class Sok extends Component {
         autobind(this);
     }
 
-    settSoketekst(soketekst) {
-        this.props.settSoketekst(soketekst.target.value, this.props.base);
-    }
-
-    sendQuery(event) {
-        event.preventDefault();
-        this.props.queryTekster(this.props.soketekst, this.props.base);
+    settSoketekst(eventSok) {
+        eventSok.preventDefault();
+        this.props.settSoketekst(eventSok.target.value, this.props.base);
     }
 
     render() {
         return (
-            <form onSubmit={this.sendQuery}>
+            <form className="blokk-xxs" onSubmit={this.settSoketekst}>
                 <div className="sokefelt">
                     <label htmlFor="sok" className="visuallyhidden">Søk</label>
-                    <input
-                        type="text"
+                    <DebouncedInput
+                        debounceTimeout={500}
                         name="sok"
+                        value={this.props.sokeQuery}
                         placeholder="SØK PÅ NØKKEL"
                         className="sokefelt"
-                        value={this.props.soketekst ? this.props.soketekst : ''}
                         onChange={this.settSoketekst}
-                        onBlur={this.settSoketekst}
                     />
                     <button type="submit" className="sokefelt-knapp-sok">
                         <span className="visuallyhidden">Søk</span>
@@ -42,23 +38,24 @@ class Sok extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        sokeQuery: state.sok.sokeQuery
+    };
+}
+
 function mapDispatchToProps(dispatch) {
     return {
-        queryTekster: (soketekst, pathname) => {
-            dispatch(push({ pathname, query: { soketekst } }));
-        },
-        settSoketekst: (soketekst, pathname) => {
-            dispatch(push({ pathname, query: { soketekst } }));
-            dispatch(settSoketekst(soketekst));
+        settSoketekst: (sokeQuery, pathname) => {
+            dispatch(push({ pathname, query: { sokeQuery } }));
         }
     };
 }
 
 Sok.propTypes = {
     settSoketekst: PropTypes.func.isRequired,
-    queryTekster: PropTypes.func.isRequired,
     base: PropTypes.string.isRequired,
-    soketekst: PropTypes.string.isRequired
+    sokeQuery: PropTypes.string.isRequired
 };
 
-export default connect(() => ({}), mapDispatchToProps)(Sok);
+export default connect(mapStateToProps, mapDispatchToProps)(Sok);
