@@ -68,7 +68,7 @@ export function finnTekst(queryNokkel, querySpraak, tekster) {
 }
 
 export function hentNavnFraEpost(epost) {
-    return epost.substring(0, epost.indexOf('@')).replace(/\./g, ' ');
+    return epost.substring(0, epost.indexOf('@')).replace(/\d+/g, '').replace(/\./g, ' ');
 }
 
 export function hentLedetekstIndex(tekster, endretTekst) {

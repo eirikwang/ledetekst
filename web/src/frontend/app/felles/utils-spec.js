@@ -13,9 +13,14 @@ describe('Sjekker hentNavnFraEpost', () => {
         expect(navn).to.be.equal('ola nord mann');
     });
 
-    it('Skal hente ut navn fra epost, bruker@nav.no.no', () => {
-        const navn = hentNavnFraEpost('bruker@nav.no');
-        expect(navn).to.be.equals('bruker');
+    it('Skal hente ut navn fra epost med tall, ola2.normann@nav.no.no', () => {
+        const navn = hentNavnFraEpost('ola2.normann@nav.no');
+        expect(navn).to.be.equals('ola normann');
+    });
+
+    it('Skal hente ut navn fra epost med tall, o2la.3nordmann@nav.no.no', () => {
+        const navn = hentNavnFraEpost('o2la.3nordmann@nav.no');
+        expect(navn).to.be.equals('ola nordmann');
     });
 });
 
