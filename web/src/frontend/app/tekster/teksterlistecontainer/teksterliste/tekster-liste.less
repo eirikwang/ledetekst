@@ -1,0 +1,84 @@
+// TEKST-ELEMENTER
+
+.tekst-element {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 3.625rem;
+  padding: 0.625rem;
+  margin: -0.0625rem;
+  border: solid 0.0625rem @gray-icon;
+  background-color: white;
+}
+
+.tekst-element:hover {
+  position: relative;
+  z-index: 2;
+  border: solid 0.0625rem @blue-link;
+}
+
+.tekst-link {
+  color: black;
+}
+
+.tekst-link:focus .tekst-element {
+  box-shadow: 0 0 0 0.1875rem @orange-focus;
+  position: relative;
+}
+
+.tekst-ikon {
+  width: 2%;
+}
+
+.tekst-innhold {
+  width: 43%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.tekst-nokkel {
+  width: 33%;
+}
+
+.tekst-spraak {
+  width: 5%;
+}
+
+.tekst-sistendret {
+  width: 11%;
+}
+
+//TITTEL-LINJE
+
+.tittel-element {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 2.625rem;
+  padding: 0.625rem;
+}
+
+.tekst-tittel-innhold {
+  width: 43%;
+  margin-left: 2.125rem;
+  font-weight: bold;
+}
+
+.tekst-tittel-nokkel {
+  width: 33%;
+  font-weight: bold;
+}
+.tekst-tittel-spraak {
+  width: 6%;
+  font-weight: bold;
+}
+.tekst-tittel-sistendret {
+  width: 11%;
+  font-weight: bold;
+}
