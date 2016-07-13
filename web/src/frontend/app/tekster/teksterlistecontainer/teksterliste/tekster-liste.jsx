@@ -19,17 +19,15 @@ function TeksterListe({ tekster, base }) {
     const teksterElement = tekster.data.map((ledetekst) => hentInnholdFor(ledetekst));
 
     return (
-        <div>
-            <ul className="tekster">
-                <div className="tittel-element blokk-xxxs">
-                    <span className="typo-etikett-liten tekst-tittel-innhold">Ledetekst</span>
-                    <span className="typo-etikett-liten tekst-tittel-nokkel">Id-nøkkel</span>
-                    <span className="typo-etikett-liten tekst-tittel-spraak">Språk</span>
-                    <span className="typo-etikett-liten tekst-tittel-sistendret">Redigert sist</span>
-                </div>
-                {teksterElement}
-            </ul>
-        </div>
+        <ul className="tekster">
+            <div className="tittel-element blokk-xxxs">
+                <span className="typo-etikett-liten tekst-tittel-innhold">Ledetekst</span>
+                <span className="typo-etikett-liten tekst-tittel-nokkel">Id-nøkkel</span>
+                <span className="typo-etikett-liten tekst-tittel-spraak">Språk</span>
+                <span className="typo-etikett-liten tekst-tittel-sistendret">Redigert sist</span>
+            </div>
+            {teksterElement}
+        </ul>
     );
 }
 
