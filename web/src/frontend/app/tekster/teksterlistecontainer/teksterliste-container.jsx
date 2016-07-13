@@ -11,7 +11,7 @@ function TeksterListeContainer({ tekster, base, sokeQuery }) {
 
     return (
         <div>
-            <h1 className="typo-sidetittel text-center blokk-m">Ledertekster</h1>
+            <h1 className="typo-sidetittel text-center blokk-m">Ledetekster</h1>
             <Sok base={base} sokeQuery={sokeQuery} />
             <SokAntall filtrertListe={filtrertListe} sokeQuery={sokeQuery} />
             <TeksterListe tekster={filtrertListe} base={base} />
