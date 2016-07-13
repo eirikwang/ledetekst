@@ -37,17 +37,13 @@ describe('Sjekker hentLedetekstIndex', () => {
 });
 
 describe('Sjekker erGyldigEpost', () => {
-    it('Skal ikke godta bruk3r@nav.no', () => {
-        const epostTest = 'bruk3r@nav.no';
-        const erGyldig = erGyldigEpost(epostTest);
-        expect(erGyldig).to.be.equal(false);
-    });
-    it('Skal ikke godta bru#ker@nav.no', () => {
+    // Skal IKKE godta
+    it('Skal ikke godta spesialtegn i navn: bru#ker@nav.no', () => {
         const epostTest = 'bru#ker@nav.no';
         const erGyldig = erGyldigEpost(epostTest);
         expect(erGyldig).to.be.equal(false);
     });
-    it('Skal ikke godta bruker@nav#no', () => {
+    it('Skal ikke godta andre tegn mellom "nav" og "no" enn punktum: bruker@nav#no', () => {
         const epostTest = 'bruker@nav#no';
         const erGyldig = erGyldigEpost(epostTest);
         expect(erGyldig).to.be.equal(false);
@@ -62,17 +58,23 @@ describe('Sjekker erGyldigEpost', () => {
         const erGyldig = erGyldigEpost(epostTest);
         expect(erGyldig).to.be.equal(false);
     });
-    it('Skal godta bruker@nav.no', () => {
+    // Skal godta
+    it('Skal godta tall i navn: bruk3r@nav.no', () => {
+        const epostTest = 'bruk3r@nav.no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(true);
+    });
+    it('Skal godta enkeltnavn: bruker@nav.no', () => {
         const epostTest = 'bruker@nav.no';
         const erGyldig = erGyldigEpost(epostTest);
         expect(erGyldig).to.be.equal(true);
     });
-    it('Skal godta bruk.er@nav.no', () => {
+    it('Skal godta to navn: bruk.er@nav.no', () => {
         const epostTest = 'bruk.er@nav.no';
         const erGyldig = erGyldigEpost(epostTest);
         expect(erGyldig).to.be.equal(true);
     });
-    it('Skal godta br.uk.er@nav.no', () => {
+    it('Skal godta 3 navn: br.uk.er@nav.no', () => {
         const epostTest = 'br.uk.er@nav.no';
         const erGyldig = erGyldigEpost(epostTest);
         expect(erGyldig).to.be.equal(true);
