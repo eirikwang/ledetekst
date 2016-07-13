@@ -21,7 +21,8 @@ export default function loggInn(state = DEFAULT_STATE, action) {
         case EPOST_UGYLDIG:
             return {
                 ...state,
-                status: InnloggingsStatus.LOGGINN_FEILET
+                status: InnloggingsStatus.LOGGINN_FEILET,
+                data: action.data
             };
         case LOGG_UT:
             localStorage.clear();

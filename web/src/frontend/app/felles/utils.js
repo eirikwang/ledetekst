@@ -68,7 +68,7 @@ export function finnTekst(queryNokkel, querySpraak, tekster) {
 }
 
 export function hentNavnFraEpost(epost) {
-    return epost.substring(0, epost.indexOf('@')).replace(/\./g, ' ');
+    return epost.substring(0, epost.indexOf('@')).replace(/\d+/g, '').replace(/\./g, ' ');
 }
 
 export function hentLedetekstIndex(tekster, endretTekst) {
@@ -87,3 +87,9 @@ export function filtrerListe(tekster, search) {
     }
     return tekster;
 }
+
+export function erGyldigEpost(epost) {
+    const navEpostRegex = /^([a-zA-Z0-9]\.?)*@nav\.no$/;
+    return navEpostRegex.test(epost);
+}
+
