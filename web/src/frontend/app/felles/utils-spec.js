@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import { expect } from './../../test-helper';
-import { hentNavnFraEpost, storForbokstavPaaHvertOrd, hentLedetekstIndex, filtrerListe } from './utils';
+import { hentNavnFraEpost, storForbokstavPaaHvertOrd, hentLedetekstIndex, erGyldigEpost, filtrerListe } from './utils';
 
 describe('Sjekker hentNavnFraEpost', () => {
     it('Hente ut riktig navn fra epost, ola.nordmann@nav.no', () => {
@@ -13,9 +13,14 @@ describe('Sjekker hentNavnFraEpost', () => {
         expect(navn).to.be.equal('ola nord mann');
     });
 
-    it('Skal hente ut navn fra epost, bruker@nav.no.no', () => {
-        const navn = hentNavnFraEpost('bruker@nav.no');
-        expect(navn).to.be.equals('bruker');
+    it('Skal hente ut navn fra epost med tall, ola2.normann@nav.no.no', () => {
+        const navn = hentNavnFraEpost('ola2.normann@nav.no');
+        expect(navn).to.be.equals('ola normann');
+    });
+
+    it('Skal hente ut navn fra epost med tall, o2la.3nordmann@nav.no.no', () => {
+        const navn = hentNavnFraEpost('o2la.3nordmann@nav.no');
+        expect(navn).to.be.equals('ola nordmann');
     });
 });
 
@@ -33,6 +38,51 @@ describe('Sjekker hentLedetekstIndex', () => {
         const index = hentLedetekstIndex(tekster, tekst);
         expect(index).to.be.equal(0);
         expect(index).not.to.be.equal(1);
+    });
+});
+
+describe('Sjekker erGyldigEpost', () => {
+    // Skal IKKE godta
+    it('Skal ikke godta spesialtegn i navn: bru#ker@nav.no', () => {
+        const epostTest = 'bru#ker@nav.no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(false);
+    });
+    it('Skal ikke godta andre tegn mellom "nav" og "no" enn punktum: bruker@nav#no', () => {
+        const epostTest = 'bruker@nav#no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(false);
+    });
+    it('Skal ikke godta bruker@nav..no', () => {
+        const epostTest = 'bruker@nav..no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(false);
+    });
+    it('Skal ikke godta bru..ker@nav.no', () => {
+        const epostTest = 'bru..ker@nav.no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(false);
+    });
+    // Skal godta
+    it('Skal godta tall i navn: bruk3r@nav.no', () => {
+        const epostTest = 'bruk3r@nav.no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(true);
+    });
+    it('Skal godta enkeltnavn: bruker@nav.no', () => {
+        const epostTest = 'bruker@nav.no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(true);
+    });
+    it('Skal godta to navn: bruk.er@nav.no', () => {
+        const epostTest = 'bruk.er@nav.no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(true);
+    });
+    it('Skal godta 3 navn: br.uk.er@nav.no', () => {
+        const epostTest = 'br.uk.er@nav.no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(true);
     });
 });
 
