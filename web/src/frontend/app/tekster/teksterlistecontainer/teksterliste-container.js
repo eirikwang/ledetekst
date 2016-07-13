@@ -4,16 +4,7 @@ import { storeShape } from '../../felles/proptype-shapes';
 import Sok from './sok/sok';
 import TeksterListe from './teksterliste/tekster-liste';
 import { filtrerListe } from '../../felles/utils';
-
-function antallTreff(filtrertListe, sokeQuery) {
-    if (sokeQuery.length !== 0) {
-        return (<div className="soketreff">
-            <span>{`${filtrertListe.data.length} treff på `}</span>
-            <span className="typo-avsnitt">{`${sokeQuery}`}</span>
-        </div>);
-    }
-    return null;
-}
+import SokAntall from './sok/sok-antall';
 
 function TeksterListeContainer({ tekster, base, sokeQuery }) {
     const filtrertListe = filtrerListe(tekster, sokeQuery);
@@ -22,7 +13,7 @@ function TeksterListeContainer({ tekster, base, sokeQuery }) {
         <div>
             <h1 className="typo-sidetittel text-center blokk-m">Ledertekster</h1>
             <Sok base={base} sokeQuery={sokeQuery} />
-            {antallTreff(filtrertListe, sokeQuery)}
+            <SokAntall filtrertListe={filtrertListe} sokeQuery={sokeQuery} />
             <TeksterListe tekster={filtrertListe} base={base} />
         </div>
     );
