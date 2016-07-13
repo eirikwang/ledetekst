@@ -22,7 +22,6 @@ function TeksterListe({ tekster, base }) {
 
     return (
         <div>
-            <h1 className="typo-sidetittel text-center">Ledertekster</h1>
             <ul className="tekster">
                 {teksterElement}
             </ul>
