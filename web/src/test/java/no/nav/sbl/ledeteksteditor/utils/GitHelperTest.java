@@ -1,4 +1,4 @@
-package no.nav.sbl.ledeteksteditor.rest;
+package no.nav.sbl.ledeteksteditor.utils;
 
 import org.junit.After;
 import org.junit.Before;

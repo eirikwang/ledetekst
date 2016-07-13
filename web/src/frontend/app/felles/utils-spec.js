@@ -63,6 +63,11 @@ describe('Sjekker erGyldigEpost', () => {
         const erGyldig = erGyldigEpost(epostTest);
         expect(erGyldig).to.be.equal(false);
     });
+    it('Skal ikke godta @nav.no', () => {
+        const epostTest = '@nav.no';
+        const erGyldig = erGyldigEpost(epostTest);
+        expect(erGyldig).to.be.equal(false);
+    });
     // Skal godta
     it('Skal godta tall i navn: bruk3r@nav.no', () => {
         const epostTest = 'bruk3r@nav.no';
