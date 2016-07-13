@@ -89,7 +89,7 @@ export function filtrerListe(tekster, search) {
 }
 
 export function erGyldigEpost(epost) {
-    const navEpostRegex = /^([a-zA-Z0-9]\.?)*@nav\.no$/;
+    const navEpostRegex = /^([a-zA-Z0-9]\.?)+@nav\.no$/;
     return navEpostRegex.test(epost);
 }
 

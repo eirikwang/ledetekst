@@ -1,4 +1,4 @@
-package no.nav.sbl.ledeteksteditor.rest;
+package no.nav.sbl.ledeteksteditor.services;
 
 import no.nav.sbl.ledeteksteditor.domain.Applikasjon;
 import no.nav.sbl.ledeteksteditor.domain.Ident;
